@@ -1,0 +1,9 @@
+
+LIBS=-lGL -lGLU -lglfw3 -lX11 -lXxf86vm -lXrandr -lpthread -lXi -lm -lXinerama -lXft -lXcursor
+
+all:
+	gcc *.c $(LIBS)
+run:
+	./a.out
+
+
