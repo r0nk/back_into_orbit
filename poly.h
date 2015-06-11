@@ -1,12 +1,22 @@
 #ifndef POLY
 #define POLY
 
+struct color{
+	float r,g,b;
+};
+
 struct point{
-	float x,y,red,green,blue;
+	float x,y,z;
 };
 
 struct polygon{
-	struct point points[3];
+	struct point point[3];
+	struct color color[3];
+};
+
+struct model{
+	unsigned int cardinality; 
+	struct polygon *poly;
 };
 
 #endif
