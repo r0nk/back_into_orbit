@@ -12,16 +12,23 @@ int init_graphics()
 {
 	glfwSetErrorCallback(err_callback);
 	if(!glfwInit())
-		return 0;
+		return -1;
 	window = glfwCreateWindow(640, 480, "corvus", NULL, NULL);
 	if(!window)
-		return 0;
+		return -2;
 	glfwMakeContextCurrent(window);
 	glfwSetKeyCallback(window, key_callback);
 	glfwGetFramebufferSize(window, &window_width, &window_height);
 	glViewport(0,0,window_width,window_height);
 	ratio = window_width / (float) window_height;
+	glClearColor(0.0,0.4,0.4,1.0);
 	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_LIGHTING);
+	glEnable(GL_LIGHT0);
+
+	glScalef(0.4f,0.4f,0.4f);
+
+	return 0;
 }
 
 void deinit_graphics()
@@ -41,27 +48,60 @@ void draw_poly(struct polygon p)
 
 void draw_model(struct model model)
 {
-	int i;
+	unsigned int i;
 	for(i=0;i<model.cardinality;i++)
 		draw_poly(model.poly[i]);
 }
 
 void draw_models(){
-	draw_model(p.model);
+	//	draw_model(p.model);
+	glRotatef(0.1f,1.0f,1.0f,0.0f);
+	glColor3f(1.0f, 1.0f, 0.0f);
+	glBegin(GL_QUADS);
+
+	//Front
+	glVertex3f(-1.5f, -1.0f, 1.5f);
+	glVertex3f(1.5f, -1.0f, 1.5f);
+	glVertex3f(1.5f, 1.0f, 1.5f);
+	glVertex3f(-1.5f, 1.0f, 1.5f);
+
+	//Right
+	glVertex3f(1.5f, -1.0f, -1.5f);
+	glVertex3f(1.5f, 1.0f, -1.5f);
+	glVertex3f(1.5f, 1.0f, 1.5f);
+	glVertex3f(1.5f, -1.0f, 1.5f);
+
+	//Back
+	glVertex3f(-1.5f, -1.0f, -1.5f);
+	glVertex3f(-1.5f, 1.0f, -1.5f);
+	glVertex3f(1.5f, 1.0f, -1.5f);
+	glVertex3f(1.5f, -1.0f, -1.5f);
+
+	//Left
+	glVertex3f(-1.5f, -1.0f, -1.5f);
+	glVertex3f(-1.5f, -1.0f, 1.5f);
+	glVertex3f(-1.5f, 1.0f, 1.5f);
+	glVertex3f(-1.5f, 1.0f, -1.5f);
+
+	glEnd();
 }
 
 void draw(){
 	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+
+	//Add ambient light
+	GLfloat ambientColor[] = {0.2f, 0.2f, 0.2f, 1.0f}; 
+	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambientColor);
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 
 	glOrtho(-ratio,ratio,-1.f,1.f,1.f,-1.f);
 	glMatrixMode(GL_MODELVIEW);
-	
-	glBegin(GL_TRIANGLES);
+
+	//	glBegin(GL_TRIANGLES);
 	draw_models();
-	glEnd();
+	//	glEnd();
 
 	glfwSwapBuffers(window);
 	glfwPollEvents();

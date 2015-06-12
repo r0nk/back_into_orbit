@@ -1,9 +1,11 @@
+#include <stdio.h>
+#include <stdlib.h>
+
 #include "callbacks.h"
-#include "stdio.h"
 #include "game.h"
 
 void err_callback(int err, const char* description){
-	fputs(description,stderr);
+	printf("ERR CALLBACK[%i]:%s\n",err,description);
 }
 
 void key_callback(GLFWwindow * win, int key, int scanc, int action, int mods){

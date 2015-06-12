@@ -12,7 +12,6 @@ struct model anchor()
 {
 	struct model m;
 	m.cardinality=4;
-	int i;
 	m.poly = calloc(sizeof(struct polygon),m.cardinality);
 
 	m.poly[0].point[0]=(struct point) {0.0,0.0,0.0};
