@@ -94,7 +94,7 @@ void draw(){
 	glOrtho(-ratio,ratio,-1.f,1.f,1.f,-1.f);
 	glMatrixMode(GL_MODELVIEW);
 
-	glRotatef(0.1f,1.0f,1.0f,0.0f);
+	glRotatef(0.2f,1.0f,1.0f,0.0f);
 	draw_models();
 
 	glfwSwapBuffers(window);

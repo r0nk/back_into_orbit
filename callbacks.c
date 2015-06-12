@@ -26,12 +26,12 @@ void key_callback(GLFWwindow * win, int key, int scanc, int action, int mods){
 
 void cursor_callback(GLFWwindow * win, double xpos, double ypos)
 {
-	printf("cursor callback: %f,%f\n",xpos,ypos);
 	glfwSetCursorPos(win,0,0);
 }
 
 void cursor_button_callback(GLFWwindow * win, int button, int action, int mods)
 {
-	printf("cursor button callback: %i %i\n",button,action);
+	//for button, 0 = left, 1 = right, 2 = middle
+	;
 
 }

@@ -2,11 +2,11 @@
 #define POLY
 
 struct color{
-	float r,g,b;
+	double r,g,b;
 };
 
 struct point{
-	float x,y,z;
+	double x,y,z;
 };
 
 struct polygon{

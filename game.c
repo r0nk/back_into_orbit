@@ -11,7 +11,7 @@ int game_tick(){
 struct model anchor()
 {
 	struct model m;
-	m.cardinality=4;
+	m.cardinality=8;
 	m.poly = calloc(sizeof(struct polygon),m.cardinality);
 
 	m.poly[0].point[0]=(struct point) {0.0,0.0,0.0};
@@ -42,6 +42,52 @@ struct model anchor()
 	return m;
 }
 
+struct model tetrahedron()
+{
+	struct model m;
+	m.cardinality=4;
+	m.poly = calloc(sizeof(struct polygon),m.cardinality);
+	struct point a={1.0,1.0,1.0};
+	struct point b={-1.0,-1.0,1.0};
+	struct point c={-1.0,1.0,-1.0};
+	struct point d={1.0,-1.0,-1.0};
+	struct color ac={1.0,1.0,1.0};
+	struct color bc={-1.0,-1.0,1.0};
+	struct color cc={-1.0,1.0,-1.0};
+	struct color dc={1.0,-1.0,-1.0};
+	int i=0;
+	m.poly[i].color[0]=(struct color) ac;
+	m.poly[i].color[1]=(struct color) bc;
+	m.poly[i].color[2]=(struct color) cc;
+	m.poly[i].point[0]=a;
+	m.poly[i].point[1]=b;
+	m.poly[i].point[2]=c;
+	i++;
+	m.poly[i].color[0]=(struct color) bc;
+	m.poly[i].color[1]=(struct color) ac;
+	m.poly[i].color[2]=(struct color) dc;
+	m.poly[i].point[0]=b;
+	m.poly[i].point[1]=a;
+	m.poly[i].point[2]=d;
+	i++;
+	m.poly[i].color[0]=(struct color) cc;
+	m.poly[i].color[1]=(struct color) bc;
+	m.poly[i].color[2]=(struct color) dc;
+	m.poly[i].point[0]=c;
+	m.poly[i].point[1]=b;
+	m.poly[i].point[2]=d;
+	i++;
+	m.poly[i].color[0]=(struct color) dc;
+	m.poly[i].color[1]=(struct color) ac;
+	m.poly[i].color[2]=(struct color) cc;
+	m.poly[i].point[0]=d;
+	m.poly[i].point[1]=a;
+	m.poly[i].point[2]=c;
+
+
+	return m;
+}
+
 struct model player_model()
 {
 	struct model m;
@@ -59,7 +105,7 @@ struct model player_model()
 
 int init_game(){
 	//TODO
-	p.model=player_model();
+	p.model=tetrahedron();
 //	p.model=anchor();
 	return 1;
 }
