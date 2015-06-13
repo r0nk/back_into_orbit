@@ -45,24 +45,29 @@ void deinit_graphics()
 /* calculate and apply normal */
 void norm(struct polygon p)
 {
+/*
 	struct point c,u,v;
-	u = p.point[1];
-	v = p.point[2];
+	u = p.p[1];
+	v = p.p[2];
 	c.x = (u.y*v.z)-(u.z*v.y);
 	c.y = (u.z*v.x)-(u.x*v.z);
 	c.z = (u.x*v.y)-(u.y*v.x);
-	glNormal3f(c.x,c.y,c.z);
+*/
+	glNormal3f(1.0,0,0);
+}
+
+ void draw_vertice(struct vertice v)
+{
+	glColor3f( v.c.x, v.c.y, v.c.z);
+	glVertex3f(v.p.x, v.p.y, v.p.z);
 }
 
 void draw_poly(struct polygon p)
 {
 	norm(p);
-	glColor3f(p.color[0].r,p.color[0].g,p.color[0].b);
-	glVertex3f(p.point[0].x,p.point[0].y,p.point[0].z);
-	glColor3f(p.color[1].r,p.color[1].g,p.color[1].b);
-	glVertex3f(p.point[1].x,p.point[1].y,p.point[1].z);
-	glColor3f(p.color[2].r,p.color[2].g,p.color[2].b);
-	glVertex3f(p.point[2].x,p.point[2].y,p.point[2].z);
+	draw_vertice(p.v[0]);
+	draw_vertice(p.v[1]);
+	draw_vertice(p.v[2]);
 }
 
 void draw_model(struct model model)

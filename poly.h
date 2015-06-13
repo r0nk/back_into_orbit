@@ -1,17 +1,20 @@
 #ifndef POLY
 #define POLY
 
-struct color{
-	double r,g,b;
-};
-
-struct point{
+struct vector {
 	double x,y,z;
 };
 
+typedef struct vector point;
+
+struct vertice { 
+	struct vector p;/*position*/
+	struct vector n;/*normal*/
+	struct vector c;/*color*/
+};
+
 struct polygon{
-	struct point point[3];
-	struct color color[3];
+	struct vertice v[3];
 };
 
 struct model{
