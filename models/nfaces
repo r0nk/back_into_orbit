@@ -1,0 +1,1 @@
+grep -v -e comment -e property -e ply -e format -e end_header |grep "element face" | grep -o "[[:digit:]]*"

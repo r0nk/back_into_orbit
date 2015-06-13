@@ -42,29 +42,15 @@ void deinit_graphics()
 	glfwTerminate();
 }
 
-/* calculate and apply normal */
-void norm(struct polygon p)
-{
-/*
-	struct point c,u,v;
-	u = p.p[1];
-	v = p.p[2];
-	c.x = (u.y*v.z)-(u.z*v.y);
-	c.y = (u.z*v.x)-(u.x*v.z);
-	c.z = (u.x*v.y)-(u.y*v.x);
-*/
-	glNormal3f(1.0,0,0);
-}
-
  void draw_vertice(struct vertice v)
 {
+	glNormal3f(-v.n.x, -v.n.y, -v.n.z);
 	glColor3f( v.c.x, v.c.y, v.c.z);
 	glVertex3f(v.p.x, v.p.y, v.p.z);
 }
 
 void draw_poly(struct polygon p)
 {
-	norm(p);
 	draw_vertice(p.v[0]);
 	draw_vertice(p.v[1]);
 	draw_vertice(p.v[2]);
