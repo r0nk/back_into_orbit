@@ -4,6 +4,7 @@
 #include "callbacks.h"
 #include "game.h"
 #include "poly.h"
+#include "map.h"
 
 GLFWwindow * window;
 int window_width,window_height;
@@ -37,7 +38,7 @@ int init_graphics()
 
 	glScalef(0.4f,0.4f,0.4f);
 
-	camera.eye.x=1.0; camera.eye.y=0; camera.eye.z=6.0;
+	camera.eye.x=1.0; camera.eye.y=4.0; camera.eye.z=6.0;
 	camera.rot.x=0; camera.rot.y=0; camera.rot.z=0;
 	camera.up.x=0; camera.up.y=1; camera.up.z=0;
 
@@ -49,7 +50,7 @@ void deinit_graphics()
 	glfwTerminate();
 }
 
- void draw_vertice(struct vertice v)
+void draw_vertice(struct vertice v)
 {
 	glNormal3f(v.n.x, v.n.y, v.n.z);
 	glColor3f( v.c.x, v.c.y, v.c.z);
@@ -75,7 +76,33 @@ void draw_model(struct model model)
 	glPopMatrix();
 }
 
+void draw_block(int x, int y, int z)
+{
+	unsigned int i;
+	glPushMatrix();
+	glTranslatef((double)x,(double)y,(double)z);
+	glBegin(GL_TRIANGLES);
+	for(i=0;i<block.cardinality;i++)
+		draw_poly(block.poly[i]);
+	glEnd();
+	glPopMatrix();
+}
+
+void draw_map()
+{
+	int x,y,z;
+	for(x=0;x<20;x++){
+		for(y=0;y<20;y++){
+			for(z=0;z<20;z++){
+				if(world_map.tiles[x][y][z])
+					draw_block(x,y,z);
+			}
+		}
+	}
+}
+
 void draw_models(){
+	draw_map();
 	draw_model(p.model);
 }
 
@@ -89,9 +116,9 @@ void draw(){
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 
-	glFrustum(-1.0,1.0,-1.0f,1.0f,1.0f,10.0f);
+	glFrustum(-1.0,1.0,-1.0f,1.0f,1.0f,100.0f);
 	glMatrixMode(GL_MODELVIEW);
-	
+
 
 	glPushMatrix();
 	gluLookAt(camera.eye.x,camera.eye.y,camera.eye.z,
