@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include "game.h"
 #include "map.h"
+#include "input.h"
 
 struct player p;
 
@@ -111,10 +112,12 @@ struct model tetra(){
 }
 
 int init_game(){
-	//TODO
+	int i;
 	p.model=cube();
 	p.location.x=0;p.location.y=0;p.location.z=0;
 	world_map=mkmap();
 	block=cube();
+	for(i=0;i<NUMBER_OF_KEYS;i++)
+		keys[i]=0;
 	return 1;
 }

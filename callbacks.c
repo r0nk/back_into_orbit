@@ -5,33 +5,18 @@
 #include "callbacks.h"
 #include "game.h"
 #include "graphics.h"
+#include "input.h"
+
+char keys[NUMBER_OF_KEYS];/*boolean array of the input keys*/
 
 void err_callback(int err, const char* description){
 	printf("ERR CALLBACK[%i]:%s\n",err,description);
 }
 
 void key_callback(GLFWwindow * win, int key, int scanc, int action, int mods){
-	if(!action)/*if the key is being released*/
-		return;
-	if(key=='W'){
-		camera.eye.z+=camera.rot.z;
-		camera.eye.x+=camera.rot.x;
-	}
-	if(key=='A'){
-		camera.eye.z-=camera.right.z;
-		camera.eye.x-=camera.right.x;
-	}
-	if(key=='S'){
-		camera.eye.z-=camera.rot.z;
-		camera.eye.x-=camera.rot.x;
-	}
-	if(key=='D'){
-		camera.eye.z+=camera.right.z;
-		camera.eye.x+=camera.right.x;
-	}
-	if(key==256)//ESC
+	if(key==256)/* ESC */
 		exit(0);
-	//TODO
+	keys[key]=action;
 }
 
 void cursor_callback(GLFWwindow * win, double xpos, double ypos)
@@ -49,5 +34,4 @@ void cursor_button_callback(GLFWwindow * win, int button, int action, int mods)
 {
 	//for button, 0 = left, 1 = right, 2 = middle
 	;
-
 }

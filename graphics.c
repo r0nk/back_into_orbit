@@ -118,7 +118,6 @@ void draw(){
 	glFrustum(-1.0,1.0,-1.0f,1.0f,1.0f,100.0f);
 	glMatrixMode(GL_MODELVIEW);
 
-
 	glPushMatrix();
 	gluLookAt(camera.eye.x,camera.eye.y,camera.eye.z,
 			camera.eye.x+camera.rot.x,
