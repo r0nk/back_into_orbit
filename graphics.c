@@ -36,7 +36,6 @@ int init_graphics()
 	glEnable(GL_LIGHT0);
 	glEnable(GL_COLOR_MATERIAL);
 
-	glScalef(0.4f,0.4f,0.4f);
 
 	camera.eye.x=1.0; camera.eye.y=4.0; camera.eye.z=6.0;
 	camera.rot.x=0; camera.rot.y=0; camera.rot.z=0;
