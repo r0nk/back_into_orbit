@@ -21,11 +21,22 @@ void key_callback(GLFWwindow * win, int key, int scanc, int action, int mods){
 
 void cursor_callback(GLFWwindow * win, double xpos, double ypos)
 {
+#define CAMERA_LOCK 1500
+	if(ypos<-CAMERA_LOCK){
+		glfwSetCursorPos(win,xpos,-CAMERA_LOCK);
+		ypos=-CAMERA_LOCK;
+	}
+	if(ypos>CAMERA_LOCK){
+		glfwSetCursorPos(win,xpos,CAMERA_LOCK);
+		ypos=CAMERA_LOCK;
+	}
+
 	ypos*=-0.001;
 	xpos*=-0.002;
+
 	camera.rot.x=cos(ypos) * sin(xpos);
-	camera.rot.y=sin(ypos);
 	camera.rot.z=cos(ypos) * cos(xpos);
+	camera.rot.y=sin(ypos);
 	camera.right.x=sin(xpos - 3.14f/2.0f);
 	camera.right.z=cos(xpos - 3.14f/2.0f);
 }
