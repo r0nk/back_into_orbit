@@ -1,10 +1,13 @@
+#define GLFW_INCLUDE_GLU
 #include <GLFW/glfw3.h>
+#include "graphics.h"
 #include "callbacks.h"
 #include "game.h"
 #include "poly.h"
 
 GLFWwindow * window;
 int window_width,window_height;
+struct camera camera;
 
 float ratio;
 
@@ -34,6 +37,10 @@ int init_graphics()
 
 	glScalef(0.4f,0.4f,0.4f);
 
+	camera.eye.x=1.0; camera.eye.y=0; camera.eye.z=6.0;
+	camera.rot.x=0; camera.rot.y=0; camera.rot.z=0;
+	camera.up.x=0; camera.up.y=1; camera.up.z=0;
+
 	return 0;
 }
 
@@ -44,7 +51,7 @@ void deinit_graphics()
 
  void draw_vertice(struct vertice v)
 {
-	glNormal3f(-v.n.x, -v.n.y, -v.n.z);
+	glNormal3f(v.n.x, v.n.y, v.n.z);
 	glColor3f( v.c.x, v.c.y, v.c.z);
 	glVertex3f(v.p.x, v.p.y, v.p.z);
 }
@@ -82,11 +89,19 @@ void draw(){
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 
-	glOrtho(-ratio,ratio,-1.f,1.f,1.f,-1.f);
+	glFrustum(-1.0,1.0,-1.0f,1.0f,1.0f,10.0f);
 	glMatrixMode(GL_MODELVIEW);
+	
 
-	glRotatef(0.2f,1.0f,1.0f,0.0f);
+	glPushMatrix();
+	gluLookAt(camera.eye.x,camera.eye.y,camera.eye.z,
+			camera.eye.x+camera.rot.x,
+			camera.eye.y+camera.rot.y,
+			camera.eye.z+camera.rot.z,
+			0,1,0);
 	draw_models();
+
+	glPopMatrix();
 
 	glfwSwapBuffers(window);
 	glfwPollEvents();
