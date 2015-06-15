@@ -2,10 +2,12 @@
 #include <GLFW/glfw3.h>
 #include <math.h>
 #include <stdio.h>
+#include "poly.h"
 #include "graphics.h"
 #include "engine.h"
 #include "input.h"
 #include "game.h"
+#include "map.h"
 
 double delta_time()
 {
@@ -14,26 +16,54 @@ double delta_time()
 	return s;
 }
 
+/*try to actually move the player*/
+void do_move(struct vector delta)
+{
+	double nx = main_player.location.x+delta.x;
+	double ny = main_player.location.y+delta.y;
+	double nz = main_player.location.z+delta.z;
+
+	printf("delta x %f\n",delta.x);
+	printf("delta y %f\n",delta.y);
+	printf("delta z %f\n",delta.z);
+
+	if(!world_map.tiles[(int)nx]
+			[(int)main_player.location.y]
+			[(int)main_player.location.z])
+		main_player.location.x=nx;
+	if(!world_map.tiles[(int)main_player.location.x]
+			[(int)ny]
+			[(int)main_player.location.z])
+		main_player.location.y=ny;
+	if(!world_map.tiles[(int)main_player.location.x]
+			[(int)main_player.location.y]
+			[(int)nz])
+		main_player.location.z=nz;
+}
+
 void player_move(double dt)
 {
-	double sci = 1/(fabs(camera.rot.z)+fabs(camera.rot.x));
 #define player_speed 5
+	double sci = 1/(fabs(camera.rot.z)+fabs(camera.rot.x));
+	struct vector delta;
+	delta.x=0; delta.y=0; delta.z=0;
 	if(keys['W']){
-		main_player.location.z+= (sci*camera.rot.z) * dt * player_speed;
-		main_player.location.x+= (sci*camera.rot.x) * dt * player_speed;
+		delta.z+=(sci*camera.rot.z) * dt * player_speed;
+		delta.x+=(sci*camera.rot.x) * dt * player_speed;
 	}
 	if(keys['A']){
-		main_player.location.z-= camera.right.z * dt * player_speed;
-		main_player.location.x-= camera.right.x * dt * player_speed;
+		delta.z-=(camera.right.z * dt * player_speed);
+		delta.x-=(camera.right.x * dt * player_speed);
 	}
 	if(keys['S']){
-		main_player.location.z-= (sci*camera.rot.z) * dt * player_speed;
-		main_player.location.x-= (sci*camera.rot.x) * dt * player_speed;
+		delta.z-= (sci*camera.rot.z) * dt * player_speed;
+		delta.x-= (sci*camera.rot.x) * dt * player_speed;
 	}
 	if(keys['D']){
-		main_player.location.z+= camera.right.z * dt * player_speed;
-		main_player.location.x+= camera.right.x * dt * player_speed;
+		delta.z+= camera.right.z * dt * player_speed;
+		delta.x+= camera.right.x * dt * player_speed;
 	}
+	do_move(delta);
 }
 
 void tick()
