@@ -3,15 +3,10 @@
 #include "map.h"
 #include "input.h"
 
-struct player p;
+struct player main_player;
 
 struct map world_map;
 struct model block;
-
-int game_tick(){
-	/* update each of the players based on their state */
-	return 1;
-}
 
 struct model player_model()
 {
@@ -113,8 +108,10 @@ struct model tetra(){
 
 int init_game(){
 	int i;
-	p.model=cube();
-	p.location.x=0;p.location.y=0;p.location.z=0;
+	main_player.model=cube();
+	main_player.location.x=0;
+	main_player.location.y=0;
+	main_player.location.z=0;
 	world_map=mkmap();
 	block=cube();
 	for(i=0;i<NUMBER_OF_KEYS;i++)

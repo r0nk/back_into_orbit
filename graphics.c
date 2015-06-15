@@ -67,7 +67,9 @@ void draw_model(struct model model)
 {
 	unsigned int i;
 	glPushMatrix();
-	glTranslatef(p.location.x,p.location.y,p.location.z);
+	glTranslatef(main_player.location.x,
+			main_player.location.y,
+			main_player.location.z);
 	glBegin(GL_TRIANGLES);
 	for(i=0;i<model.cardinality;i++)
 		draw_poly(model.poly[i]);
@@ -102,7 +104,7 @@ void draw_map()
 
 void draw_models(){
 	draw_map();
-	draw_model(p.model);
+	draw_model(main_player.model);
 }
 
 void draw(){

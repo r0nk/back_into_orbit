@@ -9,6 +9,6 @@ struct player {
 	point location;
 };
 
-extern struct player p;
+extern struct player main_player;
 
 #endif
