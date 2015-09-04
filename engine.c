@@ -52,7 +52,24 @@ void player_move(double dt)
 	delta.x=0; delta.y=0; delta.z=0;
 
 	//TODO: add camera move stuff here.
-	
+
+	if(keys['W']){
+		delta.z-=0.02;
+		delta.x-=0.02;
+	}
+	if(keys['A']){
+		delta.z+=0.02;
+		delta.x-=0.02;
+	}
+	if(keys['S']){
+		delta.z+=0.02;
+		delta.x+=0.02;
+	}
+	if(keys['D']){
+		delta.z-=0.02;
+		delta.x+=0.02;
+	}
+
 
 	do_move(delta);
 }

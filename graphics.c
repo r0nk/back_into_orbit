@@ -121,11 +121,19 @@ void draw(){
 	glMatrixMode(GL_MODELVIEW);
 
 	glPushMatrix();
+
+	gluLookAt(main_player.location.x+5,camera.eye.y+5,camera.eye.z+5,
+			main_player.location.x,
+			main_player.location.y,
+			main_player.location.z,
+			0,1,0);
+	/*
 	gluLookAt(camera.eye.x,camera.eye.y,camera.eye.z,
 			camera.eye.x+camera.rot.x,
 			camera.eye.y+camera.rot.y,
 			camera.eye.z+camera.rot.z,
 			0,1,0);
+	*/
 	draw_models();
 
 	glPopMatrix();

@@ -27,14 +27,14 @@ void cursor_callback(GLFWwindow * win, double xpos, double ypos)
 	printf("cursor_x: %i\n",cursor_x);
 	printf("cursor_y: %i\n",cursor_y);
 
+	xpos*=-0.01;
+	ypos*=0.01;
 
-	/*
 	camera.rot.x=cos(ypos) * sin(xpos);
 	camera.rot.z=cos(ypos) * cos(xpos);
 	camera.rot.y=sin(ypos);
 	camera.right.x=sin(xpos - 3.14f/2.0f);
 	camera.right.z=cos(xpos - 3.14f/2.0f);
-	*/
 }
 
 void cursor_button_callback(GLFWwindow * win, int button, int action, int mods)
