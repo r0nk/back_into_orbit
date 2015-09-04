@@ -50,22 +50,10 @@ void player_move(double dt)
 	double sci = 1/(fabs(camera.rot.z)+fabs(camera.rot.x));
 	struct vector delta;
 	delta.x=0; delta.y=0; delta.z=0;
-	if(keys['W']){
-		delta.z+=(sci*camera.rot.z) * dt * player_speed;
-		delta.x+=(sci*camera.rot.x) * dt * player_speed;
-	}
-	if(keys['A']){
-		delta.z-=(camera.right.z * dt * player_speed);
-		delta.x-=(camera.right.x * dt * player_speed);
-	}
-	if(keys['S']){
-		delta.z-= (sci*camera.rot.z) * dt * player_speed;
-		delta.x-= (sci*camera.rot.x) * dt * player_speed;
-	}
-	if(keys['D']){
-		delta.z+= camera.right.z * dt * player_speed;
-		delta.x+= camera.right.x * dt * player_speed;
-	}
+
+	//TODO: add camera move stuff here.
+	
+
 	do_move(delta);
 }
 

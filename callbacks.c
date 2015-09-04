@@ -21,28 +21,25 @@ void key_callback(GLFWwindow * win, int key, int scanc, int action, int mods){
 
 void cursor_callback(GLFWwindow * win, double xpos, double ypos)
 {
-#define CAMERA_LOCK 1500
-	if(ypos<-CAMERA_LOCK){
-		glfwSetCursorPos(win,xpos,-CAMERA_LOCK);
-		ypos=-CAMERA_LOCK;
-	}
-	if(ypos>CAMERA_LOCK){
-		glfwSetCursorPos(win,xpos,CAMERA_LOCK);
-		ypos=CAMERA_LOCK;
-	}
+	cursor_x=xpos;
+	cursor_y=ypos;
 
-	ypos*=-0.001;
-	xpos*=-0.002;
+	printf("cursor_x: %i\n",cursor_x);
+	printf("cursor_y: %i\n",cursor_y);
 
+
+	/*
 	camera.rot.x=cos(ypos) * sin(xpos);
 	camera.rot.z=cos(ypos) * cos(xpos);
 	camera.rot.y=sin(ypos);
 	camera.right.x=sin(xpos - 3.14f/2.0f);
 	camera.right.z=cos(xpos - 3.14f/2.0f);
+	*/
 }
 
 void cursor_button_callback(GLFWwindow * win, int button, int action, int mods)
 {
 	//for button, 0 = left, 1 = right, 2 = middle
+	printf("cursor_botton callback, %i\n",button);
 	;
 }

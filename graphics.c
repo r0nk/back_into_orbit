@@ -25,7 +25,7 @@ int init_graphics()
 	glfwSetKeyCallback(window, key_callback);
 	glfwSetCursorPosCallback(window, cursor_callback);
 	glfwSetMouseButtonCallback(window, cursor_button_callback);
-	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+	//glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
 	glfwGetFramebufferSize(window, &window_width, &window_height);
 	glViewport(0,0,window_width,window_height);
