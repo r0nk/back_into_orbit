@@ -23,10 +23,6 @@ void do_move(struct vector delta)
 	double ny = main_player.location.y+delta.y;
 	double nz = main_player.location.z+delta.z;
 
-	printf("delta x %f \n",delta.x);
-	printf("delta y %f \n",delta.y);
-	printf("delta z %f \n",delta.z);
-
 	if(nz<0 || ny<0 || nz<0){
 		printf("ERR: player outside of map");
 		exit(0);
