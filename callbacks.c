@@ -24,9 +24,6 @@ void cursor_callback(GLFWwindow * win, double xpos, double ypos)
 	cursor_x=xpos;
 	cursor_y=ypos;
 
-	printf("cursor_x: %i\n",cursor_x);
-	printf("cursor_y: %i\n",cursor_y);
-
 	xpos*=-0.01;
 	ypos*=0.01;
 
@@ -40,6 +37,6 @@ void cursor_callback(GLFWwindow * win, double xpos, double ypos)
 void cursor_button_callback(GLFWwindow * win, int button, int action, int mods)
 {
 	//for button, 0 = left, 1 = right, 2 = middle
-	printf("cursor_botton callback, %i\n",button);
-	;
+	printf("cursor_botton callback, button:%i x:%i y:%i\n",
+			button,cursor_x,cursor_y);
 }

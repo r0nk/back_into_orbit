@@ -2,6 +2,7 @@
 #include <GLFW/glfw3.h>
 #include <math.h>
 #include <stdio.h>
+#include "callbacks.h"
 #include "poly.h"
 #include "graphics.h"
 #include "engine.h"
@@ -51,25 +52,25 @@ void player_move(double dt)
 	struct vector delta;
 	delta.x=0; delta.y=0; delta.z=0;
 
-	//TODO: add camera move stuff here.
+	int cx=cursor_x-(window_width/2);
+	int cy=cursor_y-(window_height/2);
 
-	if(keys['W']){
+	if(cy<0){
 		delta.z-=0.02;
 		delta.x-=0.02;
 	}
-	if(keys['A']){
+	if(cy>0){
+		delta.z+=0.02;
+		delta.x+=0.02;
+	}
+	if(cx<0){
 		delta.z+=0.02;
 		delta.x-=0.02;
 	}
-	if(keys['S']){
-		delta.z+=0.02;
-		delta.x+=0.02;
-	}
-	if(keys['D']){
+	if(cx>0){
 		delta.z-=0.02;
 		delta.x+=0.02;
 	}
-
 
 	do_move(delta);
 }

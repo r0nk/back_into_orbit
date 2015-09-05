@@ -122,7 +122,7 @@ void draw(){
 
 	glPushMatrix();
 
-	gluLookAt(main_player.location.x+5,camera.eye.y+5,camera.eye.z+5,
+	gluLookAt(camera.eye.x+5,camera.eye.y+5,camera.eye.z+5,
 			main_player.location.x,
 			main_player.location.y,
 			main_player.location.z,
