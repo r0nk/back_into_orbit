@@ -37,6 +37,19 @@ void cursor_callback(GLFWwindow * win, double xpos, double ypos)
 void cursor_button_callback(GLFWwindow * win, int button, int action, int mods)
 {
 	//for button, 0 = left, 1 = right, 2 = middle
-	printf("cursor_botton callback, button:%i x:%i y:%i\n",
-			button,cursor_x,cursor_y);
+	main_player.destination.x=0;main_player.destination.z=0;
+
+	main_player.destination.x = 
+		main_player.location.x+(cursor_x-(window_width/2));
+	main_player.destination.z = 
+		main_player.location.z-(cursor_x-(window_width/2));
+
+	main_player.destination.x +=
+		main_player.location.x+(cursor_y-(window_height/2));
+	main_player.destination.z +=
+		main_player.location.z+(cursor_y-(window_height/2));
+
+
+	printf("l: %f %f %f \n",main_player.location.x,main_player.location.y,main_player.location.z);
+	printf("d: %f %f %f \n\n",main_player.destination.x,main_player.destination.y,main_player.destination.z);
 }

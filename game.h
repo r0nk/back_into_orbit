@@ -7,6 +7,7 @@ int init_game();
 struct player {
 	struct model model;
 	point location;
+	point destination;
 };
 
 extern struct player main_player;

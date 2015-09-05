@@ -48,29 +48,18 @@ void do_move(struct vector delta)
 void player_move(double dt)
 {
 #define player_speed 5
-	double sci = 1/(fabs(camera.rot.z)+fabs(camera.rot.x));
 	struct vector delta;
 	delta.x=0; delta.y=0; delta.z=0;
 
-	int cx=cursor_x-(window_width/2);
-	int cy=cursor_y-(window_height/2);
+	if(main_player.location.x > main_player.destination.x)
+		main_player.location.x-=0.01;
+	if(main_player.location.x < main_player.destination.x)
+		main_player.location.x+=0.01;
 
-	if(cy<0){
-		delta.z-=0.02;
-		delta.x-=0.02;
-	}
-	if(cy>0){
-		delta.z+=0.02;
-		delta.x+=0.02;
-	}
-	if(cx<0){
-		delta.z+=0.02;
-		delta.x-=0.02;
-	}
-	if(cx>0){
-		delta.z-=0.02;
-		delta.x+=0.02;
-	}
+	if(main_player.location.z > main_player.destination.z)
+		main_player.location.z-=0.01;
+	if(main_player.location.z < main_player.destination.z)
+		main_player.location.z+=0.01;
 
 	do_move(delta);
 }
