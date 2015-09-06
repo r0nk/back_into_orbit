@@ -63,13 +63,13 @@ void draw_poly(struct polygon p)
 	draw_vertice(p.v[2]);
 }
 
-void draw_model(struct model model)
+void draw_model(struct model model,struct vector location)
 {
 	unsigned int i;
 	glPushMatrix();
-	glTranslatef(main_player.location.x,
-			main_player.location.y,
-			main_player.location.z);
+	glTranslatef(location.x,
+			location.y,
+			location.z);
 	glBegin(GL_TRIANGLES);
 	for(i=0;i<model.cardinality;i++)
 		draw_poly(model.poly[i]);
@@ -104,7 +104,8 @@ void draw_map()
 
 void draw_models(){
 	draw_map();
-	draw_model(main_player.model);
+	draw_model(main_player.model,main_player.location);
+	draw_model(main_player.model,main_player.destination);
 }
 
 void draw(){

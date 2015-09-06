@@ -2,8 +2,8 @@
 #define CALLBACKS
 #include <GLFW/glfw3.h>
 
-int cursor_x;
-int cursor_y;
+double cursor_x;
+double cursor_y;
 
 void err_callback(int err, const char * description);
 void key_callback(GLFWwindow * win, int key, int scanc, int action, int mods);

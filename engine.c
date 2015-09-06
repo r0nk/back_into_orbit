@@ -41,7 +41,6 @@ void do_move(struct vector delta)
 			[(int)main_player.location.y]
 			[(int)nz])
 		main_player.location.z=nz;
-
 	
 }
 
@@ -52,16 +51,16 @@ void player_move(double dt)
 	delta.x=0; delta.y=0; delta.z=0;
 
 	if(main_player.location.x > main_player.destination.x)
-		main_player.location.x-=0.01;
+		delta.x-=0.01;
 	if(main_player.location.x < main_player.destination.x)
-		main_player.location.x+=0.01;
+		delta.x+=0.01;
 
 	if(main_player.location.z > main_player.destination.z)
-		main_player.location.z-=0.01;
+		delta.z-=0.01;
 	if(main_player.location.z < main_player.destination.z)
-		main_player.location.z+=0.01;
+		delta.z+=0.01;
 
-	do_move(delta);
+//	do_move(delta);
 }
 
 void tick()
