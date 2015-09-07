@@ -17,7 +17,7 @@ int init_graphics()
 	glfwSetErrorCallback(err_callback);
 	if(!glfwInit())
 		return -1;
-	window = glfwCreateWindow(640, 480, "corvus", NULL, NULL);
+	window = glfwCreateWindow(640, 640, "corvus", NULL, NULL);
 	if(!window)
 		return -2;
 	glfwMakeContextCurrent(window);
@@ -118,12 +118,16 @@ void draw(){
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 
-	glFrustum(-1.0,1.0,-1.0f,1.0f,1.0f,100.0f);
+	float frame = 10;
+	glOrtho(-frame,frame,-frame,frame,1.0f,1000.0f);
+	//glFrustum(-1.0,1.0,-1.0f,1.0f,1.0f,100.0f);
 	glMatrixMode(GL_MODELVIEW);
 
 	glPushMatrix();
 
-	gluLookAt(camera.eye.x+5,camera.eye.y+5,camera.eye.z+5,
+	int zoom = 8;
+
+	gluLookAt(main_player.location.x+zoom,main_player.location.y+zoom,main_player.location.z+zoom,
 			main_player.location.x,
 			main_player.location.y,
 			main_player.location.z,
@@ -135,6 +139,7 @@ void draw(){
 			camera.eye.z+camera.rot.z,
 			0,1,0);
 	*/
+
 	draw_models();
 
 	glPopMatrix();

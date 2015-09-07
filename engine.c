@@ -60,14 +60,11 @@ void player_move(double dt)
 	if(main_player.location.z < main_player.destination.z)
 		delta.z+=0.01;
 
-//	do_move(delta);
+	do_move(delta);
 }
 
 void tick()
 {
 	double dt = delta_time();
 	player_move(dt);
-	camera.eye.x = main_player.location.x;
-	camera.eye.y = main_player.location.y+4.6;
-	camera.eye.z = main_player.location.z;
 }
