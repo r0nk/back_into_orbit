@@ -2,7 +2,7 @@
 #define MAP
 
 struct map {
-	char tiles[20][20][20];
+	char tiles[20][20];
 };
 
 extern struct map world_map;

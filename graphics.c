@@ -93,10 +93,10 @@ void draw_map()
 {
 	int x,y,z;
 	for(x=0;x<20;x++){
-		for(y=0;y<20;y++){
-			for(z=0;z<20;z++){
-				if(world_map.tiles[x][y][z])
-					draw_block(x,y,z);
+		for(z=0;z<20;z++){
+			if(world_map.tiles[x][z]){
+				draw_block(x,0,z);
+				draw_block(x,1,z);
 			}
 		}
 	}
@@ -133,12 +133,12 @@ void draw(){
 			main_player.location.z,
 			0,1,0);
 	/*
-	gluLookAt(camera.eye.x,camera.eye.y,camera.eye.z,
-			camera.eye.x+camera.rot.x,
-			camera.eye.y+camera.rot.y,
-			camera.eye.z+camera.rot.z,
-			0,1,0);
-	*/
+	   gluLookAt(camera.eye.x,camera.eye.y,camera.eye.z,
+	   camera.eye.x+camera.rot.x,
+	   camera.eye.y+camera.rot.y,
+	   camera.eye.z+camera.rot.z,
+	   0,1,0);
+	 */
 
 	draw_models();
 

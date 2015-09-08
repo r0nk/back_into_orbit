@@ -30,15 +30,9 @@ void do_move(struct vector delta)
 	}
 
 	if(!world_map.tiles[(int)nx]
-			[(int)main_player.location.y]
 			[(int)main_player.location.z])
 		main_player.location.x=nx;
 	if(!world_map.tiles[(int)main_player.location.x]
-			[(int)ny]
-			[(int)main_player.location.z])
-		main_player.location.y=ny;
-	if(!world_map.tiles[(int)main_player.location.x]
-			[(int)main_player.location.y]
 			[(int)nz])
 		main_player.location.z=nz;
 	

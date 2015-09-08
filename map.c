@@ -5,26 +5,17 @@
 struct map mkmap()
 {
 	struct map *m = calloc(1,sizeof(struct map));
-	int x,y,z;
-	for(z=0;z<10;z++){
-		for(y=0;y<3;y++){
-			m->tiles[0][y][z]=1;
-		}
-	}
-	for(z=0;z<10;z++){
-		for(y=0;y<3;y++){
-			m->tiles[10][y][z]=1;
-		}
-	}
-	for(x=0;x<10;x++){
-		for(y=0;y<3;y++){
-			m->tiles[x][y][0]=1;
-		}
-	}
-	for(x=0;x<10;x++){
-		for(y=0;y<3;y++){
-			m->tiles[x][y][10]=1;
-		}
-	}
+	int x,y;
+
+#define MS 15
+
+	for(y=0;y<MS;y++)
+		m->tiles[0][y]=1;
+	for(x=0;x<MS;x++)
+		m->tiles[x][0]=1;
+	for(y=0;y<MS;y++)
+		m->tiles[MS][y]=1;
+	for(x=0;x<MS;x++)
+		m->tiles[x][MS]=1;
 	return *m;
 }
