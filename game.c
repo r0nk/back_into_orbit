@@ -132,6 +132,7 @@ struct model tetra(){
 int init_game(){
 	int i;
 	main_player.model=player_model();
+	main_player.dest_model=tetra();
 	main_player.location.x=5;
 	main_player.location.y=0;
 	main_player.location.z=5;

@@ -91,7 +91,7 @@ void draw_block(int x, int y, int z)
 
 void draw_map()
 {
-	int x,y,z;
+	int x,z;
 	for(x=0;x<20;x++){
 		for(z=0;z<20;z++){
 			if(world_map.tiles[x][z]){
@@ -105,7 +105,7 @@ void draw_map()
 void draw_models(){
 	draw_map();
 	draw_model(main_player.model,main_player.location);
-	draw_model(main_player.model,main_player.destination);
+	draw_model(main_player.dest_model,main_player.destination);
 }
 
 void draw(){
