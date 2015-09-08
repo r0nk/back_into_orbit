@@ -46,19 +46,19 @@ void do_move(struct vector delta)
 
 void player_move(double dt)
 {
-#define player_speed 5
+#define player_speed 0.05
 	struct vector delta;
 	delta.x=0; delta.y=0; delta.z=0;
 
 	if(main_player.location.x > main_player.destination.x)
-		delta.x-=0.01;
+		delta.x-=player_speed;
 	if(main_player.location.x < main_player.destination.x)
-		delta.x+=0.01;
+		delta.x+=player_speed;
 
 	if(main_player.location.z > main_player.destination.z)
-		delta.z-=0.01;
+		delta.z-=player_speed;
 	if(main_player.location.z < main_player.destination.z)
-		delta.z+=0.01;
+		delta.z+=player_speed;
 
 	do_move(delta);
 }
