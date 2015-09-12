@@ -24,11 +24,6 @@ void do_move(struct vector delta)
 	double ny = main_player.location.y+delta.y;
 	double nz = main_player.location.z+delta.z;
 
-	if(nz<0 || ny<0 || nz<0){
-		printf("ERR: player outside of map");
-		exit(0);
-	}
-
 	if(!world_map.tiles[(int)nx]
 			[(int)main_player.location.z])
 		main_player.location.x=nx;

@@ -119,7 +119,7 @@ void draw(){
 	glLoadIdentity();
 
 	float frame = 10;
-	glOrtho(-frame,frame,-frame,frame,1.0f,1000.0f);
+	glOrtho(-frame,frame,-frame,frame,0.0f,1000.0f);
 	//glFrustum(-1.0,1.0,-1.0f,1.0f,1.0f,100.0f);
 	glMatrixMode(GL_MODELVIEW);
 
