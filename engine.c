@@ -10,6 +10,8 @@
 #include "game.h"
 #include "map.h"
 
+
+/*get the time since the last delta_time() call*/
 double delta_time()
 {
 	double s = glfwGetTime();
@@ -41,8 +43,8 @@ void player_move(double dt)
 	o = main_player.destination.z - main_player.location.z;
 	h = sqrt((a*a)+(o*o));
 
-	delta.x=a/h * main_player.speed;
-	delta.z=o/h * main_player.speed;
+	delta.x=(a/h) * main_player.speed * dt;
+	delta.z=(o/h) * main_player.speed * dt;
 
 	do_move(delta);
 }

@@ -23,15 +23,6 @@ void cursor_callback(GLFWwindow * win, double xpos, double ypos)
 {
 	cursor_x=xpos;
 	cursor_y=ypos;
-
-	xpos*=-0.01;
-	ypos*=0.01;
-
-	camera.rot.x=cos(ypos) * sin(xpos);
-	camera.rot.z=cos(ypos) * cos(xpos);
-	camera.rot.y=sin(ypos);
-	camera.right.x=sin(xpos - 3.14f/2.0f);
-	camera.right.z=cos(xpos - 3.14f/2.0f);
 }
 
 void cursor_button_callback(GLFWwindow * win, int button, int action, int mods)

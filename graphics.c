@@ -8,7 +8,6 @@
 
 GLFWwindow * window;
 int window_width,window_height;
-struct camera camera;
 
 float ratio;
 
@@ -37,9 +36,6 @@ int init_graphics()
 	glEnable(GL_COLOR_MATERIAL);
 
 
-	camera.eye.x=1.0; camera.eye.y=4.0; camera.eye.z=6.0;
-	camera.rot.x=0; camera.rot.y=0; camera.rot.z=0;
-	camera.up.x=0; camera.up.y=1; camera.up.z=0;
 
 	return 0;
 }
