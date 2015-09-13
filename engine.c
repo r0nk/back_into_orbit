@@ -35,7 +35,6 @@ void do_move(struct vector delta)
 
 void player_move(double dt)
 {
-#define player_speed 0.07
 	struct vector delta;
 	delta.x=0; delta.y=0; delta.z=0;
 
@@ -44,8 +43,8 @@ void player_move(double dt)
 	o = main_player.destination.z - main_player.location.z;
 	h = sqrt((a*a)+(o*o));
 
-	delta.x=a/h * player_speed;
-	delta.z=o/h * player_speed;
+	delta.x=a/h * main_player.speed;
+	delta.z=o/h * main_player.speed;
 
 	do_move(delta);
 }
