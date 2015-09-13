@@ -1,8 +1,7 @@
 #ifndef GAME
 #define GAME 1
 #include "poly.h"
-
-int init_game();
+#include "model.h"
 
 struct player {
 	struct model model;
@@ -11,7 +10,5 @@ struct player {
 	point location;
 	point destination;
 };
-
-extern struct player main_player;
 
 #endif

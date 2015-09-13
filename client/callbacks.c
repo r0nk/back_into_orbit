@@ -3,6 +3,7 @@
 #include <stdlib.h>
 
 #include "callbacks.h"
+#include "engine.h"
 #include "game.h"
 #include "graphics.h"
 #include "input.h"
@@ -16,7 +17,7 @@ void err_callback(int err, const char* description){
 void key_callback(GLFWwindow * win, int key, int scanc, int action, int mods){
 	if(key==256)/* ESC */
 		exit(0);
-	keys[key]=action;
+	keys[key]=action;//action is a binary (press||depress)
 }
 
 void cursor_callback(GLFWwindow * win, double xpos, double ypos)

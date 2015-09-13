@@ -1,11 +1,10 @@
-#ifndef POLY
-#define POLY
+#ifndef MODEL
+#define MODEL
+#include "poly.h"
 
-struct vector {
-	double x,y,z;
-};
-
-typedef struct vector point;
+struct model player_model();
+struct model cube();
+struct model tetra();
 
 struct vertice { 
 	struct vector p;/*position*/
@@ -22,4 +21,5 @@ struct model{
 	struct polygon *poly;
 };
 
+ 
 #endif

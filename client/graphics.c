@@ -1,6 +1,7 @@
 #define GLFW_INCLUDE_GLU
 #include <GLFW/glfw3.h>
 #include "graphics.h"
+#include "engine.h"
 #include "callbacks.h"
 #include "game.h"
 #include "poly.h"
@@ -34,8 +35,6 @@ int init_graphics()
 	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);
 	glEnable(GL_COLOR_MATERIAL);
-
-
 
 	return 0;
 }
@@ -123,7 +122,9 @@ void graphics_draw(){
 
 	int zoom = 8;
 
-	gluLookAt(main_player.location.x+zoom,main_player.location.y+zoom,main_player.location.z+zoom,
+	gluLookAt(main_player.location.x+zoom,
+			main_player.location.y+zoom,
+			main_player.location.z+zoom,
 			main_player.location.x,
 			main_player.location.y,
 			main_player.location.z,
