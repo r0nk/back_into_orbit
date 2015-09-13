@@ -21,7 +21,6 @@ double delta_time()
 void do_move(struct vector delta)
 {
 	double nx = main_player.location.x+delta.x;
-	double ny = main_player.location.y+delta.y;
 	double nz = main_player.location.z+delta.z;
 
 	if(!world_map.tiles[(int)nx]
@@ -30,7 +29,6 @@ void do_move(struct vector delta)
 	if(!world_map.tiles[(int)main_player.location.x]
 			[(int)nz])
 		main_player.location.z=nz;
-	
 }
 
 void player_move(double dt)
@@ -49,7 +47,7 @@ void player_move(double dt)
 	do_move(delta);
 }
 
-void tick()
+void engine_tick()
 {
 	double dt = delta_time();
 	player_move(dt);

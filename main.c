@@ -8,8 +8,8 @@ int main(){
 	init_graphics();
 	init_game();
 	while(1){
-		tick();
-		draw();
+		engine_tick();
+		graphics_draw();
 	}
 	return 0;
 }

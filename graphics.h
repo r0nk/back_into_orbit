@@ -14,7 +14,7 @@ extern struct camera camera;
 extern int window_width,window_height;
 
 int init_graphics();
-void draw();
+void graphics_draw();
 void deinit_graphics();
 
 #endif

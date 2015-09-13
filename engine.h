@@ -1,6 +1,6 @@
 #ifndef ENGINE
 #define ENGINE
 
-void tick();
+void engine_tick();
  
 #endif

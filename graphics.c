@@ -108,7 +108,7 @@ void draw_models(){
 	draw_model(main_player.dest_model,main_player.destination);
 }
 
-void draw(){
+void graphics_draw(){
 	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 
 	//Add ambient light
