@@ -128,14 +128,6 @@ void graphics_draw(){
 			main_player.location.y,
 			main_player.location.z,
 			0,1,0);
-	/*
-	   gluLookAt(camera.eye.x,camera.eye.y,camera.eye.z,
-	   camera.eye.x+camera.rot.x,
-	   camera.eye.y+camera.rot.y,
-	   camera.eye.z+camera.rot.z,
-	   0,1,0);
-	 */
-
 	draw_models();
 
 	glPopMatrix();
