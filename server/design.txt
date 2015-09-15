@@ -4,3 +4,10 @@ The server accepts new players, and gives each their own thread.
 MAIN LOOP:
 The main server loop handles information transfer between multiple clients.
 It will use some locking mechanisms to accept new clients.
+Every loop tick, it updates all of the clients with each others info, it also
+randomly checks clients for data integrity.
+
+There will be an array of players on the server,
+      each player struct will have IP addresses and misc info.
+
+
