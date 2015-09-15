@@ -9,15 +9,15 @@ int init_server()
 	int portnum = 2903;
 	struct sockaddr_in address;
 	int err = 0;
-	int server_socket = socket(PF_INET,SOCK_STREAM,0);
+	int ss = socket(PF_INET,SOCK_STREAM,0);
 
 	address.sin_family = AF_INET;
 	address.sin_port = htons(portnum);
 
 	printf("port number:%i\n",portnum);
 
-	err = bind(server_socket,(struct sockaddr *)&address,
-			sizeof(struct sockaddr_in));
+	err = bind(ss,(struct sockaddr *)&address,sizeof(struct sockaddr_in));
+
 	if(err){
 		printf("bind err: %i\n",err);
 		exit(-1);
@@ -25,7 +25,7 @@ int init_server()
 		printf("socket binded.\n");
 	}
 
-	err = listen(server_socket,10);
+	err = listen(ss,10);
 	if(err){
 		printf("listen err: %i\n",err);
 		exit(-1);
@@ -33,8 +33,7 @@ int init_server()
 		printf("socket listening.\n");
 	}
 
-	return server_socket;
-
+	return ss;
 }
 
 /* start a new thread for each new player */
@@ -43,12 +42,18 @@ void handle(int player_fd)
 	printf("TODO handle %i \n",player_fd);
 }
 
-int main()
+void accept_loop(int server_socket)
 {
 	int np = 0;
-	int server_socket=init_server();
 	while(1){
 		np = accept(server_socket,NULL,NULL);
 		handle(np);
 	}
+}
+
+int main()
+{
+	int server_socket = init_server();
+	accept_loop(server_socket);
+	/* TODO main universe loop */
 }
