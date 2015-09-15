@@ -7,6 +7,7 @@
 int main(){
 	init_graphics();
 	init_game();
+	//init_networking(); TODO
 	while(1){
 		engine_tick();
 		graphics_draw();
