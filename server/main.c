@@ -1,8 +1,12 @@
 #include <stdio.h>
+#include <unistd.h>
+#include <pthread.h>
 #include <arpa/inet.h>
 #include <stdlib.h>
 #include <errno.h>
 #include <sys/socket.h>
+
+int server_socket;
 
 int init_server()
 {
@@ -40,9 +44,10 @@ int init_server()
 void handle(int player_fd)
 {
 	printf("TODO handle %i \n",player_fd);
+	sleep(1);
 }
 
-void accept_loop(int server_socket)
+void accept_loop()
 {
 	int np = 0;
 	while(1){
@@ -53,7 +58,13 @@ void accept_loop(int server_socket)
 
 int main()
 {
-	int server_socket = init_server();
-	accept_loop(server_socket);
+	server_socket = init_server();
+	pthread_t accept_thread;
+	pthread_create(&accept_thread,NULL,accept_loop,NULL);
+	while(1){
+		printf("abcdefg\n");
+		sleep(1);
+	}
+	//accept_loop(server_socket);
 	/* TODO main universe loop */
 }
