@@ -9,7 +9,8 @@ struct player main_player;
 struct map world_map;
 struct model block;
 
-int init_game(){
+int init_game()
+{
 	int i;
 	main_player.model=player_model();
 	main_player.dest_model=tetra();

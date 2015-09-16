@@ -10,11 +10,13 @@
 
 char keys[NUMBER_OF_KEYS];/*boolean array of the input keys*/
 
-void err_callback(int err, const char* description){
+void err_callback(int err, const char* description)
+{
 	printf("ERR CALLBACK[%i]:%s\n",err,description);
 }
 
-void key_callback(GLFWwindow * win, int key, int scanc, int action, int mods){
+void key_callback(GLFWwindow * win, int key, int scanc, int action, int mods)
+{
 	if(key==256)/* ESC */
 		exit(0);
 	keys[key]=action;//action is a binary (press||depress)

@@ -5,7 +5,8 @@
 #include "game.h"
 #include "networking.h"
 
-int main(){
+int main()
+{
 	init_graphics();
 	init_game();
 	init_networking();

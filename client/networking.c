@@ -5,7 +5,8 @@
 #include <sys/socket.h>
 #include "networking.h"
 
-int init_networking(){
+int init_networking()
+{
 	struct sockaddr_in address;
 	int cs = socket(PF_INET,SOCK_STREAM,0);
 	int e=0;

@@ -1,5 +1,5 @@
 ACCEPT THREAD:
-The server accepts new players, and gives each their own thread.
+	The server accepts new players, and gives each their own thread.
 
 MAIN LOOP:
 The main server loop handles information transfer between multiple clients.
