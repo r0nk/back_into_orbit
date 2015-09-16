@@ -3,11 +3,12 @@
 #include "graphics.h"
 #include "engine.h"
 #include "game.h"
+#include "networking.h"
 
 int main(){
 	init_graphics();
 	init_game();
-	//init_networking(); TODO
+	init_networking();
 	while(1){
 		engine_tick();
 		graphics_draw();

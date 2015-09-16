@@ -5,20 +5,18 @@
 #include <stdlib.h>
 #include <errno.h>
 #include <sys/socket.h>
+#include <protolol.h>
 
 int server_socket;
 
 int init_server()
 {
-	int portnum = 2903;
 	struct sockaddr_in address;
 	int err = 0;
 	int ss = socket(PF_INET,SOCK_STREAM,0);
 
 	address.sin_family = AF_INET;
-	address.sin_port = htons(portnum);
-
-	printf("port number:%i\n",portnum);
+	address.sin_port = htons(PROTOLOL_PORT);
 
 	err = bind(ss,(struct sockaddr *)&address,sizeof(struct sockaddr_in));
 
@@ -61,10 +59,10 @@ int main()
 	server_socket = init_server();
 	pthread_t accept_thread;
 	pthread_create(&accept_thread,NULL,accept_loop,NULL);
+
 	while(1){
-		printf("abcdefg\n");
-		sleep(1);
+		printf(".\n");
+		sleep(10);
 	}
-	//accept_loop(server_socket);
 	/* TODO main universe loop */
 }
