@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <unistd.h>
+#include <err.h>
 #include <pthread.h>
 #include <arpa/inet.h>
 #include <stdlib.h>
@@ -12,28 +13,21 @@ int server_socket;
 int init_server()
 {
 	struct sockaddr_in address;
-	int err = 0;
+	int e = 0;
 	int ss = socket(PF_INET,SOCK_STREAM,0);
 
 	address.sin_family = AF_INET;
 	address.sin_port = htons(PROTOLOL_PORT);
 
-	err = bind(ss,(struct sockaddr *)&address,sizeof(struct sockaddr_in));
+	e = bind(ss,(struct sockaddr *)&address,sizeof(struct sockaddr_in));
+	if(e)
+		err(2,"init_server() binding");
+	printf("socket binded.\n");
 
-	if(err){
-		printf("bind err: %i\n",err);
-		exit(-1);
-	}else{
-		printf("socket binded.\n");
-	}
-
-	err = listen(ss,10);
-	if(err){
-		printf("listen err: %i\n",err);
-		exit(-1);
-	}else{
-		printf("socket listening.\n");
-	}
+	e = listen(ss,10);
+	if(e)
+		err(3,"init_server() listen");
+	printf("socket listening.\n");
 
 	return ss;
 }
