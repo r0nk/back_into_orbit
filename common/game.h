@@ -1,5 +1,6 @@
 #ifndef GAME
 #define GAME 1
+
 #include "poly.h"
 #include "model.h"
 
