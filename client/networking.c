@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <unistd.h>
 #include <err.h>
 #include <arpa/inet.h>
 #include <errno.h>
@@ -10,6 +11,7 @@ int init_networking()
 	struct sockaddr_in address;
 	int cs = socket(PF_INET,SOCK_STREAM,0);
 	int e=0;
+	char in[10];
 
 	address.sin_family = AF_INET;
 	address.sin_port = htons(PROTOLOL_PORT);
@@ -17,9 +19,11 @@ int init_networking()
 
 	e=connect(cs,(struct sockaddr *)&address,sizeof(struct sockaddr_in));
 
-	if(e){
+	if(e)
 		err(1,"init_networking()");
-	}
+
+	read(cs,in,5);
+	printf("read from server: %s",in);
 
 	return 0;
 }

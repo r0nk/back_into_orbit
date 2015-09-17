@@ -36,6 +36,7 @@ int init_server()
 void handle(int player_fd)
 {
 	printf("TODO handle %i \n",player_fd);
+	write(player_fd,"oHai\n",5);
 	sleep(1);
 }
 
