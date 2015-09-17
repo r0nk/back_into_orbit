@@ -7,6 +7,7 @@
 #include <errno.h>
 #include <sys/socket.h>
 #include <protolol.h>
+#include "client.h"
 
 int server_socket;
 
@@ -29,15 +30,9 @@ int init_server()
 		err(3,"init_server() listen");
 	printf("socket listening.\n");
 
-	return ss;
-}
+	init_clients();
 
-/* start a new thread for each new player */
-void handle(int player_fd)
-{
-	printf("TODO handle %i \n",player_fd);
-	write(player_fd,"oHai\n",5);
-	sleep(1);
+	return ss;
 }
 
 void accept_loop()
@@ -45,8 +40,15 @@ void accept_loop()
 	int np = 0;
 	while(1){
 		np = accept(server_socket,NULL,NULL);
-		handle(np);
+		add_client(np);
 	}
+}
+
+void update_all()
+{
+		pthread_mutex_lock(&clients_mutex);
+		/*TODO: make the magic happen in here*/
+		pthread_mutex_unlock(&clients_mutex);
 }
 
 int main()
@@ -56,8 +58,8 @@ int main()
 	pthread_create(&accept_thread,NULL,accept_loop,NULL);
 
 	while(1){
+		update_all();
 		printf(".\n");
 		sleep(10);
 	}
-	/* TODO main universe loop */
 }
