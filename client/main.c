@@ -8,10 +8,11 @@
 int main()
 {
 	init_graphics();
-	init_game();
-	init_networking();
+	int server_fd = init_networking();
+	struct game_state gs;
+	gs= init_game();
 	while(1){
-		engine_tick();
+		engine_tick(server_fd,gs);
 		graphics_draw();
 	}
 	return 0;

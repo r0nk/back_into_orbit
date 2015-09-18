@@ -2,6 +2,10 @@
 #include <GLFW/glfw3.h>
 #include <math.h>
 #include <stdio.h>
+
+#include <game_state.h>
+#include <protolol.h>
+
 #include "callbacks.h"
 #include "poly.h"
 #include "graphics.h"
@@ -50,8 +54,18 @@ void player_move(double dt)
 	do_move(delta);
 }
 
-void engine_tick()
+/* tell the server what state we think we're in, then update ourselves to 
+   match what state the server tells us we're in. */
+void update_state(int server_fd, struct game_state * gs)
+{
+	send_game_state(*gs,server_fd);
+	*gs = recv_game_state(server_fd);
+}
+
+void engine_tick(int server_fd, struct game_state * gs)
 {
 	double dt = delta_time();
 	player_move(dt);
+	//TODO: other misc logic; enemies, etc. here
+	update_state(server_fd,gs);
 }

@@ -6,6 +6,7 @@
 #include <sys/socket.h>
 #include "networking.h"
 
+/* Get connected to the server, and return the server file descriptor. */
 int init_networking()
 {
 	struct sockaddr_in address;
@@ -25,6 +26,6 @@ int init_networking()
 	read(cs,in,5);
 	printf("read from server: %s",in);
 
-	return 0;
+	return cs;
 }
 

@@ -5,6 +5,7 @@
 
 #include <game_state.h>
 #include <string.h>
+#include <unistd.h>
 
 #define PROTOLOL_PORT 2690
 
@@ -16,19 +17,19 @@ struct protolol_packet {
 
 #define PROTOLOL_TYPE_GAME_STATE 0
 
-inline void send_protolol(struct protolol_packet pp,int fd)
+static inline void send_protolol(struct protolol_packet pp,int fd)
 {
 	write(fd,&pp,sizeof(pp));
 }
 
-inline struct protolol_packet recv_protolol(int fd)
+static inline struct protolol_packet recv_protolol(int fd)
 {
 	struct protolol_packet pp;
 	read(fd,&pp,sizeof(pp));
 	return pp;
 }
 
-inline void send_game_state(struct game_state gs ,int fd)
+static inline void send_game_state(struct game_state gs ,int fd)
 {
 	struct protolol_packet pp;
 	pp.magic_start[0]='o';
@@ -40,7 +41,7 @@ inline void send_game_state(struct game_state gs ,int fd)
 	send_protolol(pp,fd);
 }
 
-inline struct game_state recv_game_state(int fd)
+static inline struct game_state recv_game_state(int fd)
 {
 	struct protolol_packet pp;
 	struct game_state gs;

@@ -5,7 +5,7 @@
 
 struct game_state {
 	int n_players;
-	struct vector player_locations[10];
+	struct vector player_location[10];
 };
  
 #endif

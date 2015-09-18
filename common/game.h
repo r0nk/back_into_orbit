@@ -3,6 +3,7 @@
 
 #include "poly.h"
 #include "model.h"
+#include "game_state.h"
 
 struct player {
 	struct model model;
@@ -11,5 +12,7 @@ struct player {
 	point location;
 	point destination;
 };
+
+struct game_state init_game();
 
 #endif

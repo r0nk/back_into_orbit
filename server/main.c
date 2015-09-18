@@ -48,6 +48,7 @@ void update_all()
 {
 		pthread_mutex_lock(&clients_mutex);
 		/*TODO: make the magic happen in here*/
+		sleep(1);
 		pthread_mutex_unlock(&clients_mutex);
 }
 
@@ -57,9 +58,6 @@ int main()
 	pthread_t accept_thread;
 	pthread_create(&accept_thread,NULL,accept_loop,NULL);
 
-	while(1){
+	while(1)
 		update_all();
-		printf(".\n");
-		sleep(10);
-	}
 }
