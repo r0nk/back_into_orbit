@@ -47,9 +47,10 @@ inline struct game_state recv_game_state(int fd)
 	pp = recv_protolol(fd);
 	if(pp.type!=PROTOLOL_TYPE_GAME_STATE){
 		printf("non-recognized packet \n");
-		return gs;//FIXME this shouldn't return, it should panic;
+		return gs;//FIXME this shouldn't return, it should panic
 	}
 	memcpy(&gs,&pp.data,sizeof(gs));
+	return gs;
 }
  
 #endif
