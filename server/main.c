@@ -51,14 +51,19 @@ void update_all()
 	if(n_clients<2){
 		pthread_mutex_unlock(&clients_mutex);
 		printf("waiting on clients,n_clients: %i\n",n_clients);
-		sleep(10);
+		sleep(1);
 		return;
 	}
 	struct game_state gs1,gs2;
 	gs1 = recv_game_state(clients[0].fd);
 	gs2 = recv_game_state(clients[1].fd);
+	printf("gs1:");
+	dump_game_state(gs1);
+	printf("gs2:");
+	dump_game_state(gs2);
 	send_game_state(gs2,clients[1].fd);
 	send_game_state(gs1,clients[0].fd);
+
 
 	pthread_mutex_unlock(&clients_mutex);
 }

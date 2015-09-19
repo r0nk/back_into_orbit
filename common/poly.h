@@ -1,6 +1,8 @@
 #ifndef POLY
 #define POLY
 
+#include <stdio.h>
+
 struct vector {
 	double x,y,z;
 };

@@ -2,6 +2,7 @@
 #define GAME_STATE
 
 #include <game.h>
+#include <stdio.h>
 
 struct game_state {
 	int n_players;
