@@ -57,13 +57,16 @@ void update_all()
 	struct game_state gs1,gs2;
 	gs1 = recv_game_state(clients[0].fd);
 	gs2 = recv_game_state(clients[1].fd);
-	printf("gs1:");
-	dump_game_state(gs1);
-	printf("gs2:");
-	dump_game_state(gs2);
+	
+	if(gs1.n_players!=n_clients)
+		gs1.n_players=n_clients;
+	if(gs2.n_players!=n_clients)
+		gs2.n_players=n_clients;
+
+	printf("gs1:"); dump_game_state(gs1);
+	printf("gs2:"); dump_game_state(gs2);
 	send_game_state(gs2,clients[1].fd);
 	send_game_state(gs1,clients[0].fd);
-
 
 	pthread_mutex_unlock(&clients_mutex);
 }
