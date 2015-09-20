@@ -39,7 +39,7 @@ void do_move(struct vector delta)
 		main_player.location.z=nz;
 }
 
-void player_move(double dt)
+void player_move(double dt,struct game_state * gs)
 {
 	struct vector delta;
 	delta.x=0; delta.y=0; delta.z=0;
@@ -53,13 +53,14 @@ void player_move(double dt)
 	delta.z=(o/h) * main_player.speed * dt;
 
 	do_move(delta);
+	gs->player_location[gs->current_player] = main_player.location;
 }
 
 
 void engine_tick(int server_fd, struct game_state * gs)
 {
 	double dt = delta_time();
-	player_move(dt);
+	player_move(dt,gs);
 	//TODO: other misc logic; enemies, etc. here
 	*gs = update_state(server_fd,*gs);
 }
