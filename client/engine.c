@@ -61,5 +61,5 @@ void engine_tick(int server_fd, struct game_state * gs)
 	double dt = delta_time();
 	player_move(dt);
 	//TODO: other misc logic; enemies, etc. here
-	update_state(server_fd,gs);
+	*gs = update_state(server_fd,*gs);
 }

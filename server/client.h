@@ -6,7 +6,6 @@
 
 struct client {
 	int fd;
-	struct vector location;
 };
 
 #define MAX_CLIENTS 10

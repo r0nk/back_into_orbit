@@ -63,8 +63,11 @@ void update_all()
 	if(gs2.n_players!=n_clients)
 		gs2.n_players=n_clients;
 
-	printf("gs1:"); dump_game_state(gs1);
-	printf("gs2:"); dump_game_state(gs2);
+	printf("gs1:\n"); dump_game_state(gs1);
+	printf("gs2:\n"); dump_game_state(gs2);
+
+	gs2.current_player=1;
+	gs1.current_player=0;
 	send_game_state(gs2,clients[1].fd);
 	send_game_state(gs1,clients[0].fd);
 

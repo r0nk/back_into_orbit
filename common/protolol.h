@@ -31,6 +31,8 @@ static inline struct protolol_packet recv_protolol(int fd)
 
 static inline void send_game_state(struct game_state gs ,int fd)
 {
+	printf("sending game state:\n");
+	dump_game_state(gs);
 	struct protolol_packet pp;
 	pp.magic_start[0]='o';
 	pp.magic_start[1]='H';
@@ -51,6 +53,8 @@ static inline struct game_state recv_game_state(int fd)
 		return gs;//FIXME this shouldn't return, it should panic
 	}
 	memcpy(&gs,&pp.data,sizeof(gs));
+	printf("recieved game state:\n");
+	dump_game_state(gs);
 	return gs;
 }
  

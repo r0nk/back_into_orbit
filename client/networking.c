@@ -6,12 +6,13 @@
 #include <sys/socket.h>
 #include "networking.h"
 
-/* tell the server what state we think we're in, then update ourselves to 
+/* Tell the server what state we think we're in, then update ourselves to 
    match what state the server tells us we're in. */
-void update_state(int server_fd, struct game_state * gs)
+struct game_state update_state(int server_fd, struct game_state gs)
 {
-	send_game_state(*gs,server_fd);
-	*gs = recv_game_state(server_fd);
+	send_game_state(gs,server_fd);
+	gs = recv_game_state(server_fd);
+	return gs;
 }
 
 /* Get connected to the server, and return the server file descriptor. */
@@ -19,8 +20,7 @@ int init_networking()
 {
 	struct sockaddr_in address;
 	int cs = socket(PF_INET,SOCK_STREAM,0);
-	int e=0;
-	char in[10];
+	int e = 0;
 
 	address.sin_family = AF_INET;
 	address.sin_port = htons(PROTOLOL_PORT);
@@ -30,9 +30,6 @@ int init_networking()
 
 	if(e)
 		err(1,"init_networking()");
-
-	read(cs,in,5);
-	printf("read from server: %s",in);
 
 	return cs;
 }
