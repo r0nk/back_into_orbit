@@ -12,6 +12,9 @@ int window_width,window_height;
 
 float ratio;
 
+struct model p_model;
+struct model d_model;
+
 int init_graphics()
 {
 	glfwSetErrorCallback(err_callback);
@@ -21,6 +24,9 @@ int init_graphics()
 	if(!window)
 		return -2;
 	glfwMakeContextCurrent(window);
+
+	p_model=player_model();
+	d_model=player_model();
 
 	glfwSetKeyCallback(window, key_callback);
 	glfwSetCursorPosCallback(window, cursor_callback);
@@ -97,14 +103,17 @@ void draw_map()
 	}
 }
 
-void draw_models()
+void draw_models(struct game_state * gs)
 {
 	draw_map();
-	draw_model(main_player.model,main_player.location);
-	draw_model(main_player.dest_model,main_player.destination);
+	int i;
+	for(i=0;i<gs->n_players;i++){
+		draw_model(p_model,gs->player_location[i]);
+	}
+	draw_model(p_model,main_player.destination);
 }
 
-void graphics_draw()
+void graphics_draw(struct game_state * gs)
 {
 	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 
@@ -131,7 +140,7 @@ void graphics_draw()
 			main_player.location.y,
 			main_player.location.z,
 			0,1,0);
-	draw_models();
+	draw_models(gs);
 
 	glPopMatrix();
 

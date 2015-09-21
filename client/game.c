@@ -17,8 +17,6 @@ struct game_state init_game()
 	gs.current_player=0;
 	for(i=0;i<MAX_PLAYERS;i++);
 		gs.player_location[i] = (struct vector) {0,0,0};
-	main_player.model=player_model();
-	main_player.dest_model=tetra();
 	main_player.location.x=5;
 	main_player.location.y=0;
 	main_player.location.z=5;

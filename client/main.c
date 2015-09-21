@@ -11,11 +11,9 @@ int main()
 	int server_fd = init_networking();
 	struct game_state gs;
 	gs = init_game();
-	printf("init\n");
-	dump_game_state(gs);
 	while(1){
 		engine_tick(server_fd,&gs);
-		graphics_draw();
+		graphics_draw(&gs);
 	}
 	return 0;
 }
