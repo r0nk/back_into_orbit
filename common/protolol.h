@@ -6,6 +6,7 @@
 #include <game_state.h>
 #include <string.h>
 #include <unistd.h>
+#include <stdlib.h>
 
 #define PROTOLOL_PORT 2690
 
@@ -31,8 +32,6 @@ static inline struct protolol_packet recv_protolol(int fd)
 
 static inline void send_game_state(struct game_state gs ,int fd)
 {
-	printf("sending game state:\n");
-	dump_game_state(gs);
 	struct protolol_packet pp;
 	pp.magic_start[0]='o';
 	pp.magic_start[1]='H';
@@ -50,11 +49,9 @@ static inline struct game_state recv_game_state(int fd)
 	pp = recv_protolol(fd);
 	if(pp.type!=PROTOLOL_TYPE_GAME_STATE){
 		printf("non-recognized packet \n");
-		return gs;//FIXME this shouldn't return, it should panic
+		exit(3);
 	}
 	memcpy(&gs,&pp.data,sizeof(gs));
-	printf("recieved game state:\n");
-	dump_game_state(gs);
 	return gs;
 }
  

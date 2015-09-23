@@ -50,7 +50,7 @@ void update_all()
 	/* TODO replace me with a for loop */
 	if(n_clients<2){
 		pthread_mutex_unlock(&clients_mutex);
-		printf("waiting on clients,n_clients: %i\n",n_clients);
+		printf("waiting on clients, n_clients:%i\n",n_clients);
 		sleep(1);
 		return;
 	}
@@ -62,9 +62,6 @@ void update_all()
 		gs1.n_players=n_clients;
 	if(gs2.n_players!=n_clients)
 		gs2.n_players=n_clients;
-
-	printf("gs1: \n"); dump_game_state(gs1);
-	printf("gs2: \n"); dump_game_state(gs2);
 
 	gs1.current_player=0;
 	gs2.current_player=1;

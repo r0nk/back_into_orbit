@@ -12,7 +12,6 @@ struct map mkmap(char * pathname)
 	int x=0,y=0;
 
 	while(read(fd,c,1)){
-		printf("%c",c[0]);
 		switch(c[0]){
 		case '\n':
 			y++;
