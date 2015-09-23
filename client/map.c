@@ -1,21 +1,30 @@
 #include "map.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include <unistd.h>
+#include <fcntl.h>
 
-struct map mkmap()
+struct map mkmap(char * pathname)
 {
+	int fd = open(pathname,O_RDONLY);
 	struct map *m = calloc(1,sizeof(struct map));
-	int x,y;
+	char c[2];
+	int x=0,y=0;
 
-#define MS 15
-
-	for(y=0;y<MS;y++)
-		m->tiles[0][y]=1;
-	for(x=0;x<MS;x++)
-		m->tiles[x][0]=1;
-	for(y=0;y<MS;y++)
-		m->tiles[MS][y]=1;
-	for(x=0;x<MS;x++)
-		m->tiles[x][MS]=1;
+	while(read(fd,c,1)){
+		printf("%c",c[0]);
+		switch(c[0]){
+		case '\n':
+			y++;
+			x=0;
+			continue;
+		case '#':
+			m->tiles[x][y]=1;
+			break;
+		default:
+			break;
+		}
+		x++;
+	}
 	return *m;
 }

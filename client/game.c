@@ -22,7 +22,7 @@ struct game_state init_game()
 	main_player.location.z=5;
 	gs.player_location[0] = main_player.location;
 	main_player.speed=3.0;
-	world_map=mkmap();
+	world_map=mkmap("maps/condor.map");
 	block=cube();
 	for(i=0;i<NUMBER_OF_KEYS;i++)
 		keys[i]=0;

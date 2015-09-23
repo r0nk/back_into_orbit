@@ -93,8 +93,8 @@ void draw_block(int x, int y, int z)
 void draw_map()
 {
 	int x,z;
-	for(x=0;x<20;x++){
-		for(z=0;z<20;z++){
+	for(x=0;x<100;x++){
+		for(z=0;z<100;z++){
 			if(world_map.tiles[x][z]){
 				draw_block(x,0,z);
 				draw_block(x,1,z);
