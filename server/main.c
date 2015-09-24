@@ -44,30 +44,40 @@ void accept_loop()
 	}
 }
 
+struct game_state get_state_from_clients(){
+	struct game_state ret_gs,buffer_gs;
+	int i;
+
+	ret_gs.n_players=n_clients;
+	for(i=0;i<n_clients;i++)
+	{
+		buffer_gs = recv_game_state(clients[i].fd);
+		ret_gs.player_location[i]=buffer_gs.player_location[i];
+	}
+	return ret_gs;
+}
+
+void update_clients(struct game_state gs){
+	int i;
+	for(i=0;i<n_clients;i++)
+	{
+		gs.current_player=i;
+		send_game_state(gs,clients[i].fd);
+	}
+}
+
 void update_all()
 {
 	pthread_mutex_lock(&clients_mutex);
-	/* TODO replace me with a for loop */
 	if(n_clients<2){
 		pthread_mutex_unlock(&clients_mutex);
 		printf("waiting on clients, n_clients:%i\n",n_clients);
 		sleep(1);
 		return;
 	}
-	struct game_state gs1,gs2;
-	gs1 = recv_game_state(clients[1].fd);
-	gs2 = recv_game_state(clients[0].fd);
-	
-	if(gs1.n_players!=n_clients)
-		gs1.n_players=n_clients;
-	if(gs2.n_players!=n_clients)
-		gs2.n_players=n_clients;
-
-	gs1.current_player=0;
-	gs2.current_player=1;
-	send_game_state(gs1,clients[0].fd);
-	send_game_state(gs2,clients[1].fd);
-
+	struct game_state gs;
+	gs = get_state_from_clients();
+	update_clients(gs);
 	pthread_mutex_unlock(&clients_mutex);
 }
 
