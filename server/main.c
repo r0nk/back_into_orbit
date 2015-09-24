@@ -68,13 +68,10 @@ void update_clients(struct game_state gs){
 
 void update_all()
 {
+	while(n_clients<1)
+		sleep(1);//wait for clients to connect
+
 	pthread_mutex_lock(&clients_mutex);
-	if(n_clients<2){
-		pthread_mutex_unlock(&clients_mutex);
-		printf("waiting on clients, n_clients:%i\n",n_clients);
-		sleep(1);
-		return;
-	}
 	struct game_state gs;
 	gs = get_state_from_clients();
 	update_clients(gs);
@@ -86,6 +83,7 @@ int main()
 	server_socket = init_server();
 	pthread_t accept_thread;
 	pthread_create(&accept_thread,NULL,accept_loop,NULL);
+
 
 	while(1)
 		update_all();
