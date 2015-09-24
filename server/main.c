@@ -52,7 +52,7 @@ struct game_state get_state_from_clients(){
 	for(i=0;i<n_clients;i++)
 	{
 		buffer_gs = recv_game_state(clients[i].fd);
-		ret_gs.player_location[i]=buffer_gs.player_location[i];
+		ret_gs.game_player[i]=buffer_gs.game_player[i];
 	}
 	return ret_gs;
 }

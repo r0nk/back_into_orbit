@@ -53,7 +53,7 @@ void player_move(double dt,struct game_state * gs)
 	delta.z=(o/h) * main_player.speed * dt;
 
 	do_move(delta);
-	gs->player_location[gs->current_player] = main_player.location;
+	gs->game_player[gs->current_player] = main_player;
 }
 
 

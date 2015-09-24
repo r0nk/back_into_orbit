@@ -13,7 +13,7 @@
 struct protolol_packet {
 	char magic_start[4];// should be "oHai"
 	char type;// whether or not its a game state or kick or whatever
-	char data[500];
+	char data[1500];
 };
 
 #define PROTOLOL_TYPE_GAME_STATE 0

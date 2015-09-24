@@ -1,5 +1,6 @@
 #define GLFW_INCLUDE_GLU
 #include <GLFW/glfw3.h>
+#include "game_state.h"
 #include "graphics.h"
 #include "engine.h"
 #include "callbacks.h"
@@ -108,7 +109,7 @@ void draw_models(struct game_state * gs)
 	draw_map();
 	int i;
 	for(i=0;i<gs->n_players;i++){
-		draw_model(p_model,gs->player_location[i]);
+		draw_model(p_model,gs->game_player[i].location);
 	}
 	draw_model(p_model,main_player.destination);
 }

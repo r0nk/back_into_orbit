@@ -9,7 +9,7 @@
 struct game_state {
 	int n_players;
 	int current_player;
-	struct vector player_location[MAX_PLAYERS];
+	struct player game_player[MAX_PLAYERS];
 };
 
 static inline void dump_game_state(struct game_state gs)
@@ -18,10 +18,12 @@ static inline void dump_game_state(struct game_state gs)
 	printf("gs.n_players:%i\n",gs.n_players);
 	printf("gs.current_player:%i\n",gs.current_player);
 	for(i=0;i<gs.n_players;i++){
-		printf("gs.player_location[%i]{",i);
-		dump_vector(gs.player_location[i]);
+		printf("gs.game_player[%i]{",i);
+		dump_player(gs.game_player[i]);
 		printf("}\n");
 	}
 }
+
+struct game_state init_game();
  
 #endif
