@@ -5,11 +5,14 @@
 #include <stdio.h>
 
 #define MAX_PLAYERS 10
+#define MAX_NPCS 30
 
 struct game_state {
 	int n_players;
 	int current_player;
 	struct unit game_player[MAX_PLAYERS];
+	int n_unit;
+	struct unit npc[MAX_NPCS];
 };
 
 static inline void dump_game_state(struct game_state gs)
