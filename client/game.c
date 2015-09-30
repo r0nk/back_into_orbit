@@ -5,7 +5,7 @@
 #include "input.h"
 #include "model.h"
 
-struct player main_player;
+struct unit main_player;
 
 struct map world_map;
 struct model block;

@@ -9,7 +9,7 @@
 struct game_state {
 	int n_players;
 	int current_player;
-	struct player game_player[MAX_PLAYERS];
+	struct unit game_player[MAX_PLAYERS];
 };
 
 static inline void dump_game_state(struct game_state gs)
@@ -19,7 +19,7 @@ static inline void dump_game_state(struct game_state gs)
 	printf("gs.current_player:%i\n",gs.current_player);
 	for(i=0;i<gs.n_players;i++){
 		printf("gs.game_player[%i]{",i);
-		dump_player(gs.game_player[i]);
+		dump_unit(gs.game_player[i]);
 		printf("}\n");
 	}
 }

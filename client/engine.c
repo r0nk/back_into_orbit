@@ -15,7 +15,7 @@
 #include "game.h"
 #include "map.h"
 
-struct player main_player;
+struct unit main_player;
 
 /*get the time since the last delta_time() call*/
 double delta_time()

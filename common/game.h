@@ -5,13 +5,13 @@
 #include "poly.h"
 #include "model.h"
 
-struct player {
+struct unit {
 	double speed;
 	point location;
 	point destination;
 };
 
-static inline void dump_player(struct player p){
+static inline void dump_unit(struct unit p){
 	printf("speed:%f\n",p.speed);
 	printf("location:");
 	dump_vector(p.location);

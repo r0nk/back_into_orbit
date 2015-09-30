@@ -2,6 +2,6 @@
 #define ENGINE
 
 void engine_tick();
-extern struct player main_player;
+extern struct unit main_player;
  
 #endif
