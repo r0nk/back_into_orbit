@@ -26,7 +26,7 @@ int init_graphics()
 		return -2;
 	glfwMakeContextCurrent(window);
 
-	p_model=player_model();
+	p_model=pawn();
 	d_model=player_model();
 
 	glfwSetKeyCallback(window, key_callback);
@@ -111,7 +111,7 @@ void draw_models(struct game_state * gs)
 	for(i=0;i<gs->n_players;i++){
 		draw_model(p_model,gs->game_player[i].location);
 	}
-	draw_model(p_model,main_player.destination);
+	draw_model(d_model,main_player.destination);
 }
 
 void graphics_draw(struct game_state * gs)

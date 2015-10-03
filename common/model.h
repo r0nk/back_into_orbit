@@ -2,6 +2,7 @@
 #define MODEL
 #include "poly.h"
 
+struct model pawn();
 struct model player_model();
 struct model cube();
 struct model tetra();
