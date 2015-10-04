@@ -9,6 +9,7 @@ struct unit {
 	double speed;
 	point location;
 	point destination;
+	int health;
 };
 
 static inline void dump_unit(struct unit p){
