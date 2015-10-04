@@ -29,7 +29,7 @@ int init_graphics()
 
 	p_model=pawn();
 	d_model=player_model();
-	ai_model=skull_monkey();
+	ai_model=tetra();
 
 	glfwSetKeyCallback(window, key_callback);
 	glfwSetCursorPosCallback(window, cursor_callback);
@@ -81,6 +81,15 @@ void draw_model(struct model model,struct vector location)
 	glPopMatrix();
 }
 
+struct vector normal(struct vector v)
+{
+	struct vector n;
+	n.z = v.x * v.y;
+	n.x = v.y * v.z;
+	n.y = v.z * v.x;
+	return n;
+}
+
 void draw_block(int x, int y, int z)
 {
 	unsigned int i;
@@ -119,16 +128,41 @@ void draw_models(struct game_state * gs)
 	draw_model(d_model,main_player.destination);
 }
 
+void draw_health_bar(struct unit u)
+{
+	struct polygon a;
+	a.v[0].p = (struct vector) {0,0,0};
+	a.v[1].p = (struct vector) {1,0,0};
+	a.v[2].p = (struct vector) {1,1,0};
+
+	a.v[0].c = (struct vector) {0,1,0};
+	a.v[1].c = (struct vector) {0,1,0};
+	a.v[2].c = (struct vector) {0,1,0};
+
+	a.v[0].n = normal(a.v[0].p);
+	a.v[1].n = normal(a.v[1].p);
+	a.v[2].n = normal(a.v[2].p);
+
+	draw_poly(a);
+}
+
+void draw_hud()
+{
+	glBegin(GL_TRIANGLES);
+	draw_health_bar(main_player);
+	glEnd();
+}
+
 void graphics_draw(struct game_state * gs)
 {
 	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+
 	//Add ambient light
 	GLfloat ambientColor[] = {0.2f, 0.2f, 0.2f, 1.0f}; 
 	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambientColor);
-
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
 
 	float frame = 10;
 	glOrtho(-frame,frame,-frame,frame,0.0f,1000.0f);
@@ -136,9 +170,7 @@ void graphics_draw(struct game_state * gs)
 	glMatrixMode(GL_MODELVIEW);
 
 	glPushMatrix();
-
 	int zoom = 8;
-
 	gluLookAt(main_player.location.x+zoom,
 			main_player.location.y+zoom,
 			main_player.location.z+zoom,
@@ -147,7 +179,11 @@ void graphics_draw(struct game_state * gs)
 			main_player.location.z,
 			0,1,0);
 	draw_models(gs);
+	glPopMatrix();
 
+	glPushMatrix();
+	gluLookAt(0,0,0, 0,0,1, 0,1,0);
+	draw_hud();
 	glPopMatrix();
 
 	glfwSwapBuffers(window);

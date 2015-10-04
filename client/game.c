@@ -24,8 +24,10 @@ struct game_state init_game()
 	main_player.location.x=5;
 	main_player.location.y=0;
 	main_player.location.z=5;
-	gs.game_player[gs.current_player] = main_player;
 	main_player.speed=3.0;
+	main_player.health=100;
+
+	gs.game_player[gs.current_player] = main_player;
 	world_map=mkmap("maps/condor.map");
 	block=cube();
 	for(i=0;i<NUMBER_OF_KEYS;i++)

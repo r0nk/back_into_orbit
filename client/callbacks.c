@@ -44,5 +44,4 @@ void cursor_button_callback(GLFWwindow * win, int button, int action, int mods)
 
 	main_player.destination.x+=cy;
 	main_player.destination.z+=cy;
-
 }
