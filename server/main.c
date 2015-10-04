@@ -66,14 +66,22 @@ void update_clients(struct game_state gs){
 	}
 }
 
+void npc_update(struct game_state * gs)
+{
+	gs->n_npcs=1;
+	if(gs->npc[0].location.x>10 || gs->npc[0].location.x<0)
+		gs->npc[0].location.x=0;
+
+	gs->npc[0].location.x=5;
+	gs->npc[0].location.z=5;
+}
+
 void update_all()
 {
-	while(n_clients<1)
-		sleep(1);//wait for clients to connect
-
 	pthread_mutex_lock(&clients_mutex);
 	struct game_state gs;
 	gs = get_state_from_clients();
+	npc_update(&gs);
 	update_clients(gs);
 	pthread_mutex_unlock(&clients_mutex);
 }
@@ -84,6 +92,8 @@ int main()
 	pthread_t accept_thread;
 	pthread_create(&accept_thread,NULL,accept_loop,NULL);
 
+	while(n_clients<1)
+		sleep(1);//wait for clients to connect
 
 	while(1)
 		update_all();

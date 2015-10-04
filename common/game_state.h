@@ -11,7 +11,7 @@ struct game_state {
 	int n_players;
 	int current_player;
 	struct unit game_player[MAX_PLAYERS];
-	int n_unit;
+	int n_npcs;
 	struct unit npc[MAX_NPCS];
 };
 

@@ -19,5 +19,4 @@ static inline void dump_unit(struct unit p){
 	dump_vector(p.destination);
 }
 
-
 #endif

@@ -6,6 +6,7 @@ struct model pawn();
 struct model player_model();
 struct model cube();
 struct model tetra();
+struct model skull_monkey();
 
 struct vertice { 
 	struct vector p;/*position*/
@@ -21,6 +22,5 @@ struct model{
 	unsigned int cardinality; 
 	struct polygon *poly;
 };
-
  
 #endif

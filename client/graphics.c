@@ -15,6 +15,7 @@ float ratio;
 
 struct model p_model;
 struct model d_model;
+struct model ai_model;
 
 int init_graphics()
 {
@@ -28,6 +29,7 @@ int init_graphics()
 
 	p_model=pawn();
 	d_model=player_model();
+	ai_model=skull_monkey();
 
 	glfwSetKeyCallback(window, key_callback);
 	glfwSetCursorPosCallback(window, cursor_callback);
@@ -37,7 +39,7 @@ int init_graphics()
 	glfwGetFramebufferSize(window, &window_width, &window_height);
 	glViewport(0,0,window_width,window_height);
 	ratio = window_width / (float) window_height;
-	glClearColor(0.2,0.3,0.3,1.0);
+	glClearColor(0.5,0.2,0.0,1.0);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);
@@ -110,6 +112,9 @@ void draw_models(struct game_state * gs)
 	int i;
 	for(i=0;i<gs->n_players;i++){
 		draw_model(p_model,gs->game_player[i].location);
+	}
+	for(i=0;i<gs->n_npcs;i++){
+		draw_model(ai_model,gs->npc[i].location);
 	}
 	draw_model(d_model,main_player.destination);
 }
