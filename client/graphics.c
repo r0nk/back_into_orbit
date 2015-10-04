@@ -130,10 +130,19 @@ void draw_models(struct game_state * gs)
 
 void draw_health_bar(struct unit u)
 {
-	struct polygon a;
-	a.v[0].p = (struct vector) {0,0,0};
-	a.v[1].p = (struct vector) {1,0,0};
-	a.v[2].p = (struct vector) {1,1,0};
+	struct polygon a,b;
+	double h = u.health/50;
+	a.v[0].p = (struct vector) {0.0,0.0,0.0};
+	a.v[1].p = (struct vector) { h ,0.0,0.0};
+	a.v[2].p = (struct vector) {0.0,1.0,0.0};
+
+	b.v[0].p = (struct vector) {0.0,1.0,0.0};
+	b.v[1].p = (struct vector) { h ,1.0,0.0};
+	b.v[2].p = (struct vector) { h ,0.0,0.0};
+
+	b.v[0].c = (struct vector) {0,1,0};
+	b.v[1].c = (struct vector) {0,1,0};
+	b.v[2].c = (struct vector) {0,1,0};
 
 	a.v[0].c = (struct vector) {0,1,0};
 	a.v[1].c = (struct vector) {0,1,0};
@@ -143,7 +152,12 @@ void draw_health_bar(struct unit u)
 	a.v[1].n = normal(a.v[1].p);
 	a.v[2].n = normal(a.v[2].p);
 
+	b.v[0].n = normal(b.v[0].p);
+	b.v[1].n = normal(b.v[1].p);
+	b.v[2].n = normal(b.v[2].p);
+
 	draw_poly(a);
+	draw_poly(b);
 }
 
 void draw_hud()
@@ -180,6 +194,9 @@ void graphics_draw(struct game_state * gs)
 			0,1,0);
 	draw_models(gs);
 	glPopMatrix();
+
+	GLfloat HUD_Color[] = {1.0f, 1.0f, 1.0f, 1.0f}; 
+	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, HUD_Color);
 
 	glPushMatrix();
 	gluLookAt(0,0,0, 0,0,1, 0,1,0);
