@@ -21,9 +21,9 @@ static inline void dump_game_state(struct game_state gs)
 	printf("gs.n_players:%i\n",gs.n_players);
 	printf("gs.current_player:%i\n",gs.current_player);
 	for(i=0;i<gs.n_players;i++){
-		printf("gs.game_player[%i]{",i);
+		printf("gs.game_player[%i]{\n",i);
 		dump_unit(gs.game_player[i]);
-		printf("}\n");
+		printf("\n}\n");
 	}
 }
 

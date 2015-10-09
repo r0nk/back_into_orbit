@@ -16,8 +16,9 @@ static inline void dump_unit(struct unit p){
 	printf("speed:%f\n",p.speed);
 	printf("location:");
 	dump_vector(p.location);
-	printf("destination:");
+	printf("\ndestination:");
 	dump_vector(p.destination);
+	printf("\nhealth:%f\n",p.health);
 }
 
 #endif
