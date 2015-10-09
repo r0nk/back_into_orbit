@@ -128,17 +128,17 @@ void draw_models(struct game_state * gs)
 	draw_model(d_model,main_player.destination);
 }
 
-void draw_health_bar(struct unit u)
+void draw_health_bar(struct unit u, int x, int y)
 {
 	struct polygon a,b;
 	double h = u.health/50;
-	a.v[0].p = (struct vector) {0.0,0.0,0.0};
-	a.v[1].p = (struct vector) { h ,0.0,0.0};
-	a.v[2].p = (struct vector) {0.0,1.0,0.0};
+	a.v[0].p = (struct vector) {x+0.0,y+0.0,0.0};
+	a.v[1].p = (struct vector) {x+ h ,y+0.0,0.0};
+	a.v[2].p = (struct vector) {x+0.0,y+1.0,0.0};
 
-	b.v[0].p = (struct vector) {0.0,1.0,0.0};
-	b.v[1].p = (struct vector) { h ,1.0,0.0};
-	b.v[2].p = (struct vector) { h ,0.0,0.0};
+	b.v[0].p = (struct vector) {x+0.0,y+1.0,0.0};
+	b.v[1].p = (struct vector) {x+h  ,y+1.0,0.0};
+	b.v[2].p = (struct vector) {x+h  ,y+0.0,0.0};
 
 	b.v[0].c = (struct vector) {0,1,0};
 	b.v[1].c = (struct vector) {0,1,0};
@@ -163,7 +163,7 @@ void draw_health_bar(struct unit u)
 void draw_hud()
 {
 	glBegin(GL_TRIANGLES);
-	draw_health_bar(main_player);
+	draw_health_bar(main_player,0,-9);
 	glEnd();
 }
 
