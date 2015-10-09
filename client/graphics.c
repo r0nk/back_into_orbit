@@ -117,6 +117,7 @@ void draw_map()
 
 void draw_models(struct game_state * gs)
 {
+	dump_game_state(*gs);
 	draw_map();
 	int i;
 	for(i=0;i<gs->n_players;i++){
@@ -160,10 +161,10 @@ void draw_health_bar(struct unit u, int x, int y)
 	draw_poly(b);
 }
 
-void draw_hud()
+void draw_hud(struct game_state * gs)
 {
 	glBegin(GL_TRIANGLES);
-	draw_health_bar(main_player,0,-9);
+	draw_health_bar(gs->game_player[gs->current_player],0,-9);
 	glEnd();
 }
 
@@ -185,12 +186,12 @@ void graphics_draw(struct game_state * gs)
 
 	glPushMatrix();
 	int zoom = 8;
-	gluLookAt(main_player.location.x+zoom,
-			main_player.location.y+zoom,
-			main_player.location.z+zoom,
-			main_player.location.x,
-			main_player.location.y,
-			main_player.location.z,
+	gluLookAt(gs->game_player[gs->current_player].location.x+zoom,
+			gs->game_player[gs->current_player].location.y+zoom,
+			gs->game_player[gs->current_player].location.z+zoom,
+			gs->game_player[gs->current_player].location.x,
+			gs->game_player[gs->current_player].location.y,
+			gs->game_player[gs->current_player].location.z,
 			0,1,0);
 	draw_models(gs);
 	glPopMatrix();
@@ -200,7 +201,7 @@ void graphics_draw(struct game_state * gs)
 
 	glPushMatrix();
 	gluLookAt(0,0,0, 0,0,1, 0,1,0);
-	draw_hud();
+	draw_hud(gs);
 	glPopMatrix();
 
 	glfwSwapBuffers(window);

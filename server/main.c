@@ -83,7 +83,6 @@ void npc_update(struct game_state * gs)
 
 	if((gs->npc[0].location.x ==  gs->game_player[0].location.x) &&
 	(gs->npc[0].location.z ==  gs->game_player[0].location.z)){
-		printf("tick:%f\n",gs->game_player[0].health);
 		gs->game_player[0].health-=0.100;
 	}
 }
