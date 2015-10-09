@@ -69,11 +69,18 @@ void update_clients(struct game_state gs){
 void npc_update(struct game_state * gs)
 {
 	gs->n_npcs=1;
-	if(gs->npc[0].location.x>10 || gs->npc[0].location.x<0)
-		gs->npc[0].location.x=0;
-
 	gs->npc[0].location.x=5;
+	gs->npc[0].location.y=0;
 	gs->npc[0].location.z=5;
+
+	if(gs->n_players > 0)
+		gs->npc[0].location = gs->game_player[0].location;
+
+	if(gs->npc[0].location.x>10 || gs->npc[0].location.x<0)
+		gs->npc[0].location.x=5;
+	if(gs->npc[0].location.z>10 || gs->npc[0].location.z<0)
+		gs->npc[0].location.z=5;
+
 }
 
 void update_all()
