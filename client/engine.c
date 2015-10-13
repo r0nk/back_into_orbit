@@ -15,7 +15,18 @@
 #include "game.h"
 #include "map.h"
 
-struct unit main_player;
+void move(double x, double z)
+{
+	gs.game_player[gs.current_player].destination.x=
+		gs.game_player[gs.current_player].location.x+x;
+	gs.game_player[gs.current_player].destination.z=
+		gs.game_player[gs.current_player].location.z+z;
+}
+
+void attack(double x, double z)
+{
+	printf("attack %f,%f\n",x,z);
+}
 
 /*get the time since the last delta_time() call*/
 double delta_time()
@@ -26,17 +37,17 @@ double delta_time()
 }
 
 /*try to actually move the player*/
-void do_move(struct vector delta)
+void do_move(struct vector delta,struct game_state * gs)
 {
-	double nx = main_player.location.x+delta.x;
-	double nz = main_player.location.z+delta.z;
+	double nx = gs->game_player[gs->current_player].location.x+delta.x;
+	double nz = gs->game_player[gs->current_player].location.z+delta.z;
 
 	if(!world_map.tiles[(int)nx]
-			[(int)main_player.location.z])
-		main_player.location.x=nx;
-	if(!world_map.tiles[(int)main_player.location.x]
+			[(int)gs->game_player[gs->current_player].location.z])
+		gs->game_player[gs->current_player].location.x=nx;
+	if(!world_map.tiles[(int)gs->game_player[gs->current_player].location.x]
 			[(int)nz])
-		main_player.location.z=nz;
+		gs->game_player[gs->current_player].location.z=nz;
 }
 
 void player_move(double dt,struct game_state * gs)
@@ -45,18 +56,17 @@ void player_move(double dt,struct game_state * gs)
 	delta.x=0; delta.y=0; delta.z=0;
 
 	double a,o,h;
-	a = main_player.destination.x - main_player.location.x;
-	o = main_player.destination.z - main_player.location.z;
+	a = gs->game_player[gs->current_player].destination.x 
+		- gs->game_player[gs->current_player].location.x;
+	o = gs->game_player[gs->current_player].destination.z 
+		- gs->game_player[gs->current_player].location.z;
 	h = sqrt((a*a)+(o*o));
 
-	delta.x=(a/h) * main_player.speed * dt;
-	delta.z=(o/h) * main_player.speed * dt;
+	delta.x=(a/h) * gs->game_player[gs->current_player].speed * dt;
+	delta.z=(o/h) * gs->game_player[gs->current_player].speed * dt;
 
-	do_move(delta);
-	main_player.health = gs->game_player[gs->current_player].health;
-	gs->game_player[gs->current_player].location = main_player.location;
+	do_move(delta,gs);
 }
-
 
 void engine_tick(int server_fd, struct game_state * gs)
 {

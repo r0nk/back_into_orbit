@@ -125,7 +125,7 @@ void draw_models(struct game_state * gs)
 	for(i=0;i<gs->n_npcs;i++){
 		draw_model(ai_model,gs->npc[i].location);
 	}
-	draw_model(d_model,main_player.destination);
+	draw_model(d_model,gs->game_player[gs->current_player].destination);
 }
 
 void draw_health_bar(struct unit u, int x, int y)

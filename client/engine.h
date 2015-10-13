@@ -1,7 +1,10 @@
 #ifndef ENGINE
 #define ENGINE
 
+extern struct game_state gs;
+
 void engine_tick();
-extern struct unit main_player;
+void move(double x, double z);
+void attack(double x, double z);
  
 #endif

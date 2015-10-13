@@ -5,8 +5,6 @@
 #include "input.h"
 #include "model.h"
 
-struct unit main_player;
-
 struct map world_map;
 struct model block;
 
@@ -21,13 +19,11 @@ struct game_state init_game()
 		gs.game_player[i].location = (struct vector) {0,0,0};
 		gs.game_player[i].destination = (struct vector) {0,0,0};
 	}
-	main_player.location.x=5;
-	main_player.location.y=0;
-	main_player.location.z=5;
-	main_player.speed=3.0;
-	main_player.health=100;
-
-	gs.game_player[gs.current_player] = main_player;
+	gs.game_player[gs.current_player].location.x=5;
+	gs.game_player[gs.current_player].location.y=0;
+	gs.game_player[gs.current_player].location.z=5;
+	gs.game_player[gs.current_player].speed=3.0;
+	gs.game_player[gs.current_player].health=100;
 	world_map=mkmap("maps/condor.map");
 	block=cube();
 	for(i=0;i<NUMBER_OF_KEYS;i++)
