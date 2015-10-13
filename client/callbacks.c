@@ -28,6 +28,7 @@ void cursor_callback(GLFWwindow * win, double xpos, double ypos)
 	cursor_y=ypos;
 }
 
+//TODO actually calculate the right point here
 void cursor_button_callback(GLFWwindow * win, int button, int action, int mods)
 {
 	double w = window_width/2;
@@ -36,12 +37,12 @@ void cursor_button_callback(GLFWwindow * win, int button, int action, int mods)
 	double cy = 13.0*((cursor_y-h)/h);
 
 	//for button, 0 = left, 1 = right, 2 = middle
-	main_player.destination.x=main_player.location.x;
-	main_player.destination.z=main_player.location.z;
+	if(button==0){// left click
+		main_player.destination.x=main_player.location.x+cx+cy;
+		main_player.destination.z=main_player.location.z-cx+cy;
+	}
 
-	main_player.destination.x+=cx;
-	main_player.destination.z-=cx;
-
-	main_player.destination.x+=cy;
-	main_player.destination.z+=cy;
+	if(button==1 && action==1){// right click
+		printf("attack\n");
+	}
 }

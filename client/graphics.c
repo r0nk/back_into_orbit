@@ -117,7 +117,6 @@ void draw_map()
 
 void draw_models(struct game_state * gs)
 {
-	dump_game_state(*gs);
 	draw_map();
 	int i;
 	for(i=0;i<gs->n_players;i++){
