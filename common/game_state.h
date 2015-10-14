@@ -6,6 +6,7 @@
 
 #define MAX_PLAYERS 10
 #define MAX_NPCS 30
+#define MAX_BULLETS 400
 
 struct game_state {
 	int n_players;
@@ -13,6 +14,7 @@ struct game_state {
 	struct unit game_player[MAX_PLAYERS];
 	int n_npcs;
 	struct unit npc[MAX_NPCS];
+	struct unit bullet[MAX_BULLETS];
 };
 
 static inline void dump_game_state(struct game_state gs)

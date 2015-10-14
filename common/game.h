@@ -5,6 +5,12 @@
 #include "poly.h"
 #include "model.h"
 
+struct bullet {
+	double speed;
+	point location;
+	struct vector direction;
+};
+
 struct unit {
 	double speed;
 	point location;
