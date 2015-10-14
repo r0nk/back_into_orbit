@@ -15,17 +15,17 @@
 #include "game.h"
 #include "map.h"
 
-void move(double x, double z)
+void move(double x, double y)
 {
 	gs.game_player[gs.current_player].destination.x=
-		gs.game_player[gs.current_player].location.x+x;
+		gs.game_player[gs.current_player].location.x+x+y;
 	gs.game_player[gs.current_player].destination.z=
-		gs.game_player[gs.current_player].location.z+z;
+		gs.game_player[gs.current_player].location.z+y-x;
 }
 
-void attack(double x, double z)
+void attack(double x, double y)
 {
-	printf("attack %f,%f\n",x,z);
+	printf("attack %f,%f\n",x,y);
 }
 
 /*get the time since the last delta_time() call*/
