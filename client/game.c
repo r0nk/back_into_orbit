@@ -28,5 +28,7 @@ struct game_state init_game()
 	block=cube();
 	for(i=0;i<NUMBER_OF_KEYS;i++)
 		keys[i]=0;
+
+	gs.n_bullets=0;
 	return gs;
 }

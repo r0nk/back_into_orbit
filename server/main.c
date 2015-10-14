@@ -49,10 +49,16 @@ struct game_state get_state_from_clients(){
 	int i;
 
 	ret_gs.n_players=n_clients;
+	ret_gs.n_bullets=n_clients;
 	for(i=0;i<n_clients;i++)
 	{
 		buffer_gs = recv_game_state(clients[i].fd);
 		ret_gs.game_player[i]=buffer_gs.game_player[i];
+		if(buffer_gs.n_bullets!=ret_gs.n_bullets){
+			ret_gs.n_bullets=buffer_gs.n_bullets;
+			ret_gs.bullet[ret_gs.n_bullets]=
+				buffer_gs.bullet[ret_gs.n_bullets];
+		}
 	}
 	return ret_gs;
 }

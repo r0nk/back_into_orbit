@@ -125,6 +125,9 @@ void draw_models(struct game_state * gs)
 	for(i=0;i<gs->n_npcs;i++){
 		draw_model(ai_model,gs->npc[i].location);
 	}
+	for(i=0;i<gs->n_bullets;i++){
+		draw_model(ai_model,gs->bullet[i].location);
+	}
 	draw_model(d_model,gs->game_player[gs->current_player].destination);
 }
 

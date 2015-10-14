@@ -14,8 +14,17 @@ struct game_state {
 	struct unit game_player[MAX_PLAYERS];
 	int n_npcs;
 	struct unit npc[MAX_NPCS];
-	struct unit bullet[MAX_BULLETS];
+	int n_bullets;
+	struct bullet bullet[MAX_BULLETS];
 };
+
+static inline void add_bullet(struct game_state * gs, struct bullet b)
+{
+	if(gs->n_bullets>MAX_BULLETS)
+		return;
+	gs->bullet[gs->n_bullets]=b;
+	gs->n_bullets++;
+}
 
 static inline void dump_game_state(struct game_state gs)
 {

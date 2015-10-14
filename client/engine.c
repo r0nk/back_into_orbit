@@ -25,7 +25,13 @@ void move(double x, double y)
 
 void attack(double x, double y)
 {
+	struct bullet b;
+	b.location = gs.game_player[gs.current_player].location;
+	b.direction.x = x+y;
+	b.direction.y = 0; 
+	b.direction.z = y-x;
 	printf("attack %f,%f\n",x,y);
+	add_bullet(&gs,b);
 }
 
 /*get the time since the last delta_time() call*/
