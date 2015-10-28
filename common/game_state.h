@@ -29,11 +29,26 @@ static inline void add_bullet(struct game_state * gs, struct bullet b)
 static inline void dump_game_state(struct game_state gs)
 {
 	int i;
+	printf("----- dumping game state: -----");
 	printf("gs.n_players:%i\n",gs.n_players);
 	printf("gs.current_player:%i\n",gs.current_player);
 	for(i=0;i<gs.n_players;i++){
 		printf("gs.game_player[%i]{\n",i);
 		dump_unit(gs.game_player[i]);
+		printf("\n}\n");
+	}
+
+	printf("gs.n_npc:%i\n",gs.n_npcs);
+	for(i=0;i<gs.n_npcs;i++){
+		printf("gs.npc[%i]{\n",i);
+		dump_unit(gs.npc[i]);
+		printf("\n}\n");
+	}
+
+	printf("gs.n_bullets:%i\n",gs.n_bullets);
+	for(i=0;i<gs.n_bullets;i++){
+		printf("gs.bullets[%i]{\n",i);
+		dump_bullet(gs.bullet[i]);
 		printf("\n}\n");
 	}
 }

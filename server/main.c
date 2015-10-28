@@ -44,16 +44,18 @@ void accept_loop()
 	}
 }
 
-struct game_state get_state_from_clients(){
+struct game_state get_state_from_clients()
+{
 	struct game_state ret_gs,buffer_gs;
 	int i;
 
 	ret_gs.n_players=n_clients;
-	ret_gs.n_bullets=n_clients;
+	ret_gs.n_bullets=0;
 	for(i=0;i<n_clients;i++)
 	{
 		buffer_gs = recv_game_state(clients[i].fd);
 		ret_gs.game_player[i]=buffer_gs.game_player[i];
+		//TODO clean this up
 		if(buffer_gs.n_bullets!=ret_gs.n_bullets){
 			ret_gs.n_bullets=buffer_gs.n_bullets;
 			ret_gs.bullet[ret_gs.n_bullets]=
@@ -63,7 +65,8 @@ struct game_state get_state_from_clients(){
 	return ret_gs;
 }
 
-void update_clients(struct game_state gs){
+void update_clients(struct game_state gs)
+{
 	int i;
 	for(i=0;i<n_clients;i++)
 	{

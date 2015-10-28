@@ -11,6 +11,14 @@ struct bullet {
 	struct vector direction;
 };
 
+static inline void dump_bullet(struct bullet b){
+	printf("speed:%f\n",b.speed);
+	printf("location:");
+	dump_vector(b.location);
+	printf("\n direction:");
+	dump_vector(b.direction);
+}
+
 struct unit {
 	double speed;
 	point location;
