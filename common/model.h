@@ -3,6 +3,7 @@
 #include "poly.h"
 
 struct model pawn();
+struct model bullet();
 struct model player_model();
 struct model cube();
 struct model tetra();
