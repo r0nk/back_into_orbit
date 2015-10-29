@@ -7,7 +7,7 @@
 #include "networking.h"
 
 /* Tell the server what state we think we're in, then update ourselves to 
-   match what state the server tells us we're in. */
+ * match what state the server tells us we're in. */
 struct game_state update_state(int server_fd, struct game_state gs)
 {
 	send_game_state(gs,server_fd);
@@ -26,7 +26,7 @@ int init_networking()
 	address.sin_port = htons(PROTOLOL_PORT);
 	inet_aton("127.0.0.1",&address.sin_addr);
 
-	e=connect(cs,(struct sockaddr *)&address,sizeof(struct sockaddr_in));
+	e = connect(cs,(struct sockaddr *)&address,sizeof(struct sockaddr_in));
 
 	if(e)
 		err(1,"init_networking()");

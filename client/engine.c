@@ -11,7 +11,6 @@
 #include "poly.h"
 #include "graphics.h"
 #include "engine.h"
-#include "input.h"
 #include "game.h"
 #include "map.h"
 
@@ -79,5 +78,4 @@ void engine_tick(int server_fd, struct game_state * gs)
 	double dt = delta_time();
 	player_move(dt,gs);
 	*gs = update_state(server_fd,*gs);
-	dump_game_state(*gs);
 }

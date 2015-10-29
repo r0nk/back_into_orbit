@@ -17,8 +17,18 @@ struct model p_model;
 struct model d_model;
 struct model ai_model;
 struct model bullet_model;
+struct model block_model;
 
-int init_graphics()
+void init_models()
+{
+	p_model=pawn();
+	d_model=player_model();
+	ai_model=tetra();
+	bullet_model=bullet();
+	block_model=cube();
+}
+
+int init_window_lib()
 {
 	glfwSetErrorCallback(err_callback);
 	if(!glfwInit())
@@ -28,17 +38,17 @@ int init_graphics()
 		return -2;
 	glfwMakeContextCurrent(window);
 
-	p_model=pawn();
-	d_model=player_model();
-	ai_model=tetra();
-	bullet_model=bullet();
-
 	glfwSetKeyCallback(window, key_callback);
 	glfwSetCursorPosCallback(window, cursor_callback);
 	glfwSetMouseButtonCallback(window, cursor_button_callback);
 	//glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
 	glfwGetFramebufferSize(window, &window_width, &window_height);
+	return 0;
+}
+
+void init_gl()
+{
 	glViewport(0,0,window_width,window_height);
 	ratio = window_width / (float) window_height;
 	glClearColor(0.5,0.2,0.0,1.0);
@@ -46,6 +56,14 @@ int init_graphics()
 	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);
 	glEnable(GL_COLOR_MATERIAL);
+}
+
+
+int init_graphics()
+{
+	init_models();
+	init_window_lib();
+	init_gl();
 
 	return 0;
 }
@@ -69,13 +87,11 @@ void draw_poly(struct polygon p)
 	draw_vertice(p.v[2]);
 }
 
-void draw_model(struct model model,struct vector location)
+void draw_model(struct model model,struct vector loc)
 {
 	unsigned int i;
 	glPushMatrix();
-	glTranslatef(location.x,
-			location.y,
-			location.z);
+	glTranslatef(loc.x,loc.y,loc.z);
 	glBegin(GL_TRIANGLES);
 	for(i=0;i<model.cardinality;i++)
 		draw_poly(model.poly[i]);
@@ -98,8 +114,8 @@ void draw_block(int x, int y, int z)
 	glPushMatrix();
 	glTranslatef((double)x,(double)y,(double)z);
 	glBegin(GL_TRIANGLES);
-	for(i=0;i<block.cardinality;i++)
-		draw_poly(block.poly[i]);
+	for(i=0;i<block_model.cardinality;i++)
+		draw_poly(block_model.poly[i]);
 	glEnd();
 	glPopMatrix();
 }
