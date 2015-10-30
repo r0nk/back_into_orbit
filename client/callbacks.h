@@ -2,12 +2,7 @@
 #define CALLBACKS
 #include <GLFW/glfw3.h>
 
-#define NUMBER_OF_KEYS 300
-extern char keys[NUMBER_OF_KEYS];/*boolean status array of all the input keys*/
-					/*1 = pressed, 0 = released */ 
-
-double cursor_x;
-double cursor_y;
+extern struct player_input pi;
 
 void err_callback(int err, const char * description);
 void key_callback(GLFWwindow * win, int key, int scanc, int action, int mods);

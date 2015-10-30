@@ -24,8 +24,6 @@ struct game_state init_game()
 	gs.game_player[gs.current_player].speed=3.0;
 	gs.game_player[gs.current_player].health=100;
 	world_map=mkmap("maps/condor.map");
-	for(i=0;i<NUMBER_OF_KEYS;i++)
-		keys[i]=0;
 
 	gs.n_bullets=0;
 	return gs;
