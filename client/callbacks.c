@@ -20,7 +20,7 @@ void key_callback(GLFWwindow * win, int key, int scanc, int action, int mods)
 {
 	if(key==256)/* 256 is ESC */
 		exit(0);
-	pi.keys[key]=action;//action is a binary (press||depress)
+	pi.keys[key]=action; /*action is a binary (press||depress)*/
 }
 
 void cursor_callback(GLFWwindow * win, double xpos, double ypos)

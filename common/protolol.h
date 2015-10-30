@@ -4,6 +4,7 @@
 /* protolol is the networking protocol both the server and the client share */
 
 #include <game_state.h>
+#include <input.h>
 #include <string.h>
 #include <unistd.h>
 #include <stdlib.h>
@@ -17,10 +18,14 @@ struct protolol_packet {
 };
 
 #define PROTOLOL_TYPE_GAME_STATE 0
+#define PROTOLOL_TYPE_PLAYER_INPUT 1
 
 static inline void send_protolol(struct protolol_packet pp,int fd)
 {
-	write(fd,&pp,sizeof(pp));
+	if(pp.type==PROTOLOL_TYPE_GAME_STATE)
+		write(fd,&pp,sizeof(pp));
+	else if (pp.type==PROTOLOL_TYPE_PLAYER_INPUT)
+		write(fd,&pp,5+sizeof(struct player_input));
 }
 
 static inline struct protolol_packet recv_protolol(int fd)
@@ -28,6 +33,18 @@ static inline struct protolol_packet recv_protolol(int fd)
 	struct protolol_packet pp;
 	read(fd,&pp,sizeof(pp));
 	return pp;
+}
+
+static inline void send_player_input(struct player_input pi ,int fd)
+{
+	struct protolol_packet pp;
+	pp.magic_start[0]='o';
+	pp.magic_start[1]='H';
+	pp.magic_start[2]='a';
+	pp.magic_start[3]='i';
+	pp.type = PROTOLOL_TYPE_PLAYER_INPUT;
+	memcpy(&pp.data,&pi,sizeof(pi));
+	send_protolol(pp,fd);
 }
 
 static inline void send_game_state(struct game_state gs ,int fd)
@@ -42,13 +59,26 @@ static inline void send_game_state(struct game_state gs ,int fd)
 	send_protolol(pp,fd);
 }
 
+static inline struct player_input recv_player_input(int fd)
+{
+	struct protolol_packet pp;
+	struct player_input pi;
+	pp = recv_protolol(fd);
+	if(pp.type!=PROTOLOL_TYPE_PLAYER_INPUT){
+		printf("non-recognized packet; not player input \n");
+		exit(4);
+	}
+	memcpy(&pi,&pp.data,sizeof(pi));
+	return pi;
+}
+
 static inline struct game_state recv_game_state(int fd)
 {
 	struct protolol_packet pp;
 	struct game_state gs;
 	pp = recv_protolol(fd);
 	if(pp.type!=PROTOLOL_TYPE_GAME_STATE){
-		printf("non-recognized packet \n");
+		printf("non-recognized packet; not game state \n");
 		exit(3);
 	}
 	memcpy(&gs,&pp.data,sizeof(gs));

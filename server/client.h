@@ -2,10 +2,13 @@
 #define CLIENT
 
 #include <poly.h>
+#include <input.h>
+
 #include <pthread.h>
 
 struct client {
 	int fd;
+	struct player_input pi;
 };
 
 #define MAX_CLIENTS 10

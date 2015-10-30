@@ -11,6 +11,28 @@
 
 int server_socket;
 
+struct game_state world_state;
+
+struct game_state init_game()
+{
+	int i;
+	struct game_state gs;
+	gs.n_players=1;
+	gs.current_player=0;
+	for(i=0;i<MAX_PLAYERS;i++){
+		gs.game_player[i].speed = 0;
+		gs.game_player[i].location = (struct vector) {0,0,0};
+		gs.game_player[i].destination = (struct vector) {0,0,0};
+	}
+	gs.game_player[gs.current_player].location.x=5;
+	gs.game_player[gs.current_player].location.y=0;
+	gs.game_player[gs.current_player].location.z=5;
+	gs.game_player[gs.current_player].speed=3.0;
+	gs.game_player[gs.current_player].health=100;
+	gs.n_bullets=0;
+	return gs;
+}
+
 int init_server()
 {
 	struct sockaddr_in address;
@@ -23,12 +45,10 @@ int init_server()
 	e = bind(ss,(struct sockaddr *)&address,sizeof(struct sockaddr_in));
 	if(e)
 		err(2,"init_server() binding");
-	printf("socket binded.\n");
 
 	e = listen(ss,10);
 	if(e)
 		err(3,"init_server() listen");
-	printf("socket listening.\n");
 
 	init_clients();
 
@@ -44,25 +64,13 @@ void accept_loop()
 	}
 }
 
-struct game_state get_state_from_clients()
+int get_client_inputs()
 {
-	struct game_state ret_gs,buffer_gs;
 	int i;
-
-	ret_gs.n_players=n_clients;
-	ret_gs.n_bullets=0;
-	for(i=0;i<n_clients;i++)
-	{
-		buffer_gs = recv_game_state(clients[i].fd);
-		ret_gs.game_player[i]=buffer_gs.game_player[i];
-		//TODO clean this up
-		if(buffer_gs.n_bullets!=ret_gs.n_bullets){
-			ret_gs.n_bullets=buffer_gs.n_bullets;
-			ret_gs.bullet[ret_gs.n_bullets]=
-				buffer_gs.bullet[ret_gs.n_bullets];
-		}
+	for (i=0;i<n_clients;i++){
+		clients[i].pi = recv_player_input(clients[i].fd);
 	}
-	return ret_gs;
+	return 0;
 }
 
 void update_clients(struct game_state gs)
@@ -82,6 +90,12 @@ void npc_update(struct game_state * gs)
 	gs->npc[0].location.y=0;
 	gs->npc[0].location.z=5;
 
+	if(clients[0].pi.keys['W'])
+		gs->game_player[0].location.x=10;
+	else
+		gs->game_player[0].location.x=5;
+
+
 	if(gs->n_players > 0)
 		gs->npc[0].location = gs->game_player[0].location;
 
@@ -99,10 +113,9 @@ void npc_update(struct game_state * gs)
 void update_all()
 {
 	pthread_mutex_lock(&clients_mutex);
-	struct game_state gs;
-	gs = get_state_from_clients();
-	npc_update(&gs);
-	update_clients(gs);
+	get_client_inputs();
+	npc_update(&world_state);
+	update_clients(world_state);
 	pthread_mutex_unlock(&clients_mutex);
 }
 
@@ -111,7 +124,9 @@ int main()
 	server_socket = init_server();
 	pthread_t accept_thread;
 	pthread_create(&accept_thread,NULL,accept_loop,NULL);
+	world_state = init_game();
 
+	printf("Waiting for clients to connect...\n");
 	while(n_clients<1)
 		sleep(1);//wait for clients to connect
 
