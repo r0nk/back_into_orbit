@@ -20,15 +20,11 @@ struct game_state init_game()
 	gs.n_players=1;
 	gs.current_player=0;
 	for(i=0;i<MAX_PLAYERS;i++){
-		gs.game_player[i].speed = 0;
-		gs.game_player[i].location = (struct vector) {0,0,0};
+		gs.game_player[i].speed = 3;
+		gs.game_player[i].health = 100;
+		gs.game_player[i].location = (struct vector) {i,0,2};
 		gs.game_player[i].destination = (struct vector) {0,0,0};
 	}
-	gs.game_player[gs.current_player].location.x=5;
-	gs.game_player[gs.current_player].location.y=0;
-	gs.game_player[gs.current_player].location.z=5;
-	gs.game_player[gs.current_player].speed=3.0;
-	gs.game_player[gs.current_player].health=100;
 	gs.n_bullets=0;
 	return gs;
 }
@@ -127,6 +123,7 @@ int main()
 	world_state = init_game();
 
 	printf("Waiting for clients to connect...\n");
+
 	while(n_clients<1)
 		sleep(1);//wait for clients to connect
 
