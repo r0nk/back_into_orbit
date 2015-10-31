@@ -96,30 +96,39 @@ void npc_update(struct game_state * gs,double delta)
 		gs->npc[0].location.z=5;
 
 	if((gs->npc[0].location.x ==  gs->game_player[0].location.x) &&
-	(gs->npc[0].location.z ==  gs->game_player[0].location.z)){
+			(gs->npc[0].location.z ==  gs->game_player[0].location.z)){
 		gs->game_player[0].health-=0.100;
+	}
+}
+
+void player_controls(struct game_state * gs,double delta)
+{
+	int i =0;
+	for(i=0;i<n_clients;i++){
+		double d = gs->game_player[i].speed*delta;
+		if(clients[i].pi.keys['W']){
+			gs->game_player[i].location.x-=d;
+			gs->game_player[i].location.z-=d;
+		}
+		if(clients[i].pi.keys['A']){
+			gs->game_player[i].location.x-=d;
+			gs->game_player[i].location.z+=d;
+		}
+		if(clients[i].pi.keys['S']){
+			gs->game_player[i].location.x+=d;
+			gs->game_player[i].location.z+=d;
+		}
+		if(clients[i].pi.keys['D']){
+			gs->game_player[i].location.x+=d;
+			gs->game_player[i].location.z-=d;
+		}
 	}
 }
 
 void engine_tick(struct game_state * gs,double delta)
 {
+	player_controls(gs,delta);
 
-	if(clients[0].pi.keys['D']){
-		gs->game_player[0].location.x+=gs->game_player[0].speed*delta;
-		gs->game_player[0].location.z-=gs->game_player[0].speed*delta;
-	}
-	if(clients[0].pi.keys['A']){
-		gs->game_player[0].location.x-=gs->game_player[0].speed*delta;
-		gs->game_player[0].location.z+=gs->game_player[0].speed*delta;
-	}
-	if(clients[0].pi.keys['S']){
-		gs->game_player[0].location.x+=gs->game_player[0].speed*delta;
-		gs->game_player[0].location.z+=gs->game_player[0].speed*delta;
-	}
-	if(clients[0].pi.keys['W']){
-		gs->game_player[0].location.x-=gs->game_player[0].speed*delta;
-		gs->game_player[0].location.z-=gs->game_player[0].speed*delta;
-	}
 
 	npc_update(gs,delta);
 }
@@ -134,9 +143,11 @@ double delta_time()
 void update_all()
 {
 	pthread_mutex_lock(&clients_mutex);
+
 	get_client_inputs();
 	engine_tick(&world_state,delta_time());
 	update_clients(world_state);
+
 	pthread_mutex_unlock(&clients_mutex);
 }
 
@@ -148,7 +159,7 @@ int main()
 	world_state = init_game();
 	glfwInit();
 
-	printf("Waiting for clients to connect...\n");
+	printf("Drone server: Waiting for clients to connect...\n");
 
 	while(n_clients<1)
 		sleep(1);//wait for clients to connect
