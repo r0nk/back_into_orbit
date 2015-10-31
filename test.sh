@@ -5,5 +5,5 @@ make
 cd ..
 cd client
 make clean
-make
+make -j8
 ./lost_lair

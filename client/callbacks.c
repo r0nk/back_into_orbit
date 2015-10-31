@@ -29,7 +29,6 @@ void cursor_callback(GLFWwindow * win, double xpos, double ypos)
 	pi.mouse_y=ypos;
 }
 
-//TODO actually calculate the right point here
 void cursor_button_callback(GLFWwindow * win, int button, int action, int mods)
 {
 	//for button, 0 = left, 1 = right, 2 = middle

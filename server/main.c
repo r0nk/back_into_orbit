@@ -1,3 +1,4 @@
+#include <GLFW/glfw3.h>
 #include <stdio.h>
 #include <unistd.h>
 #include <err.h>
@@ -20,7 +21,7 @@ struct game_state init_game()
 	gs.n_players=1;
 	gs.current_player=0;
 	for(i=0;i<MAX_PLAYERS;i++){
-		gs.game_player[i].speed = 3;
+		gs.game_player[i].speed = 1.0;
 		gs.game_player[i].health = 100;
 		gs.game_player[i].location = (struct vector) {i,0,2};
 		gs.game_player[i].destination = (struct vector) {0,0,0};
@@ -79,18 +80,12 @@ void update_clients(struct game_state gs)
 	}
 }
 
-void npc_update(struct game_state * gs)
+void npc_update(struct game_state * gs,double delta)
 {
 	gs->n_npcs=1;
 	gs->npc[0].location.x=5;
 	gs->npc[0].location.y=0;
 	gs->npc[0].location.z=5;
-
-	if(clients[0].pi.keys['W'])
-		gs->game_player[0].location.x=10;
-	else
-		gs->game_player[0].location.x=5;
-
 
 	if(gs->n_players > 0)
 		gs->npc[0].location = gs->game_player[0].location;
@@ -106,11 +101,41 @@ void npc_update(struct game_state * gs)
 	}
 }
 
+void engine_tick(struct game_state * gs,double delta)
+{
+
+	if(clients[0].pi.keys['D']){
+		gs->game_player[0].location.x+=gs->game_player[0].speed*delta;
+		gs->game_player[0].location.z-=gs->game_player[0].speed*delta;
+	}
+	if(clients[0].pi.keys['A']){
+		gs->game_player[0].location.x-=gs->game_player[0].speed*delta;
+		gs->game_player[0].location.z+=gs->game_player[0].speed*delta;
+	}
+	if(clients[0].pi.keys['S']){
+		gs->game_player[0].location.x+=gs->game_player[0].speed*delta;
+		gs->game_player[0].location.z+=gs->game_player[0].speed*delta;
+	}
+	if(clients[0].pi.keys['W']){
+		gs->game_player[0].location.x-=gs->game_player[0].speed*delta;
+		gs->game_player[0].location.z-=gs->game_player[0].speed*delta;
+	}
+
+	npc_update(gs,delta);
+}
+
+double delta_time()
+{
+	double s = glfwGetTime();
+	glfwSetTime(0.0);
+	return s;
+}
+
 void update_all()
 {
 	pthread_mutex_lock(&clients_mutex);
 	get_client_inputs();
-	npc_update(&world_state);
+	engine_tick(&world_state,delta_time());
 	update_clients(world_state);
 	pthread_mutex_unlock(&clients_mutex);
 }
@@ -121,6 +146,7 @@ int main()
 	pthread_t accept_thread;
 	pthread_create(&accept_thread,NULL,accept_loop,NULL);
 	world_state = init_game();
+	glfwInit();
 
 	printf("Waiting for clients to connect...\n");
 

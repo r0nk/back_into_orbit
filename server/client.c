@@ -11,7 +11,7 @@ void init_clients()
 {
 	n_clients=0;
 	pthread_mutex_init(&clients_mutex,NULL);
-	
+
 	int i;
 	for(i=0;i<MAX_CLIENTS;i++){
 		clients[i].fd=0;
