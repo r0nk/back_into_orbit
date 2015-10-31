@@ -91,9 +91,9 @@ void npc_update(struct game_state * gs,double delta)
 		gs->npc[0].location = gs->game_player[0].location;
 
 	if(gs->npc[0].location.x>10 || gs->npc[0].location.x<0)
-		gs->npc[0].location.x=5;
+		gs->npc[0].location.x=5 + delta;
 	if(gs->npc[0].location.z>10 || gs->npc[0].location.z<0)
-		gs->npc[0].location.z=5;
+		gs->npc[0].location.z=5 + delta;
 
 	if((gs->npc[0].location.x ==  gs->game_player[0].location.x) &&
 			(gs->npc[0].location.z ==  gs->game_player[0].location.z)){
@@ -122,14 +122,32 @@ void player_controls(struct game_state * gs,double delta)
 			gs->game_player[i].location.x+=d;
 			gs->game_player[i].location.z-=d;
 		}
+		if(clients[i].pi.keys[' ']){
+			struct bullet b;
+			b.location = gs->game_player[i].location;
+			b.direction = (struct vector) {1,0,0};
+			b.speed = 1;
+			b.duration = 100;
+			add_bullet(gs,b);
+		}
+	}
+}
+
+void bullet_update(struct game_state * gs, double delta)
+{
+	int i;
+	for(i=0;i<gs->n_bullets;i++){
+		gs->bullet[i].location.x+=
+			(gs->bullet[i].direction.x+gs->bullet[i].speed)*delta;
+		gs->bullet[i].location.z+=
+			(gs->bullet[i].direction.z+gs->bullet[i].speed)*delta;
 	}
 }
 
 void engine_tick(struct game_state * gs,double delta)
 {
-	player_controls(gs,delta);
-
-
+	player_controls(gs,delta); //updates the players
+	bullet_update(gs,delta);
 	npc_update(gs,delta);
 }
 

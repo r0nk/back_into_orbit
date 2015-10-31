@@ -27,4 +27,3 @@ void add_client(int fd)
 	n_clients++;
 	pthread_mutex_unlock(&clients_mutex);
 }
-

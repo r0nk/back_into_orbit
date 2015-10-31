@@ -6,7 +6,7 @@
 
 #define MAX_PLAYERS 10
 #define MAX_NPCS 30
-#define MAX_BULLETS 400
+#define MAX_BULLETS 100
 
 struct game_state {
 	int n_players;

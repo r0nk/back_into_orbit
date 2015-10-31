@@ -9,6 +9,7 @@ struct bullet {
 	double speed;
 	point location;
 	struct vector direction;
+	double duration;
 };
 
 static inline void dump_bullet(struct bullet b){
