@@ -21,9 +21,9 @@ struct game_state init_game()
 	gs.n_players=1;
 	gs.current_player=0;
 	for(i=0;i<MAX_PLAYERS;i++){
-		gs.game_player[i].speed = 1.0;
+		gs.game_player[i].speed = 2.0;
 		gs.game_player[i].health = 100;
-		gs.game_player[i].location = (struct vector) {i,0,2};
+		gs.game_player[i].location = (struct vector) {2+i,0,2};
 		gs.game_player[i].destination = (struct vector) {0,0,0};
 	}
 	gs.n_bullets=0;
@@ -101,9 +101,19 @@ void npc_update(struct game_state * gs,double delta)
 	}
 }
 
+void fire_bullet(struct vector starting, struct vector direction)
+{
+	struct bullet b;
+	b.location = starting;
+	b.direction = direction;
+	b.speed = 5;
+	b.duration = 100;
+	add_bullet(&world_state,b);
+}
+
 void player_controls(struct game_state * gs,double delta)
 {
-	int i =0;
+	int i = 0;
 	for(i=0;i<n_clients;i++){
 		double d = gs->game_player[i].speed*delta;
 		if(clients[i].pi.keys['W']){
@@ -122,14 +132,45 @@ void player_controls(struct game_state * gs,double delta)
 			gs->game_player[i].location.x+=d;
 			gs->game_player[i].location.z-=d;
 		}
-		if(clients[i].pi.keys[' ']){
-			struct bullet b;
-			b.location = gs->game_player[i].location;
-			b.direction = (struct vector) {1,0,0};
-			b.speed = 1;
-			b.duration = 100;
-			add_bullet(gs,b);
+//TODO temporary firing rate
+#define FR 4
+		if(clients[i].pi.keys['J']){
+			if(gs->game_player[i].cooldown<1){
+				fire_bullet(gs->game_player[i].location,
+						(struct vector) {1,0,1});
+				gs->game_player[i].cooldown = FR;
+			} else {
+				gs->game_player[i].cooldown-=10*delta;
+			}
 		}
+		if(clients[i].pi.keys['H']){
+			if(gs->game_player[i].cooldown<1){
+				fire_bullet(gs->game_player[i].location,
+						(struct vector) {-1,0,1});
+				gs->game_player[i].cooldown = FR;
+			} else {
+				gs->game_player[i].cooldown-=10*delta;
+			}
+		}
+		if(clients[i].pi.keys['K']){
+			if(gs->game_player[i].cooldown<1){
+				fire_bullet(gs->game_player[i].location,
+						(struct vector) {-1,0,-1});
+				gs->game_player[i].cooldown = FR;
+			} else {
+				gs->game_player[i].cooldown-=10*delta;
+			}
+		}
+		if(clients[i].pi.keys['L']){
+			if(gs->game_player[i].cooldown<1){
+				fire_bullet(gs->game_player[i].location,
+						(struct vector) {1,0,-1});
+				gs->game_player[i].cooldown = FR;
+			} else {
+				gs->game_player[i].cooldown-=10*delta;
+			}
+		}
+
 	}
 }
 
@@ -138,9 +179,9 @@ void bullet_update(struct game_state * gs, double delta)
 	int i;
 	for(i=0;i<gs->n_bullets;i++){
 		gs->bullet[i].location.x+=
-			(gs->bullet[i].direction.x+gs->bullet[i].speed)*delta;
+			(gs->bullet[i].direction.x*gs->bullet[i].speed)*delta;
 		gs->bullet[i].location.z+=
-			(gs->bullet[i].direction.z+gs->bullet[i].speed)*delta;
+			(gs->bullet[i].direction.z*gs->bullet[i].speed)*delta;
 	}
 }
 

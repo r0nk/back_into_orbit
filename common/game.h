@@ -25,6 +25,7 @@ struct unit {
 	point location;
 	point destination;
 	double health;
+	double cooldown;
 };
 
 static inline void dump_unit(struct unit p){

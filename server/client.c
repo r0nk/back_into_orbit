@@ -14,8 +14,8 @@ void init_clients()
 
 	int i;
 	for(i=0;i<MAX_CLIENTS;i++){
-		clients[i].fd=0;
-		clients[i].pi= (struct player_input){0};
+		clients[i].fd = 0;
+		clients[i].pi = (struct player_input){0};
 	}
 }
 
