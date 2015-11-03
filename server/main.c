@@ -134,13 +134,14 @@ void player_controls(struct game_state * gs,double delta)
 		}
 //TODO temporary firing rate
 #define FR 4
+		if(gs->game_player[i].cooldown>1)
+				gs->game_player[i].cooldown-=10*delta;
+
 		if(clients[i].pi.keys['J']){
 			if(gs->game_player[i].cooldown<1){
 				fire_bullet(gs->game_player[i].location,
 						(struct vector) {1,0,1});
 				gs->game_player[i].cooldown = FR;
-			} else {
-				gs->game_player[i].cooldown-=10*delta;
 			}
 		}
 		if(clients[i].pi.keys['H']){
@@ -148,17 +149,13 @@ void player_controls(struct game_state * gs,double delta)
 				fire_bullet(gs->game_player[i].location,
 						(struct vector) {-1,0,1});
 				gs->game_player[i].cooldown = FR;
-			} else {
-				gs->game_player[i].cooldown-=10*delta;
-			}
+			} 
 		}
 		if(clients[i].pi.keys['K']){
 			if(gs->game_player[i].cooldown<1){
 				fire_bullet(gs->game_player[i].location,
 						(struct vector) {-1,0,-1});
 				gs->game_player[i].cooldown = FR;
-			} else {
-				gs->game_player[i].cooldown-=10*delta;
 			}
 		}
 		if(clients[i].pi.keys['L']){
@@ -166,8 +163,6 @@ void player_controls(struct game_state * gs,double delta)
 				fire_bullet(gs->game_player[i].location,
 						(struct vector) {1,0,-1});
 				gs->game_player[i].cooldown = FR;
-			} else {
-				gs->game_player[i].cooldown-=10*delta;
 			}
 		}
 
