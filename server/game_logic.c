@@ -19,7 +19,7 @@ void npc_update(struct game_state * gs,double delta)
 		gs->npc[0].location.z=5 + delta;
 
 	if((gs->npc[0].location.x ==  gs->game_player[0].location.x) &&
-			(gs->npc[0].location.z ==  gs->game_player[0].location.z)){
+		 (gs->npc[0].location.z ==  gs->game_player[0].location.z)){
 		gs->game_player[0].health-=0.100;
 	}
 }
@@ -57,7 +57,7 @@ void player_movement(struct game_state * gs, double delta, int i)
 
 void player_attack(struct game_state * gs, double delta, int i)
 {
-	//TODO temporary firing rate definition
+//TODO temporary firing rate definition
 #define FR 4
 	if(gs->game_player[i].cooldown<1){
 		if(clients[i].pi.keys['J']){
