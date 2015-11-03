@@ -29,6 +29,7 @@ struct game_state init_game()
 		gs.game_player[i].destination = (struct vector) {0,0,0};
 	}
 	gs.n_bullets=0;
+	glfwInit();
 	return gs;
 }
 
@@ -124,7 +125,6 @@ int main()
 	pthread_t accept_thread;
 	pthread_create(&accept_thread,NULL,accept_loop,NULL);
 	world_state = init_game();
-	glfwInit();
 
 	printf("Drone server: Waiting for clients to connect...\n");
 
