@@ -6,7 +6,7 @@ SRCFILES:= $(shell find -type f -name "*.c")
 
 OBJFILES:= $(patsubst %.c,%.o,$(SRCFILES)) 
 
-PROJ:= lost_lair
+PROJ:= dr0ne
 	
 .PHONY:all clean run
 
