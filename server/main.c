@@ -86,22 +86,13 @@ void update_clients(struct game_state gs)
 	}
 }
 
-void bullet_update(struct game_state * gs, double delta)
-{
-	int i;
-	for(i=0;i<gs->n_bullets;i++){
-		gs->bullet[i].location.x+=
-			(gs->bullet[i].direction.x*gs->bullet[i].speed)*delta;
-		gs->bullet[i].location.z+=
-			(gs->bullet[i].direction.z*gs->bullet[i].speed)*delta;
-	}
-}
 
 void engine_tick(struct game_state * gs,double delta)
 {
 	player_controls(gs,delta); //updates the players
 	bullet_update(gs,delta);
 	npc_update(gs,delta);
+	flag_update(gs,delta);
 }
 
 double delta_time()

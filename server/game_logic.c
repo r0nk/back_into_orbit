@@ -3,6 +3,26 @@
 
 struct game_state world_state;
 
+int close(struct vector a, struct vector b)
+{
+	if(( a.x > (b.x - 1)  && a.x < b.x + 1) &&
+		(a.z > (b.z-1) && a.z < (b.z+1))){
+			return 1;
+	}
+	return 0;
+}
+
+void bullet_update(struct game_state * gs, double delta)
+{
+	int i;
+	for(i=0;i<gs->n_bullets;i++){
+		gs->bullet[i].location.x+=
+			(gs->bullet[i].direction.x*gs->bullet[i].speed)*delta;
+		gs->bullet[i].location.z+=
+			(gs->bullet[i].direction.z*gs->bullet[i].speed)*delta;
+	}
+}
+
 void npc_update(struct game_state * gs,double delta)
 {
 	gs->n_npcs=1;
@@ -93,3 +113,15 @@ void player_controls(struct game_state * gs,double delta)
 		player_attack(gs,delta,i);
 	}
 }
+
+void flag_update(struct game_state * gs,double delta)
+{
+	int i = 0;
+	for(i=0;i<n_clients;i++){
+		if(close(gs->game_player[i].location,gs->blue_flag.location))
+			printf("touching blue flag\n");
+		if(close(gs->game_player[i].location,gs->red_flag.location))
+			printf("touching red flag\n");
+	}
+}
+
