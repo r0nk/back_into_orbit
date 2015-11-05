@@ -1,10 +1,18 @@
-#include "map.h"
-#include <stdlib.h>
+#ifndef MAP
+#define MAP
 #include <stdio.h>
-#include <unistd.h>
 #include <fcntl.h>
+#include <unistd.h>
+#include <stdlib.h>
 
-struct map mkmap(char * pathname)
+struct map {
+	char tiles[100][100];
+};
+
+extern struct map world_map;
+extern struct model block;
+
+static inline struct map mkmap(char * pathname)
 {
 	int fd = open(pathname,O_RDONLY);
 	struct map *m = calloc(1,sizeof(struct map));
@@ -27,3 +35,5 @@ struct map mkmap(char * pathname)
 	}
 	return *m;
 }
+
+#endif

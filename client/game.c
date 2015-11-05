@@ -23,7 +23,7 @@ struct game_state init_game()
 	gs.game_player[gs.current_player].location.z=5;
 	gs.game_player[gs.current_player].speed=3.0;
 	gs.game_player[gs.current_player].health=100;
-	world_map=mkmap("maps/condor.map");
+	world_map=mkmap("../maps/condor.map");
 
 	gs.n_bullets=0;
 	return gs;

@@ -5,6 +5,7 @@
 
 #include <game_state.h>
 #include <protolol.h>
+#include <map.h>
 
 #include "networking.h"
 #include "callbacks.h"
@@ -12,7 +13,6 @@
 #include "graphics.h"
 #include "engine.h"
 #include "game.h"
-#include "map.h"
 
 /*get the time since the last delta_time() call*/
 double delta_time()
