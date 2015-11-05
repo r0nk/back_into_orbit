@@ -8,13 +8,16 @@
 #include <errno.h>
 #include <sys/socket.h>
 
+#include <map.h>
 #include <protolol.h>
+
 #include "client.h"
 #include "game_logic.h"
 
 int server_socket;
 
 struct game_state world_state;
+struct map world_map;
 
 struct game_state init_game()
 {
@@ -33,6 +36,7 @@ struct game_state init_game()
 	gs.red_flag.location = (struct vector) { 5,0,10};
 	gs.blue_flag.location = (struct vector) { 10,0,5};
 	glfwInit();
+	world_map=mkmap("../maps/condor.map");
 	return gs;
 }
 

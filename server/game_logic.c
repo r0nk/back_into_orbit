@@ -1,9 +1,9 @@
+#include <map.h>
+
 #include "game_logic.h"
 #include "client.h"
 
-struct game_state world_state;
-
-int close(struct vector a, struct vector b)
+int near(struct vector a, struct vector b)
 {
 	if(( a.x > (b.x - 1)  && a.x < b.x + 1) &&
 		(a.z > (b.z-1) && a.z < (b.z+1))){
@@ -54,25 +54,35 @@ void fire_bullet(struct vector starting, struct vector direction)
 	add_bullet(&world_state,b);
 }
 
+void move_unit(struct unit * u,struct vector d)
+{
+	if(!world_map.tiles[ (int)(u->location.x+d.x) ][(int)(u->location.z)])
+		u->location.x+=d.x;
+	if(!world_map.tiles[ (int)(u->location.x)][(int)(u->location.z+d.z)])
+		u->location.z+=d.z;
+}
+
 void player_movement(struct game_state * gs, double delta, int i)
 {
 	double d = gs->game_player[i].speed*delta;
+	struct vector dvec = (struct vector){0,0,0};
 	if(clients[i].pi.keys['W']){
-		gs->game_player[i].location.x-=d;
-		gs->game_player[i].location.z-=d;
+		dvec.x-=d;
+		dvec.z-=d;
 	}
 	if(clients[i].pi.keys['A']){
-		gs->game_player[i].location.x-=d;
-		gs->game_player[i].location.z+=d;
+		dvec.x-=d;
+		dvec.z+=d;
 	}
 	if(clients[i].pi.keys['S']){
-		gs->game_player[i].location.x+=d;
-		gs->game_player[i].location.z+=d;
+		dvec.x+=d;
+		dvec.z+=d;
 	}
 	if(clients[i].pi.keys['D']){
-		gs->game_player[i].location.x+=d;
-		gs->game_player[i].location.z-=d;
+		dvec.x+=d;
+		dvec.z-=d;
 	}
+	move_unit(&gs->game_player[i],dvec);
 }
 
 void player_attack(struct game_state * gs, double delta, int i)
@@ -118,10 +128,10 @@ void flag_update(struct game_state * gs,double delta)
 {
 	int i = 0;
 	for(i=0;i<n_clients;i++){
-		if(close(gs->game_player[i].location,gs->blue_flag.location)){
+		if(near(gs->game_player[i].location,gs->blue_flag.location)){
 			gs->blue_flag.location=gs->game_player[i].location;
 		}
-		if(close(gs->game_player[i].location,gs->red_flag.location)){
+		if(near(gs->game_player[i].location,gs->red_flag.location)){
 			gs->red_flag.location=gs->game_player[i].location;
 		}
 	}
