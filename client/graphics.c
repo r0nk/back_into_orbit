@@ -18,6 +18,8 @@ struct model d_model;
 struct model ai_model;
 struct model bullet_model;
 struct model block_model;
+struct model bflag_model;
+struct model rflag_model;
 
 void init_models()
 {
@@ -26,6 +28,8 @@ void init_models()
 	ai_model=tetra();
 	bullet_model=bullet();
 	block_model=cube();
+	bflag_model=blue_flag_model();
+	rflag_model=red_flag_model();
 }
 
 int init_window_lib()
@@ -146,7 +150,8 @@ void draw_models(struct game_state * gs)
 	for(i=0;i<gs->n_bullets;i++){
 		draw_model(bullet_model,gs->bullet[i].location);
 	}
-	draw_model(d_model,gs->game_player[gs->current_player].destination);
+	draw_model(rflag_model,gs->red_flag.location);
+	draw_model(bflag_model,gs->blue_flag.location);
 }
 
 void draw_health_bar(struct unit u, int x, int y)

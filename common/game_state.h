@@ -9,6 +9,8 @@
 #define MAX_BULLETS 100
 
 struct game_state {
+	struct unit red_flag;
+	struct unit blue_flag;
 	int n_players;
 	int current_player;
 	struct unit game_player[MAX_PLAYERS];
