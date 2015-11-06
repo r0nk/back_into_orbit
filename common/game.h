@@ -12,6 +12,17 @@ struct bullet {
 	double duration;
 };
 
+struct unit {
+	double speed;
+	point location;
+	point destination;
+	double health;
+	double cooldown;
+	int team;
+#define RED_TEAM 1
+#define BLUE_TEAM 1
+};
+
 static inline void dump_bullet(struct bullet b){
 	printf("speed:%f\n",b.speed);
 	printf("location:");
@@ -20,14 +31,6 @@ static inline void dump_bullet(struct bullet b){
 	dump_vector(b.direction);
 }
 
-struct unit {
-	double speed;
-	point location;
-	point destination;
-	double health;
-	double cooldown;
-};
-
 static inline void dump_unit(struct unit p){
 	printf("speed:%f\n",p.speed);
 	printf("location:");
@@ -35,6 +38,7 @@ static inline void dump_unit(struct unit p){
 	printf("\ndestination:");
 	dump_vector(p.destination);
 	printf("\nhealth:%f\n",p.health);
+	printf("\nteam:%i\n",p.team);
 }
 
 #endif

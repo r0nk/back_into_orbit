@@ -6,6 +6,7 @@
 #include "callbacks.h"
 #include "game.h"
 #include "poly.h"
+#include "model.h"
 #include "map.h"
 
 GLFWwindow * window;
@@ -18,6 +19,8 @@ struct model d_model;
 struct model ai_model;
 struct model bullet_model;
 struct model block_model;
+struct model bp_model;
+struct model rp_model;
 struct model bflag_model;
 struct model rflag_model;
 
@@ -28,6 +31,8 @@ void init_models()
 	ai_model=tetra();
 	bullet_model=bullet();
 	block_model=cube();
+	bp_model=blue_pawn_model();
+	rp_model=red_pawn_model();
 	bflag_model=blue_flag_model();
 	rflag_model=red_flag_model();
 }
@@ -55,7 +60,7 @@ void init_gl()
 {
 	glViewport(0,0,window_width,window_height);
 	ratio = window_width / (float) window_height;
-	glClearColor(0.2,0.2,0.2,1.0);
+	glClearColor(0.0,0.5,0.0,1.0);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);
@@ -142,7 +147,12 @@ void draw_models(struct game_state * gs)
 	draw_map();
 	int i;
 	for(i=0;i<gs->n_players;i++){
-		draw_model(p_model,gs->game_player[i].location);
+		if(gs->game_player[i].team==BLUE_TEAM)
+			draw_model(bp_model,gs->game_player[i].location);
+		else if (gs->game_player[i].team==RED_TEAM)
+			draw_model(rp_model,gs->game_player[i].location);
+		else 
+			draw_model(p_model,gs->game_player[i].location);
 	}
 	for(i=0;i<gs->n_npcs;i++){
 		draw_model(ai_model,gs->npc[i].location);

@@ -8,6 +8,8 @@ struct model player_model();
 struct model cube();
 struct model tetra();
 struct model skull_monkey();
+struct model red_pawn_model();
+struct model blue_pawn_model();
 struct model red_flag_model();
 struct model blue_flag_model();
 
