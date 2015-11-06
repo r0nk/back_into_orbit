@@ -30,7 +30,7 @@ struct game_state init_game()
 		gs.game_player[i].health = 100;
 		gs.game_player[i].location = (struct vector) {2+i,0,2};
 		gs.game_player[i].destination = (struct vector) {0,0,0};
-		gs.game_player[i].team = RED_TEAM;
+		gs.game_player[i].team = BLUE_TEAM;
 	}
 	gs.n_bullets=0;
 	gs.n_npcs=0;

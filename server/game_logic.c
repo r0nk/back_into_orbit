@@ -128,10 +128,12 @@ void flag_update(struct game_state * gs,double delta)
 {
 	int i = 0;
 	for(i=0;i<n_clients;i++){
-		if(near(gs->game_player[i].location,gs->blue_flag.location)){
+		if(near(gs->game_player[i].location,gs->blue_flag.location)&&
+				(gs->game_player[i].team==RED_TEAM)){
 			gs->blue_flag.location=gs->game_player[i].location;
 		}
-		if(near(gs->game_player[i].location,gs->red_flag.location)){
+		if(near(gs->game_player[i].location,gs->red_flag.location)&&
+				(gs->game_player[i].team==BLUE_TEAM)){
 			gs->red_flag.location=gs->game_player[i].location;
 		}
 	}

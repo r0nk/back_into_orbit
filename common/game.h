@@ -20,7 +20,7 @@ struct unit {
 	double cooldown;
 	int team;
 #define RED_TEAM 1
-#define BLUE_TEAM 1
+#define BLUE_TEAM 2
 };
 
 static inline void dump_bullet(struct bullet b){
