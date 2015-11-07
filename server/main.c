@@ -111,6 +111,7 @@ void update_all()
 {
 	pthread_mutex_lock(&clients_mutex);
 
+	world_state.n_players=n_clients;
 	get_client_inputs();
 	engine_tick(&world_state,delta_time());
 	update_clients(world_state);
