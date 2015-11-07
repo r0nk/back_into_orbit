@@ -11,6 +11,8 @@
 struct game_state {
 	struct unit red_flag;
 	struct unit blue_flag;
+	int red_score;
+	int blue_score;
 	int n_players;
 	int current_player;
 	struct unit game_player[MAX_PLAYERS];

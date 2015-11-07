@@ -36,6 +36,8 @@ struct game_state init_game()
 	gs.n_npcs=0;
 	gs.red_flag.location = (struct vector) { 45,0,15};
 	gs.blue_flag.location = (struct vector) { 5,0,5};
+	gs.red_score=0;
+	gs.blue_score=0;
 	glfwInit();
 	world_map=mkmap("../maps/condor.map");
 	return gs;

@@ -196,10 +196,58 @@ void draw_health_bar(struct unit u, int x, int y)
 	draw_poly(b);
 }
 
+void draw_score(struct game_state * gs,double x, double y)
+{
+	struct polygon a,b;
+	a.v[0].p = (struct vector) {x+0.0,y+0.0,0.0};
+	a.v[1].p = (struct vector) {x+1.0,y+0.0,0.0};
+	a.v[2].p = (struct vector) {x+0.0,y+1.0,0.0};
+	b.v[0].p = (struct vector) {x+2.0,y+0.0,0.0};
+	b.v[1].p = (struct vector) {x+1.0,y+0.0,0.0};
+	b.v[2].p = (struct vector) {x+2.0,y+1.0,0.0};
+
+	if(gs->red_score>0)
+		a.v[0].c = (struct vector) {1,0,0};
+	else
+		a.v[0].c = (struct vector) {0,0,0};
+	if(gs->red_score>1)
+		a.v[1].c = (struct vector) {1,0,0};
+	else
+		a.v[1].c = (struct vector) {0,0,0};
+	if(gs->red_score>2)
+		a.v[2].c = (struct vector) {1,0,0};
+	else
+		a.v[2].c = (struct vector) {0,0,0};
+
+	if(gs->blue_score>0)
+		b.v[0].c = (struct vector) {0,0,1};
+	else
+		b.v[0].c = (struct vector) {0,0,0};
+	if(gs->blue_score>1)
+		b.v[1].c = (struct vector) {0,0,1};
+	else
+		b.v[1].c = (struct vector) {0,0,0};
+	if(gs->blue_score>2)
+		b.v[2].c = (struct vector) {0,0,1};
+	else
+		b.v[2].c = (struct vector) {0,0,0};
+
+	a.v[0].n = normal(a.v[0].p);
+	a.v[1].n = normal(a.v[1].p);
+	a.v[2].n = normal(a.v[2].p);
+	b.v[0].n = normal(a.v[0].p);
+	b.v[1].n = normal(a.v[1].p);
+	b.v[2].n = normal(a.v[2].p);
+
+	draw_poly(a);
+	draw_poly(b);
+}
+
 void draw_hud(struct game_state * gs)
 {
 	glBegin(GL_TRIANGLES);
 	draw_health_bar(gs->game_player[gs->current_player],0,-9);
+	draw_score(gs,-1,9);
 	glEnd();
 }
 
