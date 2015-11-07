@@ -30,7 +30,7 @@ void init_models()
 	d_model=player_model();
 	ai_model=tetra();
 	bullet_model=bullet();
-	block_model=cube();
+	block_model=wall_block();
 	bp_model=blue_pawn_model();
 	rp_model=red_pawn_model();
 	bflag_model=blue_flag_model();
