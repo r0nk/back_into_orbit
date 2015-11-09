@@ -12,9 +12,19 @@ int near(struct vector a, struct vector b)
 	return 0;
 }
 
-void bullet_update(struct game_state * gs, double delta)
+int player_hittest(struct game_state * gs, struct vector b)
 {
 	int i;
+	for(i=0;i<gs->n_players;i++){
+		if(near(gs->game_player[i].location,b))
+			return i;
+	}
+	return -1;
+}
+
+void bullet_update(struct game_state * gs, double delta)
+{
+	int i,j;
 	for(i=0;i<gs->n_bullets;i++){
 		gs->bullet[i].location.x+=
 			(gs->bullet[i].direction.x*gs->bullet[i].speed)*delta;
@@ -23,8 +33,12 @@ void bullet_update(struct game_state * gs, double delta)
 		if(world_map.tiles[(int)gs->bullet[i].location.x]
 				[(int)gs->bullet[i].location.z])
 			remove_bullet(gs,i);
+		j = player_hittest(gs,gs->bullet[i].location);
+		if(j!=-1){
+			gs->game_player[j].health-=10;
+			remove_bullet(gs,i);
+		}
 	}
-
 }
 
 void npc_update(struct game_state * gs,double delta)
@@ -51,7 +65,9 @@ void npc_update(struct game_state * gs,double delta)
 void fire_bullet(struct vector starting, struct vector direction)
 {
 	struct bullet b;
-	b.location = starting;
+	b.location.x = starting.x+direction.x;
+	b.location.y = starting.y+direction.y;
+	b.location.z = starting.z+direction.z;
 	b.direction = direction;
 	b.speed = 5;
 	b.duration = 100;
