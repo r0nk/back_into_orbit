@@ -36,6 +36,8 @@ struct game_state init_game()
 	gs.n_npcs=0;
 	gs.red_flag_starting = (struct vector){ 45,0,15};
 	gs.blue_flag_starting = (struct vector){ 5,0,5};
+	gs.red_spawn = (struct vector){ 40,0,15};
+	gs.blue_spawn = (struct vector){ 5,0,8};
 	gs.red_flag.location = gs.red_flag_starting;
 	gs.blue_flag.location = gs.blue_flag_starting;
 	gs.red_score=0;

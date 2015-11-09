@@ -135,12 +135,23 @@ void player_attack(struct game_state * gs, double delta, int i)
 	}
 }
 
+void respawn(struct game_state * gs, struct unit * u)
+{
+	if(u->team==RED_TEAM)
+		u->location=gs->red_spawn;
+	if(u->team==BLUE_TEAM)
+		u->location=gs->blue_spawn;
+	u->health=100;
+}
+
 void player_controls(struct game_state * gs,double delta)
 {
 	int i = 0;
 	for(i=0;i<n_clients;i++){
 		player_movement(gs,delta,i);
 		player_attack(gs,delta,i);
+		if(gs->game_player[i].health < 0)
+			respawn(gs,&gs->game_player[i]);
 	}
 }
 
