@@ -23,6 +23,7 @@ struct model bp_model;
 struct model rp_model;
 struct model bflag_model;
 struct model rflag_model;
+struct model fh_model;
 
 void init_models()
 {
@@ -35,6 +36,7 @@ void init_models()
 	rp_model=red_pawn_model();
 	bflag_model=blue_flag_model();
 	rflag_model=red_flag_model();
+	fh_model = flag_holder_model();
 }
 
 int init_window_lib()
@@ -162,6 +164,8 @@ void draw_models(struct game_state * gs)
 	}
 	draw_model(rflag_model,gs->red_flag.location);
 	draw_model(bflag_model,gs->blue_flag.location);
+	draw_model(fh_model,gs->red_flag_starting);
+	draw_model(fh_model,gs->blue_flag_starting);
 }
 
 void draw_health_bar(struct unit u, int x, int y)

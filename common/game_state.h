@@ -10,7 +10,9 @@
 
 struct game_state {
 	struct unit red_flag;
+	struct vector red_flag_starting; /* where the red flag starts */
 	struct unit blue_flag;
+	struct vector blue_flag_starting; /* where the blue flag starts */
 	int red_score;
 	int blue_score;
 	int n_players;

@@ -34,8 +34,10 @@ struct game_state init_game()
 	}
 	gs.n_bullets=0;
 	gs.n_npcs=0;
-	gs.red_flag.location = (struct vector) { 45,0,15};
-	gs.blue_flag.location = (struct vector) { 5,0,5};
+	gs.red_flag_starting = (struct vector){ 45,0,15};
+	gs.blue_flag_starting = (struct vector){ 5,0,5};
+	gs.red_flag.location = gs.red_flag_starting;
+	gs.blue_flag.location = gs.blue_flag_starting;
 	gs.red_score=0;
 	gs.blue_score=0;
 	glfwInit();
