@@ -22,6 +22,13 @@ struct game_state {
 	struct bullet bullet[MAX_BULLETS];
 };
 
+static inline void remove_bullet(struct game_state * gs, int i)
+{
+	for(;i<gs->n_bullets;i++)
+		gs->bullet[i] = gs->bullet[i+1];
+	gs->n_bullets--;
+}
+
 static inline void add_bullet(struct game_state * gs, struct bullet b)
 {
 	if(gs->n_bullets>MAX_BULLETS)

@@ -20,7 +20,11 @@ void bullet_update(struct game_state * gs, double delta)
 			(gs->bullet[i].direction.x*gs->bullet[i].speed)*delta;
 		gs->bullet[i].location.z+=
 			(gs->bullet[i].direction.z*gs->bullet[i].speed)*delta;
+		if(world_map.tiles[(int)gs->bullet[i].location.x]
+				[(int)gs->bullet[i].location.z])
+			remove_bullet(gs,i);
 	}
+
 }
 
 void npc_update(struct game_state * gs,double delta)
