@@ -100,7 +100,7 @@ void engine_tick(struct game_state * gs,double delta)
 {
 	player_controls(gs,delta); //updates the players
 	bullet_update(gs,delta);
-	npc_update(gs,delta);
+	//npc_update(gs,delta);
 	flag_update(gs,delta);
 }
 
