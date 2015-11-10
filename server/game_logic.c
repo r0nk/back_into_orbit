@@ -159,6 +159,7 @@ void flag_update(struct game_state * gs,double delta)
 {
 	int i = 0;
 	for(i=0;i<n_clients;i++){
+		/*TODO replace this all with pickup item */
 		if(near(gs->game_player[i].location,gs->blue.flag.location)&&
 				(gs->game_player[i].team==RED_TEAM)){
 			gs->blue.flag.location=gs->game_player[i].location;

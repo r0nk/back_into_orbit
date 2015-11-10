@@ -5,6 +5,7 @@
 #include "engine.h"
 #include "callbacks.h"
 #include "game.h"
+#include "inventory.h"
 #include "poly.h"
 #include "model.h"
 #include "map.h"
@@ -200,6 +201,26 @@ void draw_health_bar(struct unit u, int x, int y)
 	draw_poly(b);
 }
 
+void draw_inventory(struct unit u,double x, double y)
+{
+	struct polygon a;
+	int i;
+	for(i=0;i<MAX_INVENTORY_SPACE;i++){
+		a.v[0].p = (struct vector) {x+0.0-i,y+0.0,0.0};
+		a.v[1].p = (struct vector) {x+1.0-i,y+0.0,0.0};
+		a.v[2].p = (struct vector) {x+0.5-i,y+0.5,0.0};
+
+		a.v[0].c = (struct vector) {1,1,1};
+		a.v[1].c = (struct vector) {1,1,1};
+		a.v[2].c = (struct vector) {1,0.8,1};
+
+		a.v[0].n = normal(a.v[0].p);
+		a.v[1].n = normal(a.v[1].p);
+		a.v[2].n = normal(a.v[2].p);
+
+		draw_poly(a);
+	}
+}
 void draw_score(struct game_state * gs,double x, double y)
 {
 	struct polygon a,b;
@@ -252,6 +273,7 @@ void draw_hud(struct game_state * gs)
 	glBegin(GL_TRIANGLES);
 	draw_health_bar(gs->game_player[gs->current_player],0,-9);
 	draw_score(gs,-1,9);
+	draw_inventory(gs->game_player[gs->current_player],8,-8);
 	glEnd();
 }
 

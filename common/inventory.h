@@ -6,13 +6,13 @@
 struct item {
 	char name[16];
 	void (*effects)(void);
-}
+};
 
 #define MAX_INVENTORY_SPACE 6
 
 struct inventory {
 	int n_items;
 	struct item i[MAX_INVENTORY_SPACE];
-}
+};
  
 #endif
