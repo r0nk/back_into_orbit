@@ -162,10 +162,10 @@ void draw_models(struct game_state * gs)
 	for(i=0;i<gs->n_bullets;i++){
 		draw_model(bullet_model,gs->bullet[i].location);
 	}
-	draw_model(rflag_model,gs->red_flag.location);
-	draw_model(bflag_model,gs->blue_flag.location);
-	draw_model(fh_model,gs->red_flag_starting);
-	draw_model(fh_model,gs->blue_flag_starting);
+	draw_model(rflag_model,gs->red.flag.location);
+	draw_model(bflag_model,gs->blue.flag.location);
+	draw_model(fh_model,gs->red.flag_starting);
+	draw_model(fh_model,gs->blue.flag_starting);
 }
 
 void draw_health_bar(struct unit u, int x, int y)
@@ -210,28 +210,28 @@ void draw_score(struct game_state * gs,double x, double y)
 	b.v[1].p = (struct vector) {x+1.0,y+0.0,0.0};
 	b.v[2].p = (struct vector) {x+2.0,y+1.0,0.0};
 
-	if(gs->red_score>0)
+	if(gs->red.score>0)
 		a.v[0].c = (struct vector) {1,0,0};
 	else
 		a.v[0].c = (struct vector) {0,0,0};
-	if(gs->red_score>1)
+	if(gs->red.score>1)
 		a.v[1].c = (struct vector) {1,0,0};
 	else
 		a.v[1].c = (struct vector) {0,0,0};
-	if(gs->red_score>2)
+	if(gs->red.score>2)
 		a.v[2].c = (struct vector) {1,0,0};
 	else
 		a.v[2].c = (struct vector) {0,0,0};
 
-	if(gs->blue_score>0)
+	if(gs->blue.score>0)
 		b.v[0].c = (struct vector) {0,0,1};
 	else
 		b.v[0].c = (struct vector) {0,0,0};
-	if(gs->blue_score>1)
+	if(gs->blue.score>1)
 		b.v[1].c = (struct vector) {0,0,1};
 	else
 		b.v[1].c = (struct vector) {0,0,0};
-	if(gs->blue_score>2)
+	if(gs->blue.score>2)
 		b.v[2].c = (struct vector) {0,0,1};
 	else
 		b.v[2].c = (struct vector) {0,0,0};

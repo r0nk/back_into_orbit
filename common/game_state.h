@@ -8,15 +8,15 @@
 #define MAX_NPCS 30
 #define MAX_BULLETS 100
 
+struct team {
+	int score;
+	struct vector spawn;
+	struct unit flag;
+	struct vector flag_starting;
+};
+
 struct game_state {
-	struct unit red_flag;
-	struct vector red_flag_starting; /* where the red flag starts */
-	struct vector red_spawn;
-	struct unit blue_flag;
-	struct vector blue_flag_starting; /* where the blue flag starts */
-	struct vector blue_spawn;
-	int red_score;
-	int blue_score;
+	struct team red,blue;
 	int n_players;
 	int current_player;
 	struct unit game_player[MAX_PLAYERS];

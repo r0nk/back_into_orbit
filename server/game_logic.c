@@ -138,9 +138,9 @@ void player_attack(struct game_state * gs, double delta, int i)
 void respawn(struct game_state * gs, struct unit * u)
 {
 	if(u->team==RED_TEAM)
-		u->location=gs->red_spawn;
+		u->location=gs->red.spawn;
 	if(u->team==BLUE_TEAM)
-		u->location=gs->blue_spawn;
+		u->location=gs->blue.spawn;
 	u->health=100;
 }
 
@@ -159,23 +159,22 @@ void flag_update(struct game_state * gs,double delta)
 {
 	int i = 0;
 	for(i=0;i<n_clients;i++){
-		if(near(gs->game_player[i].location,gs->blue_flag.location)&&
+		if(near(gs->game_player[i].location,gs->blue.flag.location)&&
 				(gs->game_player[i].team==RED_TEAM)){
-			gs->blue_flag.location=gs->game_player[i].location;
-			if(near(gs->red_flag_starting,gs->blue_flag.location)){
-				gs->red_score++;
-				gs->blue_flag.location=
-					gs->blue_flag_starting;
+			gs->blue.flag.location=gs->game_player[i].location;
+			if(near(gs->red.flag_starting,gs->blue.flag.location)){
+				gs->red.score++;
+				gs->blue.flag.location=
+					gs->blue.flag_starting;
 			}
 		}
-		if(near(gs->game_player[i].location,gs->red_flag.location)&&
+		if(near(gs->game_player[i].location,gs->red.flag.location)&&
 				(gs->game_player[i].team==BLUE_TEAM)){
-			gs->red_flag.location=gs->game_player[i].location;
-			if(near(gs->red_flag.location,gs->blue_flag_starting)){
-				gs->blue_score++;
-				gs->red_flag.location=
-					gs->red_flag_starting;
-
+			gs->red.flag.location=gs->game_player[i].location;
+			if(near(gs->red.flag.location,gs->blue.flag_starting)){
+				gs->blue.score++;
+				gs->red.flag.location=
+					gs->red.flag_starting;
 			}
 		}
 	}
