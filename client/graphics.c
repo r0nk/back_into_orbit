@@ -204,15 +204,18 @@ void draw_health_bar(struct unit u, int x, int y)
 void draw_inventory(struct unit u,double x, double y)
 {
 	struct polygon a;
+	double c;
 	int i;
 	for(i=0;i<MAX_INVENTORY_SPACE;i++){
 		a.v[0].p = (struct vector) {x+0.0-i,y+0.0,0.0};
 		a.v[1].p = (struct vector) {x+1.0-i,y+0.0,0.0};
 		a.v[2].p = (struct vector) {x+0.5-i,y+0.5,0.0};
 
-		a.v[0].c = (struct vector) {1,1,1};
-		a.v[1].c = (struct vector) {1,1,1};
-		a.v[2].c = (struct vector) {1,0.8,1};
+		c = (u.inventory.n_items<=i);
+
+		a.v[0].c = (struct vector) {1,c,1};
+		a.v[1].c = (struct vector) {1,c,1};
+		a.v[2].c = (struct vector) {1,c,1};
 
 		a.v[0].n = normal(a.v[0].p);
 		a.v[1].n = normal(a.v[1].p);

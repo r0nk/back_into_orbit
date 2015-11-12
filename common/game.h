@@ -19,17 +19,11 @@ struct unit {
 	point destination;
 	double health;
 	double cooldown;
-	int team;
-};
-
-struct player {
-	struct unit u;
-	struct inventory i;
+	struct inventory inventory;
 	int team;
 #define RED_TEAM 1
 #define BLUE_TEAM 2
 };
-
 
 static inline void dump_bullet(struct bullet b){
 	printf("speed:%f\n",b.speed);

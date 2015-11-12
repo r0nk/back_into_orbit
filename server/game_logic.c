@@ -169,13 +169,22 @@ void flag_update(struct game_state * gs,double delta)
 					gs->blue.flag_starting;
 			}
 		}
+		/*TODO FIXME; this one is temporarily different for testing*/
 		if(near(gs->game_player[i].location,gs->red.flag.location)&&
 				(gs->game_player[i].team==BLUE_TEAM)){
+
 			gs->red.flag.location=gs->game_player[i].location;
+			gs->game_player[i].inventory.item[0]=flag_item();
+			gs->game_player[i].inventory.n_items=1;
+
 			if(near(gs->red.flag.location,gs->blue.flag_starting)){
 				gs->blue.score++;
 				gs->red.flag.location=
 					gs->red.flag_starting;
+				gs->game_player[i].inventory.item[0]
+					=(struct item) {0};
+				gs->game_player[i].inventory.n_items
+					=0;
 			}
 		}
 	}
