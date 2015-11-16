@@ -20,7 +20,11 @@ struct unit {
 	double health;
 	double cooldown;
 	struct inventory inventory;
+	int type;
+#define UNIT_TYPE_PLAYER 1
+#define UNIT_TYPE_SHOP   2
 	int team;
+#define NEUTRAL_TEAM 0
 #define RED_TEAM 1
 #define BLUE_TEAM 2
 };

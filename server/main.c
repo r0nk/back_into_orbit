@@ -31,9 +31,9 @@ struct game_state init_game()
 		gs.game_player[i].location = (struct vector) {2+i,0,2};
 		gs.game_player[i].destination = (struct vector) {0,0,0};
 		gs.game_player[i].team = BLUE_TEAM;
+		gs.game_player[i].type = UNIT_TYPE_PLAYER;
 	}
 	gs.n_bullets=0;
-	gs.n_npcs=0;
 	gs.red.flag_starting = (struct vector){ 45,0,15};
 	gs.blue.flag_starting = (struct vector){ 5,0,5};
 	gs.red.spawn = (struct vector){ 40,0,15};
@@ -42,6 +42,15 @@ struct game_state init_game()
 	gs.blue.flag.location = gs.blue.flag_starting;
 	gs.red.score=0;
 	gs.blue.score=0;
+	
+	gs.n_npcs=1;
+	gs.npc[0].speed = 0;
+	gs.npc[0].health = 100;
+	gs.npc[0].location = (struct vector) {28,0,2};
+	gs.npc[0].destination = (struct vector) {0,0,0};
+	gs.npc[0].team = 0;
+	gs.npc[0].type = UNIT_TYPE_SHOP;
+
 	glfwInit();
 	world_map=mkmap("../maps/condor.map");
 	return gs;

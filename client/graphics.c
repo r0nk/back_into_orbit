@@ -25,6 +25,7 @@ struct model rp_model;
 struct model bflag_model;
 struct model rflag_model;
 struct model fh_model;
+struct model shp_model;
 
 void init_models()
 {
@@ -38,6 +39,7 @@ void init_models()
 	bflag_model=blue_flag_model();
 	rflag_model=red_flag_model();
 	fh_model = flag_holder_model();
+	shp_model = shop_model();
 }
 
 int init_window_lib()
@@ -145,20 +147,33 @@ void draw_map()
 	}
 }
 
+void draw_unit(struct unit u)
+{
+	switch(u.type){
+		case UNIT_TYPE_PLAYER:
+			if(u.team==BLUE_TEAM)
+				draw_model(bp_model,u.location);
+			else if (u.team==RED_TEAM)
+				draw_model(rp_model,u.location);
+			else 
+				draw_model(p_model,u.location);
+			break;
+		case UNIT_TYPE_SHOP:
+			draw_model(shp_model,u.location);
+			break;
+	}
+}
+
+
 void draw_models(struct game_state * gs)
 {
 	draw_map();
 	int i;
 	for(i=0;i<gs->n_players;i++){
-		if(gs->game_player[i].team==BLUE_TEAM)
-			draw_model(bp_model,gs->game_player[i].location);
-		else if (gs->game_player[i].team==RED_TEAM)
-			draw_model(rp_model,gs->game_player[i].location);
-		else 
-			draw_model(p_model,gs->game_player[i].location);
+		draw_unit(gs->game_player[i]);
 	}
 	for(i=0;i<gs->n_npcs;i++){
-		draw_model(ai_model,gs->npc[i].location);
+		draw_unit(gs->npc[i]);
 	}
 	for(i=0;i<gs->n_bullets;i++){
 		draw_model(bullet_model,gs->bullet[i].location);
@@ -224,6 +239,7 @@ void draw_inventory(struct unit u,double x, double y)
 		draw_poly(a);
 	}
 }
+
 void draw_score(struct game_state * gs,double x, double y)
 {
 	struct polygon a,b;
@@ -299,12 +315,12 @@ void graphics_draw(struct game_state * gs)
 	glPushMatrix();
 	int zoom = 6;
 	gluLookAt(gs->game_player[gs->current_player].location.x+zoom,
-			gs->game_player[gs->current_player].location.y+(zoom*1.2),
-			gs->game_player[gs->current_player].location.z+zoom,
-			gs->game_player[gs->current_player].location.x,
-			gs->game_player[gs->current_player].location.y,
-			gs->game_player[gs->current_player].location.z,
-			0,1,0);
+		gs->game_player[gs->current_player].location.y+(zoom*1.2),
+		gs->game_player[gs->current_player].location.z+zoom,
+		gs->game_player[gs->current_player].location.x,
+		gs->game_player[gs->current_player].location.y,
+		gs->game_player[gs->current_player].location.z,
+		0,1,0);
 	draw_models(gs);
 	glPopMatrix();
 
