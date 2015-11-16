@@ -6,8 +6,8 @@
 int near(struct vector a, struct vector b)
 {
 	if(( a.x > (b.x - 1)  && a.x < b.x + 1) &&
-		(a.z > (b.z-1) && a.z < (b.z+1))){
-			return 1;
+			(a.z > (b.z-1) && a.z < (b.z+1))){
+		return 1;
 	}
 	return 0;
 }
@@ -43,22 +43,15 @@ void bullet_update(struct game_state * gs, double delta)
 
 void npc_update(struct game_state * gs,double delta)
 {
-	gs->n_npcs=1;
-	gs->npc[0].location.x=5;
-	gs->npc[0].location.y=0;
-	gs->npc[0].location.z=5;
-
-	if(gs->n_players > 0)
-		gs->npc[0].location = gs->game_player[0].location;
-
-	if(gs->npc[0].location.x>10 || gs->npc[0].location.x<0)
-		gs->npc[0].location.x=5 + delta;
-	if(gs->npc[0].location.z>10 || gs->npc[0].location.z<0)
-		gs->npc[0].location.z=5 + delta;
-
-	if((gs->npc[0].location.x ==  gs->game_player[0].location.x) &&
-		 (gs->npc[0].location.z ==  gs->game_player[0].location.z)){
-		gs->game_player[0].health-=0.100;
+	int i;
+	for(i=0;i<gs->n_players;i++){
+		if(near(gs->game_player[i].location,gs->npc[0].location)){
+			if(gs->game_player[i].inventory.n_items==1){
+				printf("the turkey calls to us.\n");
+				gs->game_player[i].inventory.item[1]=flag_item();
+				gs->game_player[i].inventory.n_items=2;
+			}
+		}
 	}
 }
 
@@ -107,7 +100,7 @@ void player_movement(struct game_state * gs, double delta, int i)
 
 void player_attack(struct game_state * gs, double delta, int i)
 {
-//TODO temporary firing rate definition
+	//TODO temporary firing rate definition
 #define FR 4
 	if(gs->game_player[i].cooldown<1){
 		if(clients[i].pi.keys['J']){
@@ -182,7 +175,7 @@ void flag_update(struct game_state * gs,double delta)
 				gs->red.flag.location=
 					gs->red.flag_starting;
 				gs->game_player[i].inventory.item[0]
-					=(struct item) {0};
+				=(struct item) {0};
 				gs->game_player[i].inventory.n_items
 					=0;
 			}
