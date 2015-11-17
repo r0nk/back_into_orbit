@@ -9,6 +9,7 @@
 #include "poly.h"
 #include "model.h"
 #include "map.h"
+#include "fonts.h"
 
 GLFWwindow * window;
 int window_width,window_height;
@@ -164,6 +165,49 @@ void draw_unit(struct unit u)
 	}
 }
 
+void draw_letter(double x, double y, char bits[24])
+{
+	int i,j;
+	struct polygon a,b;
+	double w = FONT_BIT_WIDTH;
+	double h = FONT_BIT_HEIGHT;
+	double old_x = x;
+	for(j=0;j<6;j++){
+		for(i=3;i>=0;i--){
+			a.v[0].p = (struct vector) {x    ,y    ,0.0};
+			a.v[1].p = (struct vector) {x+ w ,y    ,0.0};
+			a.v[2].p = (struct vector) {x    ,y+h  ,0.0};
+
+			b.v[0].p = (struct vector) {x    ,y+h  ,0.0};
+			b.v[1].p = (struct vector) {x+w  ,y+h  ,0.0};
+			b.v[2].p = (struct vector) {x+w  ,y    ,0.0};
+
+			b.v[0].c = (struct vector) {0,1,1};
+			b.v[1].c = (struct vector) {0,1,1};
+			b.v[2].c = (struct vector) {0,1,1};
+
+			a.v[0].c = (struct vector) {0,1,1};
+			a.v[1].c = (struct vector) {0,1,1};
+			a.v[2].c = (struct vector) {0,1,1};
+
+			a.v[0].n = normal(a.v[0].p);
+			a.v[1].n = normal(a.v[1].p);
+			a.v[2].n = normal(a.v[2].p);
+
+			b.v[0].n = normal(b.v[0].p);
+			b.v[1].n = normal(b.v[1].p);
+			b.v[2].n = normal(b.v[2].p);
+
+			if(bits[i + (j*4)]=='#'){
+				draw_poly(a);
+				draw_poly(b);
+			}
+			x+=w;
+		}
+		x=old_x;
+		y-=h;
+	}
+}
 
 void draw_models(struct game_state * gs)
 {
@@ -290,9 +334,12 @@ void draw_score(struct game_state * gs,double x, double y)
 void draw_hud(struct game_state * gs)
 {
 	glBegin(GL_TRIANGLES);
+
 	draw_health_bar(gs->game_player[gs->current_player],0,-9);
 	draw_score(gs,-1,9);
 	draw_inventory(gs->game_player[gs->current_player],8,-8);
+	draw_text(6,2,"HELLO");
+
 	glEnd();
 }
 
