@@ -266,21 +266,10 @@ void draw_inventory(struct unit u,double x, double y)
 	double c;
 	int i;
 	for(i=0;i<MAX_INVENTORY_SPACE;i++){
-		a.v[0].p = (struct vector) {x+0.0-i,y+0.0,0.0};
-		a.v[1].p = (struct vector) {x+1.0-i,y+0.0,0.0};
-		a.v[2].p = (struct vector) {x+0.5-i,y+0.5,0.0};
-
-		c = (u.inventory.n_items<=i);
-
-		a.v[0].c = (struct vector) {1,c,1};
-		a.v[1].c = (struct vector) {1,c,1};
-		a.v[2].c = (struct vector) {1,c,1};
-
-		a.v[0].n = normal(a.v[0].p);
-		a.v[1].n = normal(a.v[1].p);
-		a.v[2].n = normal(a.v[2].p);
-
-		draw_poly(a);
+		if(u.inventory.item[i].name !=NULL){
+			draw_text(x,y-i,"item");
+			//draw_text(x,y-i,u.inventory.item[i].name);
+		}
 	}
 }
 
@@ -337,10 +326,10 @@ void draw_hud(struct game_state * gs)
 
 	draw_health_bar(gs->game_player[gs->current_player],0,-9);
 	draw_score(gs,-1,9);
-	draw_inventory(gs->game_player[gs->current_player],8,-8);
-	draw_text(6,4,"0123456789");
-	draw_text(6,3,"abcdefghijklmnopqrstuvwxyz");
-	draw_text(6,2,"ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+	draw_inventory(gs->game_player[gs->current_player],8,-4);
+
+	//TODO draw this whenever we're close to the shop or whatever
+	//draw_text(3,2,"Red Flag --> $ 20 ");
 
 	glEnd();
 }

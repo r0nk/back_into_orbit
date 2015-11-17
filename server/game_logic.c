@@ -47,7 +47,6 @@ void npc_update(struct game_state * gs,double delta)
 	for(i=0;i<gs->n_players;i++){
 		if(near(gs->game_player[i].location,gs->npc[0].location)){
 			if(gs->game_player[i].inventory.n_items==1){
-				printf("the turkey calls to us.\n");
 				gs->game_player[i].inventory.item[1]=flag_item();
 				gs->game_player[i].inventory.n_items=2;
 			}
