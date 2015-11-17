@@ -338,7 +338,9 @@ void draw_hud(struct game_state * gs)
 	draw_health_bar(gs->game_player[gs->current_player],0,-9);
 	draw_score(gs,-1,9);
 	draw_inventory(gs->game_player[gs->current_player],8,-8);
-	draw_text(6,2,"HELLO");
+	draw_text(6,4,"0123456789");
+	draw_text(6,3,"abcdefghijklmnopqrstuvwxyz");
+	draw_text(6,2,"ABCDEFGHIJKLMNOPQRSTUVWXYZ");
 
 	glEnd();
 }
