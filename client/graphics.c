@@ -267,8 +267,8 @@ void draw_inventory(struct unit u,double x, double y)
 	int i;
 	for(i=0;i<MAX_INVENTORY_SPACE;i++){
 		if(u.inventory.item[i].name !=NULL){
-			draw_text(x,y-i,"item");
-			//draw_text(x,y-i,u.inventory.item[i].name);
+			//draw_text(x,y-i,"item");
+			draw_text(x,y-i,u.inventory.item[i].name);
 		}
 	}
 }

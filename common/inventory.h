@@ -4,7 +4,7 @@
 /* units are in the game world, items are in inventories */
 
 struct item {
-	char  * name;
+	char name[10];
 	void (*effects)(void);
 };
 
@@ -18,7 +18,11 @@ struct inventory {
 inline static struct item flag_item()
 {
 	struct item flag;
-	flag.name="flag";
+	flag.name[0]='F';
+	flag.name[1]='l';
+	flag.name[2]='a';
+	flag.name[3]='g';
+	flag.name[4]='\0';
 	flag.effects=NULL;
 	return flag;
 }
