@@ -43,12 +43,29 @@ void bullet_update(struct game_state * gs, double delta)
 
 void npc_update(struct game_state * gs,double delta)
 {
-	int i;
-	for(i=0;i<gs->n_players;i++){
-		if(near(gs->game_player[i].location,gs->npc[0].location)){
-			if(gs->game_player[i].inventory.n_items==1){
-				gs->game_player[i].inventory.item[1]=flag_item();
-				gs->game_player[i].inventory.n_items=2;
+	int i,j;
+	for(j=0;j<gs->n_npcs;j++){
+		if(gs->npc[j].type == UNIT_TYPE_SHOP){
+			for(i=0;i<gs->n_players;i++){
+				if(near(gs->game_player[i].location,
+							gs->npc[j].location)){
+					if(gs->game_player[i].inventory.n_items){
+						gs->game_player[i].inventory.item[1]=flag_item();
+						gs->game_player[i].inventory.n_items++;
+					}
+				}
+			}
+		}
+		if(gs->npc[j].type == UNIT_TYPE_COIN){
+			for(i=0;i<gs->n_players;i++){
+				if(near(gs->game_player[i].location,gs->npc[j].location)){
+					if(strcmp(gs->game_player[i].inventory.item[3].name,"coin")==0){
+						gs->game_player[i].inventory.item[3].amount++;
+					}else{
+						gs->game_player[i].inventory.item[3]=coin_item();
+						gs->game_player[i].inventory.n_items++;
+					}
+				}
 			}
 		}
 	}
@@ -157,8 +174,7 @@ void flag_update(struct game_state * gs,double delta)
 			gs->blue.flag.location=gs->game_player[i].location;
 			if(near(gs->red.flag_starting,gs->blue.flag.location)){
 				gs->red.score++;
-				gs->blue.flag.location=
-					gs->blue.flag_starting;
+				gs->blue.flag.location=gs->blue.flag_starting;
 			}
 		}
 		/*TODO FIXME; this one is temporarily different for testing*/
@@ -171,12 +187,9 @@ void flag_update(struct game_state * gs,double delta)
 
 			if(near(gs->red.flag.location,gs->blue.flag_starting)){
 				gs->blue.score++;
-				gs->red.flag.location=
-					gs->red.flag_starting;
-				gs->game_player[i].inventory.item[0]
-				=(struct item) {0};
-				gs->game_player[i].inventory.n_items
-					=0;
+				gs->red.flag.location=gs->red.flag_starting;
+				gs->game_player[i].inventory.item[0]=(struct item) {0};
+				gs->game_player[i].inventory.n_items=0;
 			}
 		}
 	}

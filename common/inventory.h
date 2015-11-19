@@ -5,6 +5,8 @@
 
 struct item {
 	char name[10];
+	int stackable;
+	int amount;
 	void (*effects)(void);
 };
 
@@ -24,7 +26,23 @@ inline static struct item flag_item()
 	flag.name[3]='g';
 	flag.name[4]='\0';
 	flag.effects=NULL;
+	flag.stackable = 0;
+	flag.amount = 1;
 	return flag;
+}
+
+inline static struct item coin_item()
+{
+	struct item coin;
+	coin.name[0]='c';
+	coin.name[1]='o';
+	coin.name[2]='i';
+	coin.name[3]='n';
+	coin.name[4]='\0';
+	coin.effects=NULL;
+	coin.stackable = 1;
+	coin.amount = 1;
+	return coin;
 }
  
 #endif

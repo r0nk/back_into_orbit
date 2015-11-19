@@ -27,6 +27,7 @@ struct model bflag_model;
 struct model rflag_model;
 struct model fh_model;
 struct model shp_model;
+struct model coin_model;
 
 void init_models()
 {
@@ -41,6 +42,7 @@ void init_models()
 	rflag_model=red_flag_model();
 	fh_model = flag_holder_model();
 	shp_model = shop_model();
+	coin_model = gold_coin_model();
 }
 
 int init_window_lib()
@@ -162,6 +164,9 @@ void draw_unit(struct unit u)
 		case UNIT_TYPE_SHOP:
 			draw_model(shp_model,u.location);
 			break;
+		case UNIT_TYPE_COIN:
+			draw_model(coin_model,u.location);
+			break;
 	}
 }
 
@@ -263,9 +268,13 @@ void draw_health_bar(struct unit u, int x, int y)
 void draw_inventory(struct unit u,double x, double y)
 {
 	int i;
+	char str[30];
 	for(i=0;i<MAX_INVENTORY_SPACE;i++){
 		if(u.inventory.item[i].name !=NULL){
-			draw_text(x,y-(i*FONT_HEIGHT),u.inventory.item[i].name);
+			sprintf(str,"[%i] %s",
+					u.inventory.item[i].amount,
+					u.inventory.item[i].name);
+			draw_text(x,y-(i*FONT_HEIGHT),str);
 		}
 	}
 }
