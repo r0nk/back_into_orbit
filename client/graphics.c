@@ -50,7 +50,7 @@ int init_window_lib()
 	glfwSetErrorCallback(err_callback);
 	if(!glfwInit())
 		return -1;
-	window = glfwCreateWindow(640, 640, "corvus", NULL, NULL);
+	window = glfwCreateWindow(640, 480, "corvus", NULL, NULL);
 	if(!window)
 		return -2;
 	glfwMakeContextCurrent(window);
@@ -332,7 +332,7 @@ void draw_hud(struct game_state * gs)
 
 	draw_health_bar(gs->game_player[gs->current_player],0,-9);
 	draw_score(gs,-1,9);
-	draw_inventory(gs->game_player[gs->current_player],8,-4);
+	draw_inventory(gs->game_player[gs->current_player],9,-5);
 
 	//TODO draw this whenever we're close to the shop or whatever
 	//draw_text(3,2,"Red Flag --> $ 20 ");
