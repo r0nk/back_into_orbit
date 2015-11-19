@@ -14,7 +14,7 @@ struct model blue_pawn_model();
 struct model red_flag_model();
 struct model blue_flag_model();
 struct model flag_holder_model();
-struct model gold_coin();
+struct model gold_coin_model();
 struct model shop_model();
 
 struct vertice { 
