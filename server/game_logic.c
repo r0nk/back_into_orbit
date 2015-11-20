@@ -3,6 +3,9 @@
 #include "game_logic.h"
 #include "client.h"
 
+/*TODO FIXME: this whole file would make an italian cheif proud*/
+/* seriously, this shits Al dente */
+
 int near(struct vector a, struct vector b)
 {
 	if(( a.x > (b.x - 1)  && a.x < b.x + 1) &&
@@ -25,11 +28,12 @@ int player_hittest(struct game_state * gs, struct vector b)
 void bullet_update(struct game_state * gs, double delta)
 {
 	int i,j;
+	double s = gs->bullet[i].speed*delta;
 	for(i=0;i<gs->n_bullets;i++){
 		gs->bullet[i].location.x+=
-			(gs->bullet[i].direction.x*gs->bullet[i].speed)*delta;
+			gs->bullet[i].direction.x * s;
 		gs->bullet[i].location.z+=
-			(gs->bullet[i].direction.z*gs->bullet[i].speed)*delta;
+			gs->bullet[i].direction.z * s;
 		if(world_map.tiles[(int)gs->bullet[i].location.x]
 				[(int)gs->bullet[i].location.z])
 			remove_bullet(gs,i);
@@ -41,6 +45,7 @@ void bullet_update(struct game_state * gs, double delta)
 	}
 }
 
+/* this one in particular, god greif */
 void npc_update(struct game_state * gs,double delta)
 {
 	int i,j;
@@ -153,7 +158,7 @@ void respawn(struct game_state * gs, struct unit * u)
 	u->health=100;
 }
 
-void player_controls(struct game_state * gs,double delta)
+void player_update(struct game_state * gs,double delta)
 {
 	int i = 0;
 	for(i=0;i<n_clients;i++){

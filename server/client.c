@@ -21,7 +21,6 @@ void init_clients()
 
 void add_client(int fd)
 {
-	printf("adding client %i\n",fd);
 	pthread_mutex_lock(&clients_mutex);
 	clients[n_clients].fd = fd;
 	n_clients++;
