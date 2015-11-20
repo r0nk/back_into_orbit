@@ -116,7 +116,7 @@ void update_clients(struct game_state gs)
 
 void engine_tick(struct game_state * gs,double delta)
 {
-	player_controls(gs,delta); //updates the players
+	player_update(gs,delta); //updates the players
 	bullet_update(gs,delta);
 	npc_update(gs,delta);
 	flag_update(gs,delta);

@@ -28,8 +28,9 @@ int player_hittest(struct game_state * gs, struct vector b)
 void bullet_update(struct game_state * gs, double delta)
 {
 	int i,j;
-	double s = gs->bullet[i].speed*delta;
+	double s;
 	for(i=0;i<gs->n_bullets;i++){
+		s = gs->bullet[i].speed*delta;
 		gs->bullet[i].location.x+=
 			gs->bullet[i].direction.x * s;
 		gs->bullet[i].location.z+=
