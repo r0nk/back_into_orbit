@@ -353,13 +353,13 @@ void graphics_draw(struct game_state * gs)
 
 	float frame = 10;
 	glOrtho(-frame,frame,-frame,frame,0.0f,1000.0f);
-	//glFrustum(-1.0,1.0,-1.0f,1.0f,1.0f,100.0f);
+//	glFrustum(-1.0,1.0,-1.0f,1.0f,1.0f,100.0f);
 	glMatrixMode(GL_MODELVIEW);
 
 	glPushMatrix();
-	int zoom = 6;
+	int zoom = 8;
 	gluLookAt(gs->game_player[gs->current_player].location.x+zoom,
-		gs->game_player[gs->current_player].location.y+(zoom*1.2),
+		gs->game_player[gs->current_player].location.y+(zoom*1.6),
 		gs->game_player[gs->current_player].location.z+zoom,
 		gs->game_player[gs->current_player].location.x,
 		gs->game_player[gs->current_player].location.y,
