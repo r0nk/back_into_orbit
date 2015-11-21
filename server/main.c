@@ -58,7 +58,7 @@ struct game_state init_game()
 	gs.npc[1].team = 0;
 	gs.npc[1].type = UNIT_TYPE_COIN;
 
-	gs.npc[2].speed = 1;
+	gs.npc[2].speed = 8.0;
 	gs.npc[2].health = 100;
 	gs.npc[2].location = (struct vector) {15,0,3};
 	gs.npc[2].destination = (struct vector) {15,0,3};

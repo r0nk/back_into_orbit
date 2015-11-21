@@ -1,5 +1,6 @@
 #include <map.h>
 
+#include <string.h>
 #include "game_logic.h"
 #include "client.h"
 
@@ -25,6 +26,24 @@ int player_hittest(struct game_state * gs, struct vector b)
 	return -1;
 }
 
+int npc_hittest(struct game_state * gs, struct vector b)
+{
+	int i;
+	for(i=0;i<gs->n_npcs;i++){
+		if(near(gs->npc[i].location,b,1))
+			return i;
+	}
+	return -1;
+}
+
+void move_unit(struct unit * u,struct vector d)
+{
+	if(!world_map.tiles[ (int)(u->location.x+d.x) ][(int)(u->location.z)])
+		u->location.x+=d.x;
+	if(!world_map.tiles[ (int)(u->location.x)][(int)(u->location.z+d.z)])
+		u->location.z+=d.z;
+}
+
 void bullet_update(struct game_state * gs, double delta)
 {
 	int i,j;
@@ -43,6 +62,11 @@ void bullet_update(struct game_state * gs, double delta)
 			gs->game_player[j].health-=10;
 			remove_bullet(gs,i);
 		}
+		j = npc_hittest(gs,gs->bullet[i].location);
+		if(j!=-1){
+			gs->npc[j].health-=10;
+			remove_bullet(gs,i);
+		}
 	}
 }
 
@@ -52,10 +76,31 @@ void npc_update(struct game_state * gs,double delta)
 	int i,j;
 	for(j=0;j<gs->n_npcs;j++){
 		if(gs->npc[j].type == UNIT_TYPE_NEUTRAL_CREEP){
+			if(gs->npc[j].health<0)
+				printf("dead npc \n");
 			for(i=0;i<gs->n_players;i++){
+				//hit
 				if(near(gs->game_player[i].location,
 							gs->npc[j].location,2)){
 					gs->game_player[i].health-=delta*10;
+				}
+				//chase
+				if(near(gs->game_player[i].location,
+							gs->npc[j].location,10)){
+					struct vector v = {0};
+					if(gs->npc[j].location.x > gs->game_player[i].location.x)
+						v.x=-gs->npc[j].speed*delta;
+					else
+						v.x=gs->npc[j].speed*delta;
+
+					if(gs->npc[j].location.z > gs->game_player[i].location.z)
+						v.z=-gs->npc[j].speed*delta;
+					else
+						v.z=gs->npc[j].speed*delta;
+
+					v.x*=delta;
+					v.z*=delta;
+					move_unit(&gs->npc[j],v);
 				}
 			}
 		}
@@ -97,13 +142,6 @@ void fire_bullet(struct vector starting, struct vector direction)
 	add_bullet(&world_state,b);
 }
 
-void move_unit(struct unit * u,struct vector d)
-{
-	if(!world_map.tiles[ (int)(u->location.x+d.x) ][(int)(u->location.z)])
-		u->location.x+=d.x;
-	if(!world_map.tiles[ (int)(u->location.x)][(int)(u->location.z+d.z)])
-		u->location.z+=d.z;
-}
 
 void player_movement(struct game_state * gs, double delta, int i)
 {
