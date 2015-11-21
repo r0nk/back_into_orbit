@@ -51,6 +51,14 @@ void npc_update(struct game_state * gs,double delta)
 {
 	int i,j;
 	for(j=0;j<gs->n_npcs;j++){
+		if(gs->npc[j].type == UNIT_TYPE_NEUTRAL_CREEP){
+			for(i=0;i<gs->n_players;i++){
+				if(near(gs->game_player[i].location,
+							gs->npc[j].location)){
+					gs->game_player[i].health-=delta*10;
+				}
+			}
+		}
 		if(gs->npc[j].type == UNIT_TYPE_SHOP){
 			for(i=0;i<gs->n_players;i++){
 				if(near(gs->game_player[i].location,

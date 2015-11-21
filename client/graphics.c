@@ -167,6 +167,9 @@ void draw_unit(struct unit u)
 		case UNIT_TYPE_COIN:
 			draw_model(coin_model,u.location);
 			break;
+		case UNIT_TYPE_NEUTRAL_CREEP:
+			draw_model(ai_model,u.location);
+			break;
 	}
 }
 

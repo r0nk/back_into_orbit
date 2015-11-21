@@ -21,9 +21,10 @@ struct unit {
 	double cooldown;
 	struct inventory inventory;
 	int type;
-#define UNIT_TYPE_PLAYER 1
-#define UNIT_TYPE_SHOP   2
-#define UNIT_TYPE_COIN   3
+#define UNIT_TYPE_PLAYER 		1
+#define UNIT_TYPE_SHOP   		2
+#define UNIT_TYPE_COIN   		3
+#define UNIT_TYPE_NEUTRAL_CREEP   	4
 	int team;
 #define NEUTRAL_TEAM 0
 #define RED_TEAM 1

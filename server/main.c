@@ -43,7 +43,7 @@ struct game_state init_game()
 	gs.red.score=0;
 	gs.blue.score=0;
 	
-	gs.n_npcs=2;
+	gs.n_npcs=3;
 	gs.npc[0].speed = 0;
 	gs.npc[0].health = 100;
 	gs.npc[0].location = (struct vector) {28,0,2};
@@ -57,6 +57,13 @@ struct game_state init_game()
 	gs.npc[1].destination = (struct vector) {0,0,0};
 	gs.npc[1].team = 0;
 	gs.npc[1].type = UNIT_TYPE_COIN;
+
+	gs.npc[2].speed = 1;
+	gs.npc[2].health = 100;
+	gs.npc[2].location = (struct vector) {15,0,3};
+	gs.npc[2].destination = (struct vector) {15,0,3};
+	gs.npc[2].team = 0;
+	gs.npc[2].type = UNIT_TYPE_NEUTRAL_CREEP;
 
 	glfwInit();
 	world_map=mkmap("../maps/condor.map");
