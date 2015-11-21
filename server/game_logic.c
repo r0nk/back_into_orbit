@@ -6,10 +6,10 @@
 /*TODO FIXME: this whole file would make an italian cheif proud*/
 /* seriously, this shits Al dente */
 
-int near(struct vector a, struct vector b)
+int near(struct vector a, struct vector b,double r)
 {
-	if(( a.x > (b.x - 1)  && a.x < b.x + 1) &&
-			(a.z > (b.z-1) && a.z < (b.z+1))){
+	if(( a.x > (b.x - r)  && a.x < b.x + r) &&
+			(a.z > (b.z-r) && a.z < (b.z+r))){
 		return 1;
 	}
 	return 0;
@@ -19,7 +19,7 @@ int player_hittest(struct game_state * gs, struct vector b)
 {
 	int i;
 	for(i=0;i<gs->n_players;i++){
-		if(near(gs->game_player[i].location,b))
+		if(near(gs->game_player[i].location,b,1))
 			return i;
 	}
 	return -1;
@@ -54,7 +54,7 @@ void npc_update(struct game_state * gs,double delta)
 		if(gs->npc[j].type == UNIT_TYPE_NEUTRAL_CREEP){
 			for(i=0;i<gs->n_players;i++){
 				if(near(gs->game_player[i].location,
-							gs->npc[j].location)){
+							gs->npc[j].location,2)){
 					gs->game_player[i].health-=delta*10;
 				}
 			}
@@ -62,7 +62,7 @@ void npc_update(struct game_state * gs,double delta)
 		if(gs->npc[j].type == UNIT_TYPE_SHOP){
 			for(i=0;i<gs->n_players;i++){
 				if(near(gs->game_player[i].location,
-							gs->npc[j].location)){
+							gs->npc[j].location,2)){
 					if(gs->game_player[i].inventory.n_items){
 						gs->game_player[i].inventory.item[1]=flag_item();
 						gs->game_player[i].inventory.n_items++;
@@ -72,7 +72,7 @@ void npc_update(struct game_state * gs,double delta)
 		}
 		if(gs->npc[j].type == UNIT_TYPE_COIN){
 			for(i=0;i<gs->n_players;i++){
-				if(near(gs->game_player[i].location,gs->npc[j].location)){
+				if(near(gs->game_player[i].location,gs->npc[j].location,1.8)){
 					if(strcmp(gs->game_player[i].inventory.item[3].name,"coin")==0){
 						gs->game_player[i].inventory.item[3].amount++;
 					}else{
@@ -183,23 +183,23 @@ void flag_update(struct game_state * gs,double delta)
 	int i = 0;
 	for(i=0;i<n_clients;i++){
 		/*TODO replace this all with pickup item */
-		if(near(gs->game_player[i].location,gs->blue.flag.location)&&
+		if(near(gs->game_player[i].location,gs->blue.flag.location,1)&&
 				(gs->game_player[i].team==RED_TEAM)){
 			gs->blue.flag.location=gs->game_player[i].location;
-			if(near(gs->red.flag_starting,gs->blue.flag.location)){
+			if(near(gs->red.flag_starting,gs->blue.flag.location,1)){
 				gs->red.score++;
 				gs->blue.flag.location=gs->blue.flag_starting;
 			}
 		}
 		/*TODO FIXME; this one is temporarily different for testing*/
-		if(near(gs->game_player[i].location,gs->red.flag.location)&&
+		if(near(gs->game_player[i].location,gs->red.flag.location,1)&&
 				(gs->game_player[i].team==BLUE_TEAM)){
 
 			gs->red.flag.location=gs->game_player[i].location;
 			gs->game_player[i].inventory.item[0]=flag_item();
 			gs->game_player[i].inventory.n_items=1;
 
-			if(near(gs->red.flag.location,gs->blue.flag_starting)){
+			if(near(gs->red.flag.location,gs->blue.flag_starting,1)){
 				gs->blue.score++;
 				gs->red.flag.location=gs->red.flag_starting;
 				gs->game_player[i].inventory.item[0]=(struct item) {0};
