@@ -1,4 +1,4 @@
-#include <map.h>
+#include <room.h>
 
 #include <string.h>
 #include "game_logic.h"
@@ -38,9 +38,9 @@ int npc_hittest(struct game_state * gs, struct vector b)
 
 void move_unit(struct unit * u,struct vector d)
 {
-	if(!world_map.tiles[ (int)(u->location.x+d.x) ][(int)(u->location.z)])
+	if(!world_room.tiles[ (int)(u->location.x+d.x) ][(int)(u->location.z)])
 		u->location.x+=d.x;
-	if(!world_map.tiles[ (int)(u->location.x)][(int)(u->location.z+d.z)])
+	if(!world_room.tiles[ (int)(u->location.x)][(int)(u->location.z+d.z)])
 		u->location.z+=d.z;
 }
 
@@ -54,7 +54,7 @@ void bullet_update(struct game_state * gs, double delta)
 			gs->bullet[i].direction.x * s;
 		gs->bullet[i].location.z+=
 			gs->bullet[i].direction.z * s;
-		if(world_map.tiles[(int)gs->bullet[i].location.x]
+		if(world_room.tiles[(int)gs->bullet[i].location.x]
 				[(int)gs->bullet[i].location.z])
 			remove_bullet(gs,i);
 		j = player_hittest(gs,gs->bullet[i].location);

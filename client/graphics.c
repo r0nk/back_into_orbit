@@ -8,7 +8,7 @@
 #include "inventory.h"
 #include "poly.h"
 #include "model.h"
-#include "map.h"
+#include "room.h"
 #include "fonts.h"
 
 GLFWwindow * window;
@@ -50,7 +50,7 @@ int init_window_lib()
 	glfwSetErrorCallback(err_callback);
 	if(!glfwInit())
 		return -1;
-	window = glfwCreateWindow(640, 480, "corvus", NULL, NULL);
+	window = glfwCreateWindow(640, 640, "corvus", NULL, NULL);
 	if(!window)
 		return -2;
 	glfwMakeContextCurrent(window);
@@ -142,7 +142,7 @@ void draw_map()
 	int x,z;
 	for(x=0;x<100;x++){
 		for(z=0;z<100;z++){
-			if(world_map.tiles[x][z]){
+			if(world_room.tiles[x][z]){
 				draw_block(x,0,z);
 				draw_block(x,1,z);
 			}

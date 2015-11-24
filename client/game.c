@@ -2,10 +2,10 @@
 #include "callbacks.h"
 #include "game.h"
 #include "game_state.h"
-#include "map.h"
+#include "room.h"
 #include "model.h"
 
-struct map world_map;
+struct room world_room;
 
 struct game_state init_game()
 {
@@ -23,7 +23,7 @@ struct game_state init_game()
 	gs.game_player[gs.current_player].location.z=5;
 	gs.game_player[gs.current_player].speed=3.0;
 	gs.game_player[gs.current_player].health=100;
-	world_map=mkmap("../maps/condor.map");
+	world_room=mkroom("../rooms/condor.room");
 
 	gs.n_bullets=0;
 	return gs;

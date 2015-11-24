@@ -1,21 +1,21 @@
-#ifndef MAP
-#define MAP
+#ifndef ROOM 
+#define ROOM
 #include <stdio.h>
 #include <fcntl.h>
 #include <unistd.h>
 #include <stdlib.h>
 
-struct map {
+struct room {
 	char tiles[100][100];
 };
 
-extern struct map world_map;
+extern struct room world_room;
 extern struct model block;
 
-static inline struct map mkmap(char * pathname)
+static inline struct room mkroom(char * pathname)
 {
 	int fd = open(pathname,O_RDONLY);
-	struct map *m = calloc(1,sizeof(struct map));
+	struct room *m = calloc(1,sizeof(struct room));
 	char c[2];
 	int x=0,y=0;
 

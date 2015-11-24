@@ -5,7 +5,7 @@
 
 #include <game_state.h>
 #include <protolol.h>
-#include <map.h>
+#include <room.h>
 
 #include "callbacks.h"
 #include "networking.h"

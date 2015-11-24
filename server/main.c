@@ -8,7 +8,7 @@
 #include <errno.h>
 #include <sys/socket.h>
 
-#include <map.h>
+#include <room.h>
 #include <protolol.h>
 
 #include "client.h"
@@ -17,7 +17,7 @@
 int server_socket;
 
 struct game_state world_state;
-struct map world_map;
+struct room world_room;
 
 struct game_state init_game()
 {
@@ -66,7 +66,7 @@ struct game_state init_game()
 	gs.npc[2].type = UNIT_TYPE_NEUTRAL_CREEP;
 
 	glfwInit();
-	world_map=mkmap("../maps/condor.map");
+	world_room=mkroom("../rooms/condor.room");
 	return gs;
 }
 
