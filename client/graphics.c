@@ -28,6 +28,7 @@ struct model rflag_model;
 struct model fh_model;
 struct model shp_model;
 struct model coin_model;
+struct model door_model;
 
 void init_models()
 {
@@ -43,6 +44,7 @@ void init_models()
 	fh_model = flag_holder_model();
 	shp_model = shop_model();
 	coin_model = gold_coin_model();
+	door_model = doorway_model();
 }
 
 int init_window_lib()
@@ -155,7 +157,7 @@ void draw_unit(struct unit u)
 	switch(u.type){
 		case UNIT_TYPE_PLAYER:
 			if(u.team==BLUE_TEAM)
-				draw_model(bp_model,u.location);
+				draw_model(door_model,u.location);
 			else if (u.team==RED_TEAM)
 				draw_model(rp_model,u.location);
 			else 

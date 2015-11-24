@@ -16,6 +16,7 @@ struct model blue_flag_model();
 struct model flag_holder_model();
 struct model gold_coin_model();
 struct model shop_model();
+struct model doorway_model();
 
 struct vertice { 
 	struct vector p;/*position*/
