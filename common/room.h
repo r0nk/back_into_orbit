@@ -12,6 +12,9 @@ struct room {
 extern struct room world_room;
 extern struct model block;
 
+#define ROOM_WALL 1
+#define ROOM_DOOR 2
+
 static inline struct room mkroom(char * pathname)
 {
 	int fd = open(pathname,O_RDONLY);
@@ -26,7 +29,10 @@ static inline struct room mkroom(char * pathname)
 			x=0;
 			continue;
 		case '#':
-			m->tiles[x][y]=1;
+			m->tiles[x][y]=ROOM_WALL;
+			break;
+		case '@':
+			m->tiles[x][y]=ROOM_DOOR;
 			break;
 		default:
 			break;

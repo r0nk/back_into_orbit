@@ -139,14 +139,16 @@ void draw_block(int x, int y, int z)
 	glPopMatrix();
 }
 
-void draw_map()
+void draw_room()
 {
 	int x,z;
 	for(x=0;x<100;x++){
 		for(z=0;z<100;z++){
-			if(world_room.tiles[x][z]){
+			if(world_room.tiles[x][z]==ROOM_WALL){
 				draw_block(x,0,z);
 				draw_block(x,1,z);
+			}else if(world_room.tiles[x][z]==ROOM_DOOR){
+				draw_model(door_model,(struct vector){x,0,z});
 			}
 		}
 	}
@@ -157,7 +159,7 @@ void draw_unit(struct unit u)
 	switch(u.type){
 		case UNIT_TYPE_PLAYER:
 			if(u.team==BLUE_TEAM)
-				draw_model(door_model,u.location);
+				draw_model(bp_model,u.location);
 			else if (u.team==RED_TEAM)
 				draw_model(rp_model,u.location);
 			else 
@@ -221,7 +223,7 @@ void draw_letter(double x, double y, char bits[24])
 
 void draw_models(struct game_state * gs)
 {
-	draw_map();
+	draw_room();
 	int i;
 	for(i=0;i<gs->n_players;i++){
 		draw_unit(gs->game_player[i]);
