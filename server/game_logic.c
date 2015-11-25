@@ -44,6 +44,9 @@ void move_unit(struct unit * u,struct vector d)
 	if(world_room.tiles[ (int)(u->location.x)][(int)(u->location.z+d.z)]
 			!= ROOM_WALL)
 		u->location.z+=d.z;
+	if(world_room.tiles[ (int)(u->location.x)][(int)(u->location.z)]
+			== ROOM_DOOR)
+		printf("should teleport, touching doorway\n");
 }
 
 void bullet_update(struct game_state * gs, double delta)
