@@ -16,7 +16,7 @@
 
 int server_socket;
 
-struct game_state world_state;
+struct game_state gstate[MAX_STATES];
 struct room world_room;
 
 struct game_state init_game()
@@ -66,7 +66,7 @@ struct game_state init_game()
 	gs.npc[2].type = UNIT_TYPE_NEUTRAL_CREEP;
 
 	glfwInit();
-	world_room=mkroom("../rooms/condor.room");
+	world_room=mkroom("../rooms/gamma.room");
 	return gs;
 }
 
@@ -136,14 +136,14 @@ double delta_time()
 	return s;
 }
 
-void update_all()
+void update_all(struct game_state * gs)
 {
 	pthread_mutex_lock(&clients_mutex);
 
-	world_state.n_players=n_clients;
+	gs->n_players=n_clients;
 	get_client_inputs();
-	engine_tick(&world_state,delta_time());
-	update_clients(world_state);
+	engine_tick(gs,delta_time());
+	update_clients(*gs);
 
 	pthread_mutex_unlock(&clients_mutex);
 }
@@ -153,7 +153,7 @@ int main()
 	server_socket = init_server();
 	pthread_t accept_thread;
 	pthread_create(&accept_thread,NULL,accept_loop,NULL);
-	world_state = init_game();
+	gstate[0] = init_game();
 
 	printf("Drone server: Waiting for clients to connect...\n");
 
@@ -161,5 +161,5 @@ int main()
 		sleep(1);//wait for clients to connect
 
 	while(1)
-		update_all();
+		update_all(&gstate[0]);
 }

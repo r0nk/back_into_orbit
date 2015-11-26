@@ -135,7 +135,8 @@ void npc_update(struct game_state * gs,double delta)
 	}
 }
 
-void fire_bullet(struct vector starting, struct vector direction)
+void fire_bullet(struct game_state * gs,
+		struct vector starting, struct vector direction)
 {
 	struct bullet b;
 	b.location.x = starting.x+direction.x;
@@ -144,7 +145,7 @@ void fire_bullet(struct vector starting, struct vector direction)
 	b.direction = direction;
 	b.speed = 5;
 	b.duration = 100;
-	add_bullet(&world_state,b);
+	add_bullet(gs,b);
 }
 
 
@@ -177,22 +178,22 @@ void player_attack(struct game_state * gs, double delta, int i)
 #define FR 4
 	if(gs->game_player[i].cooldown<1){
 		if(clients[i].pi.keys['J']){
-			fire_bullet(gs->game_player[i].location,
+			fire_bullet(gs,gs->game_player[i].location,
 					(struct vector) {1,0,1});
 			gs->game_player[i].cooldown = FR;
 		}
 		if(clients[i].pi.keys['H']){
-			fire_bullet(gs->game_player[i].location,
+			fire_bullet(gs,gs->game_player[i].location,
 					(struct vector) {-1,0,1});
 			gs->game_player[i].cooldown = FR;
 		}
 		if(clients[i].pi.keys['K']){
-			fire_bullet(gs->game_player[i].location,
+			fire_bullet(gs,gs->game_player[i].location,
 					(struct vector) {-1,0,-1});
 			gs->game_player[i].cooldown = FR;
 		}
 		if(clients[i].pi.keys['L']){
-			fire_bullet(gs->game_player[i].location,
+			fire_bullet(gs,gs->game_player[i].location,
 					(struct vector) {1,0,-1});
 			gs->game_player[i].cooldown = FR;
 		}
@@ -251,4 +252,3 @@ void flag_update(struct game_state * gs,double delta)
 		}
 	}
 }
-
