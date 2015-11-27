@@ -6,13 +6,33 @@
 #include <sys/socket.h>
 #include "networking.h"
 
+
+void handle_server_packet(int server_fd,
+	       	struct game_state * gs, struct room * wr)
+{
+	struct protolol_packet pp;
+	pp = recv_protolol(server_fd);
+//	printf("pp:%i\n",pp.type);
+	switch(pp.type){
+		case PROTOLOL_TYPE_GAME_STATE:
+			memcpy(gs,&pp.data,sizeof(*gs));
+			break;
+		case PROTOLOL_TYPE_ROOM_CHANGE:
+			memcpy(wr,&pp.data,sizeof(*wr));
+			break;
+		default:
+			err(-8,"unrecognized protolol packet type");
+			break;
+	}
+}
+
 /* Tell the server what state we think we're in, then update ourselves to 
  * match what state the server tells us we're in. */
 struct game_state update_state(int server_fd, struct game_state gs,
 		struct player_input pi)
 {
 	send_player_input(pi,server_fd);
-	gs = recv_game_state(server_fd);
+	handle_server_packet(server_fd,&gs,&world_room);
 	return gs;
 }
 

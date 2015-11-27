@@ -1,6 +1,8 @@
-#include <room.h>
-
 #include <string.h>
+
+#include <room.h>
+#include <protolol.h>
+
 #include "game_logic.h"
 #include "client.h"
 
@@ -45,8 +47,12 @@ void move_unit(struct unit * u,struct vector d)
 			!= ROOM_WALL)
 		u->location.z+=d.z;
 	if(world_room.tiles[ (int)(u->location.x)][(int)(u->location.z)]
-			== ROOM_DOOR)
-		printf("should teleport, touching doorway\n");
+			== ROOM_DOOR){
+		u->location = (struct vector) {5,5,5};
+		printf("Sending new room\n");
+		/* TODO FIXME this shouldn't act on a single client like this */
+		send_room(mkroom("../rooms/condor.room"),clients[0].fd);
+	}
 }
 
 void bullet_update(struct game_state * gs, double delta)

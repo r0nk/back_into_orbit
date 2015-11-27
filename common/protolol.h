@@ -3,11 +3,13 @@
 
 /* protolol is the networking protocol both the server and the client share */
 
-#include <game_state.h>
-#include <input.h>
 #include <string.h>
 #include <unistd.h>
 #include <stdlib.h>
+
+#include <game_state.h>
+#include <input.h>
+#include <room.h>
 
 #define PROTOLOL_PORT 2690
 
@@ -19,6 +21,7 @@ struct protolol_packet {
 
 #define PROTOLOL_TYPE_GAME_STATE 0
 #define PROTOLOL_TYPE_PLAYER_INPUT 1
+#define PROTOLOL_TYPE_ROOM_CHANGE 2
 
 static inline void send_protolol(struct protolol_packet pp,int fd)
 {
@@ -26,6 +29,8 @@ static inline void send_protolol(struct protolol_packet pp,int fd)
 		write(fd,&pp,sizeof(pp));
 	else if (pp.type==PROTOLOL_TYPE_PLAYER_INPUT)
 		write(fd,&pp,5+sizeof(struct player_input));
+	else if (pp.type==PROTOLOL_TYPE_ROOM_CHANGE)
+		write(fd,&pp,5+sizeof(struct room));
 }
 
 static inline struct protolol_packet recv_protolol(int fd)
@@ -59,6 +64,19 @@ static inline void send_game_state(struct game_state gs ,int fd)
 	send_protolol(pp,fd);
 }
 
+static inline void send_room(struct room r,int fd)
+{
+	struct protolol_packet pp;
+	pp.magic_start[0]='o';
+	pp.magic_start[1]='H';
+	pp.magic_start[2]='a';
+	pp.magic_start[3]='i';
+	pp.type = PROTOLOL_TYPE_ROOM_CHANGE;
+	memcpy(&pp.data,&r,sizeof(r));
+	send_protolol(pp,fd);
+}
+
+
 static inline struct player_input recv_player_input(int fd)
 {
 	struct protolol_packet pp;
@@ -84,5 +102,5 @@ static inline struct game_state recv_game_state(int fd)
 	memcpy(&gs,&pp.data,sizeof(gs));
 	return gs;
 }
- 
+
 #endif

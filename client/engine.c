@@ -10,7 +10,6 @@
 #include "callbacks.h"
 #include "networking.h"
 
-
 /* all of the game engine stuff is actually server side */
 void engine_tick(int server_fd, struct game_state * gs)
 {
