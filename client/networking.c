@@ -12,7 +12,6 @@ void handle_server_packet(int server_fd,
 {
 	struct protolol_packet pp;
 	pp = recv_protolol(server_fd);
-//	printf("pp:%i\n",pp.type);
 	switch(pp.type){
 		case PROTOLOL_TYPE_GAME_STATE:
 			memcpy(gs,&pp.data,sizeof(*gs));
