@@ -1,7 +1,11 @@
 cd server
 make clean
 make 
-./dr0ne_server &
+cd ..
+cd overlord
+make clean
+make 
+./overlord &
 cd ..
 cd client
 make clean

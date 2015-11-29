@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <errno.h>
 #include <sys/socket.h>
+#include <pthread.h>
 
 #include <protolol.h>
 
@@ -26,14 +27,20 @@ void login_loop()
 		handle_player_login();
 }
 
-void start_servling()
+void accept_loop()
 {
-	// fork, exec, yada yada
-	if(!fork())
-		execl("../server/dr0ne_server","127.0.0.1");
-
+	int np = 0;
+	while(1){
+		np = accept(server_socket,NULL,NULL);
+		printf("overlord accepted connection: %i\n",np);
+	}
 }
 
+void start_servling()
+{
+	if(!fork())
+		execl("../server/dr0ne_server","127.0.0.1");
+}
 
 void transfer_player()
 {
@@ -74,11 +81,8 @@ int main()
 {
 	server_socket=init_server();
 	start_servling();
+	pthread_t accept_thread;
+	pthread_create(&accept_thread,NULL,accept_loop,NULL);
 	while(1)
-	{
-		printf("overlord initalized \n");
 		sleep(1);
-	}
-//	printf("placeholder hello world!\n");
-	/* start login thread */
 }
