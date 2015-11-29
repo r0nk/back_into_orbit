@@ -12,6 +12,7 @@
 #include <room.h>
 
 #define PROTOLOL_PORT 2690
+#define PROTOLOL_OVER_PORT 2695
 
 struct protolol_packet {
 	char magic_start[4];// should be "oHai"

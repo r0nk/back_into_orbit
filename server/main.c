@@ -14,6 +14,8 @@
 #include "client.h"
 #include "game_logic.h"
 
+int overlord_fd;
+
 int server_socket;
 
 struct game_state world_state;
@@ -77,6 +79,7 @@ int init_server()
 	int ss = socket(PF_INET,SOCK_STREAM,0);
 
 	address.sin_family = AF_INET;
+	address.sin_addr.s_addr = inet_addr ("127.0.0.1");
 	address.sin_port = htons(PROTOLOL_PORT);
 
 	e = bind(ss,(struct sockaddr *)&address,sizeof(struct sockaddr_in));
@@ -148,9 +151,29 @@ void update_all(struct game_state * gs)
 	pthread_mutex_unlock(&clients_mutex);
 }
 
+int connect_to_overlord()
+{
+	struct sockaddr_in address;
+	int cs = socket(PF_INET,SOCK_STREAM,0);
+	int e = 0;
+
+	address.sin_family = AF_INET;
+	address.sin_port = htons(PROTOLOL_OVER_PORT);
+	inet_aton("127.0.0.1",&address.sin_addr);
+
+	e = connect(cs,(struct sockaddr *)&address,sizeof(struct sockaddr_in));
+
+	if(e)
+		err(1,"connect_to_overlord()");
+	printf("Connected to overlord\n");
+
+
+	return cs;
+}
+
 int main()
 {
-	/* TODO try to connect to overlord here */
+	overlord_fd = connect_to_overlord();
 	server_socket = init_server();
 	pthread_t accept_thread;
 	pthread_create(&accept_thread,NULL,accept_loop,NULL);
