@@ -3,9 +3,6 @@
 #include <poly.h>
 #include <game_state.h>
 
-#define MAX_STATES 16
-extern struct game_state gstate[MAX_STATES];
- 
 void npc_update(struct game_state * gs,double delta);
 void fire_bullet(struct game_state * gs,struct vector starting, struct vector direction);
 void bullet_update(struct game_state * gs, double delta);
