@@ -35,8 +35,7 @@ struct game_state update_state(int server_fd, struct game_state gs,
 	return gs;
 }
 
-/* Get connected to the server, and return the server file descriptor. */
-int init_networking()
+int connect_to_server()
 {
 	struct sockaddr_in address;
 	int cs = socket(PF_INET,SOCK_STREAM,0);
@@ -52,5 +51,30 @@ int init_networking()
 		err(1,"init_networking()");
 
 	return cs;
+}
+
+int connect_to_overlord()
+{
+	struct sockaddr_in address;
+	int cs = socket(PF_INET,SOCK_STREAM,0);
+	int e = 0;
+
+	address.sin_family = AF_INET;
+	address.sin_port = htons(PROTOLOL_OVER_PORT);
+	inet_aton("127.0.0.1",&address.sin_addr);
+
+	e = connect(cs,(struct sockaddr *)&address,sizeof(struct sockaddr_in));
+
+	if(e)
+		err(1,"connect_to_overlord()");
+	printf("client Connected to overlord\n");
+
+	return cs;
+}
+
+int init_networking()
+{
+	connect_to_overlord();
+	return connect_to_server();
 }
 

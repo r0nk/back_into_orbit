@@ -11,3 +11,6 @@ cd client
 make clean
 make -j8
 ./dr0ne
+
+echo "killing overlord"
+pkill overlord

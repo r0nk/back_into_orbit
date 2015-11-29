@@ -165,8 +165,7 @@ int connect_to_overlord()
 
 	if(e)
 		err(1,"connect_to_overlord()");
-	printf("Connected to overlord\n");
-
+	printf(" server Connected to overlord\n");
 
 	return cs;
 }
