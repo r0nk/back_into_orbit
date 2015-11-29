@@ -150,6 +150,7 @@ void update_all(struct game_state * gs)
 
 int main()
 {
+	/* TODO try to connect to overlord here */
 	server_socket = init_server();
 	pthread_t accept_thread;
 	pthread_create(&accept_thread,NULL,accept_loop,NULL);
