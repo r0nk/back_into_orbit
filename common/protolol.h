@@ -19,9 +19,16 @@ struct protolol_packet {
 	char data[sizeof(struct game_state)];
 };
 
-#define PROTOLOL_TYPE_GAME_STATE 0
-#define PROTOLOL_TYPE_PLAYER_INPUT 1
-#define PROTOLOL_TYPE_ROOM_CHANGE 2
+/* client-server */
+#define PROTOLOL_TYPE_GAME_STATE 1
+#define PROTOLOL_TYPE_PLAYER_INPUT 2
+#define PROTOLOL_TYPE_ROOM_CHANGE 3
+/* overlord-server */
+#define PROTOLOL_TYPE_EXPECT_CLIENT 4
+#define PROTOLOL_TYPE_DROP_CLIENT 5
+#define PROTOLOL_TYPE_CLIENT_TELEPORT 6
+/* overlord-client */
+#define PROTOLOL_TYPE_CONNECT_TO 7
 
 static inline void send_protolol(struct protolol_packet pp,int fd)
 {
