@@ -1,2 +1,2 @@
 overlord is the handler for all the other servers, it handles the inventory, 
-logins, client transfers, etc. for the other realtime servers
+logins, client transfers, etc. for the other realtime servers.
