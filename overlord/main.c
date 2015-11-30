@@ -85,7 +85,9 @@ int main()
 	start_servling();
 	pthread_create(&servling_thread,NULL,servling_handler_loop,NULL);
 	pthread_create(&client_thread,NULL,client_handler_loop,NULL);
-	readline(">");
+
+	while(strcmp(readline("o> "),"exit"));
+
 	close(servling_over_socket);
 	close(client_over_socket);
 }
