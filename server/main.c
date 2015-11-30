@@ -158,7 +158,7 @@ int connect_to_overlord()
 	int e = 0;
 
 	address.sin_family = AF_INET;
-	address.sin_port = htons(PROTOLOL_OVER_PORT);
+	address.sin_port = htons(PROTOLOL_SOVER_PORT);
 	inet_aton("127.0.0.1",&address.sin_addr);
 
 	e = connect(cs,(struct sockaddr *)&address,sizeof(struct sockaddr_in));

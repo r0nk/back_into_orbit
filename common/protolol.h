@@ -3,9 +3,12 @@
 
 /* protolol is the networking protocol both the server and the client share */
 
+/* TODO:a lot of this stuff is redundent and can be cleaned up */
+
 #include <string.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <err.h>
 
 #include <game_state.h>
 #include <input.h>
@@ -13,10 +16,11 @@
 
 #define PROTOLOL_PORT 2690
 #define PROTOLOL_OVER_PORT 2695
+#define PROTOLOL_SOVER_PORT 2696
 
 struct protolol_packet {
 	char magic_start[4];// should be "oHai"
-	char type;// whether or not its a game state or kick or whatever
+	char type;
 	char data[sizeof(struct game_state)];
 };
 
@@ -33,12 +37,22 @@ struct protolol_packet {
 
 static inline void send_protolol(struct protolol_packet pp,int fd)
 {
-	if(pp.type==PROTOLOL_TYPE_GAME_STATE)
-		write(fd,&pp,sizeof(pp));
-	else if (pp.type==PROTOLOL_TYPE_PLAYER_INPUT)
-		write(fd,&pp,5+sizeof(struct player_input));
-	else if (pp.type==PROTOLOL_TYPE_ROOM_CHANGE)
-		write(fd,&pp,5+sizeof(struct room));
+	switch(pp.type)
+	{
+		case PROTOLOL_TYPE_GAME_STATE:
+		case PROTOLOL_TYPE_CONNECT_TO:
+			write(fd,&pp,sizeof(pp));
+			break;
+		case PROTOLOL_TYPE_PLAYER_INPUT:
+			write(fd,&pp,5+sizeof(struct player_input));
+			break;
+		case PROTOLOL_TYPE_ROOM_CHANGE:
+			write(fd,&pp,5+sizeof(struct room));
+			break;
+		default:
+			err(-19,"unrecognized pp.type to send");
+			break;
+	}
 }
 
 static inline struct protolol_packet recv_protolol(int fd)
@@ -46,6 +60,18 @@ static inline struct protolol_packet recv_protolol(int fd)
 	struct protolol_packet pp;
 	read(fd,&pp,sizeof(pp));
 	return pp;
+}
+
+static inline void client_connect_to(int cfd, char * ascii_ip)
+{
+	struct protolol_packet pp;
+	pp.magic_start[0]='o';
+	pp.magic_start[1]='H';
+	pp.magic_start[2]='a';
+	pp.magic_start[3]='i';
+	pp.type = PROTOLOL_TYPE_CONNECT_TO;
+	memcpy(&pp.data,ascii_ip,strlen(ascii_ip));
+	send_protolol(pp,cfd);
 }
 
 static inline void send_player_input(struct player_input pi ,int fd)

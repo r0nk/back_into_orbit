@@ -6,36 +6,10 @@
 #include <sys/socket.h>
 #include "networking.h"
 
+int overlord_fd;
+int server_fd;
 
-void handle_server_packet(int server_fd,
-	       	struct game_state * gs, struct room * wr)
-{
-	struct protolol_packet pp;
-	pp = recv_protolol(server_fd);
-	switch(pp.type){
-		case PROTOLOL_TYPE_GAME_STATE:
-			memcpy(gs,&pp.data,sizeof(*gs));
-			break;
-		case PROTOLOL_TYPE_ROOM_CHANGE:
-			memcpy(wr,&pp.data,sizeof(*wr));
-			break;
-		default:
-			err(-8,"unrecognized protolol packet type");
-			break;
-	}
-}
-
-/* Tell the server what state we think we're in, then update ourselves to 
- * match what state the server tells us we're in. */
-struct game_state update_state(int server_fd, struct game_state gs,
-		struct player_input pi)
-{
-	send_player_input(pi,server_fd);
-	handle_server_packet(server_fd,&gs,&world_room);
-	return gs;
-}
-
-int connect_to_server()
+int connect_to_server(char * ip_addr)
 {
 	struct sockaddr_in address;
 	int cs = socket(PF_INET,SOCK_STREAM,0);
@@ -43,7 +17,7 @@ int connect_to_server()
 
 	address.sin_family = AF_INET;
 	address.sin_port = htons(PROTOLOL_PORT);
-	inet_aton("127.0.0.1",&address.sin_addr);
+	inet_aton(ip_addr,&address.sin_addr);
 
 	e = connect(cs,(struct sockaddr *)&address,sizeof(struct sockaddr_in));
 
@@ -67,14 +41,56 @@ int connect_to_overlord()
 
 	if(e)
 		err(1,"connect_to_overlord()");
-	printf("client Connected to overlord\n");
+	printf("Client connected to overlord\n");
 
 	return cs;
 }
 
-int init_networking()
+void handle_overlord_packet(int ofd)
 {
-	connect_to_overlord();
-	return connect_to_server();
+	struct protolol_packet pp;
+	pp = recv_protolol(ofd);
+	switch(pp.type){
+		case PROTOLOL_TYPE_CONNECT_TO:
+			server_fd = connect_to_server(&pp.data);
+			break;
+		default:
+			err(-8,"unrecognized protolol overlord packet type");
+			break;
+	}
 }
 
+void handle_server_packet(int sfd,struct game_state * gs, struct room * wr)
+{
+	struct protolol_packet pp;
+	pp = recv_protolol(sfd);
+	switch(pp.type){
+		case PROTOLOL_TYPE_GAME_STATE:
+			memcpy(gs,&pp.data,sizeof(*gs));
+			break;
+		case PROTOLOL_TYPE_ROOM_CHANGE:
+			memcpy(wr,&pp.data,sizeof(*wr));
+			break;
+		default:
+			err(-8,"unrecognized protolol packet type");
+			break;
+	}
+}
+
+struct game_state update_state(int server_fd, struct game_state gs,
+		struct player_input pi)
+{
+	send_player_input(pi,server_fd);
+	handle_server_packet(server_fd,&gs,&world_room);
+	return gs;
+}
+
+int init_networking()
+{
+	overlord_fd = connect_to_overlord();
+	printf("Client waiting for overlord to give us server \n");
+	while(!server_fd)
+		handle_overlord_packet(overlord_fd);
+	printf("server_fd:%i, returning\n",server_fd);
+	return server_fd;
+}
