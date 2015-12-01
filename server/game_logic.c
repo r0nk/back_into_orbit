@@ -18,13 +18,6 @@ void move_unit(struct unit * u,struct vector d)
 	if(world_room.tiles[ (int)(u->location.x)][(int)(u->location.z+d.z)]
 			!= ROOM_WALL)
 		u->location.z+=d.z;
-	if(world_room.tiles[ (int)(u->location.x)][(int)(u->location.z)]
-			== ROOM_DOOR){
-		u->location = (struct vector) {5,5,5};
-		printf("Sending new room\n");
-		/* TODO FIXME this shouldn't act on a single client like this */
-		send_room(mkroom("../rooms/condor.room"),clients[0].fd);
-	}
 }
 
 void bullet_update(struct game_state * gs, double delta)
@@ -131,6 +124,7 @@ void player_movement(struct game_state * gs, double delta, int i)
 {
 	double d = gs->game_player[i].speed*delta;
 	struct vector dvec = (struct vector){0,0,0};
+
 	if(clients[i].pi.keys['W']){
 		dvec.x-=d;
 		dvec.z-=d;
@@ -147,6 +141,13 @@ void player_movement(struct game_state * gs, double delta, int i)
 		dvec.x+=d;
 		dvec.z-=d;
 	}
+
+	if(world_room.tiles[ (int)(gs->game_player[i].location.x)][(int)(gs->game_player[i].location.z)] == ROOM_DOOR)
+	{
+		gs->game_player[i].location = (struct vector) {5,0,5};
+		//TODO tell the server to move this client
+	}
+
 	move_unit(&gs->game_player[i],dvec);
 }
 

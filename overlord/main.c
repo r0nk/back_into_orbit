@@ -20,7 +20,7 @@ void handle_player_login()
 {
 	/*open socket()*/
 	/* check credentials for player*/
-	//figure out the right server for the player
+	/* figure out the right server for the player */
 	//if theres no servling
 		// right_server = start_servling();
 	//add_player_to_servling(p,right_server);

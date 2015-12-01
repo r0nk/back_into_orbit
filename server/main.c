@@ -68,7 +68,7 @@ struct game_state init_game()
 	gs.npc[2].type = UNIT_TYPE_NEUTRAL_CREEP;
 
 	glfwInit();
-	world_room=mkroom("../rooms/gamma.room");
+	world_room=mkroom("../rooms/simple.room");
 	return gs;
 }
 
