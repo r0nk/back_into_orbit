@@ -16,16 +16,6 @@
 int servling_over_socket;
 int client_over_socket;
 
-void handle_player_login()
-{
-	/*open socket()*/
-	/* check credentials for player*/
-	/* figure out the right server for the player */
-	//if theres no servling
-		// right_server = start_servling();
-	//add_player_to_servling(p,right_server);
-}
-
 void client_handler_loop()
 {
 	int np = 0;
