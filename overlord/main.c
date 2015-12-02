@@ -73,9 +73,11 @@ int main()
 	pthread_t servling_thread,client_thread;
 	servling_over_socket=init_server(PROTOLOL_SOVER_PORT);
 	client_over_socket=init_server(PROTOLOL_OVER_PORT);
-	start_servling();
 	pthread_create(&servling_thread,NULL,servling_handler_loop,NULL);
 	pthread_create(&client_thread,NULL,client_handler_loop,NULL);
+
+	start_servling();
+	start_servling();
 
 	while(strcmp(readline("o> "),"exit"));
 

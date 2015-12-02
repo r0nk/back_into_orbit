@@ -40,6 +40,7 @@ static inline void send_protolol(struct protolol_packet pp,int fd)
 	switch(pp.type)
 	{
 		case PROTOLOL_TYPE_GAME_STATE:
+		case PROTOLOL_TYPE_CLIENT_TELEPORT:
 		case PROTOLOL_TYPE_CONNECT_TO:
 			write(fd,&pp,sizeof(pp));
 			break;
@@ -74,6 +75,7 @@ static inline void client_connect_to(int cfd, char * ascii_ip)
 	send_protolol(pp,cfd);
 }
 
+
 static inline void send_player_input(struct player_input pi ,int fd)
 {
 	struct protolol_packet pp;
@@ -95,6 +97,18 @@ static inline void send_game_state(struct game_state gs ,int fd)
 	pp.magic_start[3]='i';
 	pp.type = PROTOLOL_TYPE_GAME_STATE;
 	memcpy(&pp.data,&gs,sizeof(gs));
+	send_protolol(pp,fd);
+}
+
+static inline void send_player_teleport( int door,int fd)
+{
+	struct protolol_packet pp;
+	pp.magic_start[0]='o';
+	pp.magic_start[1]='H';
+	pp.magic_start[2]='a';
+	pp.magic_start[3]='i';
+	pp.type = PROTOLOL_TYPE_CLIENT_TELEPORT;
+	memcpy(&pp.data,&door,sizeof(door));
 	send_protolol(pp,fd);
 }
 
