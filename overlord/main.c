@@ -32,6 +32,7 @@ void servling_handler_loop()
 	while(1){
 		np = accept(servling_over_socket,NULL,NULL);
 		printf("Overlord accepted server connection: %i\n",np);
+		add_servling(np);
 	}
 }
 
