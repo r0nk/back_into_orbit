@@ -12,7 +12,7 @@ struct servling {
 int n_servlings;
 struct servling servling[MAX_SERVLINGS];
 
-void add_servling(int fd)
-void start_servling()
+void add_servling(int fd);
+void start_servling();
 
 #endif

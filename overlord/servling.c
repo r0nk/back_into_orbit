@@ -1,3 +1,4 @@
+#include <protolol.h>
 #include "servling.h"
 
 void handle_servling_packet(int fd)
@@ -35,6 +36,7 @@ void add_servling(int fd)
 
 void start_servling()
 {
+	printf("hello asl;dkfjasldkfj\n");
 	if(!fork())
 		execl("../server/dr0ne_server","127.0.0.1");
 }

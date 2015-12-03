@@ -7,14 +7,14 @@ struct edge
 	int b_index;
 	int a_door;
 	int b_door;
-}
+};
 
 #define MAX_EDGES 400
 
 struct map
 {
 	struct edge edge[MAX_EDGES];
-}
+};
 
 struct map init_map();
 	

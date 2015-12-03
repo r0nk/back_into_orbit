@@ -12,6 +12,7 @@
 
 #include "servling.h"
 #include "client.h"
+#include "map.h"
 
 int servling_over_socket;
 int client_over_socket;
@@ -73,7 +74,7 @@ int main()
 
 	servling_over_socket=init_server(PROTOLOL_SOVER_PORT);
 	client_over_socket=init_server(PROTOLOL_OVER_PORT);
-	pthread_create(&servling_thread,NULL,servling_handler_loop,NULL);
+	pthread_create(&servling_thread,NULL,servling_acceptor,NULL);
 	pthread_create(&client_thread,NULL,client_handler_loop,NULL);
 
 	start_servling();
