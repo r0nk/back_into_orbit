@@ -86,7 +86,7 @@ int main()
 	start_servling();
 	start_servling();
 
-	while(strcmp(readline("o> "),"exit"));
+	while(do_cmd(readline("0> ")));
 
 	close(servling_over_socket);
 	close(client_over_socket);
