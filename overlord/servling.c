@@ -6,6 +6,7 @@ void handle_servling_packet(int fd)
 	pp = recv_protolol(fd);
 	switch(pp.type){
 		case PROTOLOL_TYPE_CLIENT_TELEPORT:
+			/*TODO fix this so it actually gives a client*/
 			client_connect_to(np,"127.0.0.1");
 			break;
 		default:
