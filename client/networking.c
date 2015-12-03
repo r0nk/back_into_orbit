@@ -4,6 +4,7 @@
 #include <arpa/inet.h>
 #include <errno.h>
 #include <sys/socket.h>
+#include <pthread.h>
 #include "networking.h"
 
 int overlord_fd;
@@ -85,12 +86,17 @@ struct game_state update_state(int server_fd, struct game_state gs,
 	return gs;
 }
 
+void overlord_handler()
+{
+	while(1)
+		handle_overlord_packet(overlord_fd);
+}
+
 int init_networking()
 {
+	pthread_t overlord_thread;
 	overlord_fd = connect_to_overlord();
-	printf("Client waiting for overlord to give us server \n");
-	while(!server_fd)
-		handle_overlord_packet(overlord_fd);
-	printf("server_fd:%i, returning\n",server_fd);
+	pthread_create(&overlord_thread,NULL,overlord_handler,NULL);
+	while(!server_fd); /* wait till we get a game server */
 	return server_fd;
 }

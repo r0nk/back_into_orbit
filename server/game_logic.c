@@ -3,6 +3,7 @@
 #include <room.h>
 #include <protolol.h>
 
+#include "networking.h"
 #include "game_logic.h"
 #include "client.h"
 #include "hittest.h"
@@ -145,7 +146,8 @@ void player_movement(struct game_state * gs, double delta, int i)
 	if(world_room.tiles[(int)(gs->game_player[i].location.x)][(int)(gs->game_player[i].location.z)] == ROOM_DOOR)
 	{
 		gs->game_player[i].location = (struct vector) {5,0,5};
-		//TODO tell the server to move this client
+		/*TODO send an actual doorno*/
+		send_player_teleport(1,overlord_fd);
 	}
 
 	move_unit(&gs->game_player[i],dvec);

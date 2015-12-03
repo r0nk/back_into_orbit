@@ -12,9 +12,8 @@
 #include <protolol.h>
 
 #include "client.h"
+#include "networking.h"
 #include "game_logic.h"
-
-int overlord_fd;
 
 int server_socket;
 

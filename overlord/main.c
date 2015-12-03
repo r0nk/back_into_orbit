@@ -16,6 +16,8 @@
 int servling_over_socket;
 int client_over_socket;
 
+struct map overmap;
+
 void client_handler_loop()
 {
 	int np = 0;
@@ -26,25 +28,20 @@ void client_handler_loop()
 	}
 }
 
-void servling_handler_loop()
+void servling_acceptor()
 {
 	int np = 0;
 	while(1){
 		np = accept(servling_over_socket,NULL,NULL);
-		printf("Overlord accepted server connection: %i\n",np);
+		printf("Overlord accepted servling connection: %i\n",np);
 		add_servling(np);
 	}
 }
 
-void start_servling()
-{
-	if(!fork())
-		execl("../server/dr0ne_server","127.0.0.1");
-}
 
 void add_player_to_servling(struct client * p, struct servling * s)
 {
-	// tell servling its about to get a player p
+	//TODO tell the servling its about to get a player 
 	client_connect_to(p->fd,s->ascii_ip);
 }
 
@@ -71,6 +68,9 @@ int init_server(int port)
 int main()
 {
 	pthread_t servling_thread,client_thread;
+
+	overmap = init_map();
+
 	servling_over_socket=init_server(PROTOLOL_SOVER_PORT);
 	client_over_socket=init_server(PROTOLOL_OVER_PORT);
 	pthread_create(&servling_thread,NULL,servling_handler_loop,NULL);

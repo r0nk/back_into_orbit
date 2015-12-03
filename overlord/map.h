@@ -15,5 +15,7 @@ struct map
 {
 	struct edge edge[MAX_EDGES];
 }
+
+struct map init_map();
 	
 #endif
