@@ -12,6 +12,7 @@ int server_fd;
 
 int connect_to_server(char * ip_addr)
 {
+
 	struct sockaddr_in address;
 	int cs = socket(PF_INET,SOCK_STREAM,0);
 	int e = 0;
@@ -24,6 +25,8 @@ int connect_to_server(char * ip_addr)
 
 	if(e)
 		err(1,"init_networking()");
+
+	printf("Client connected to server\n");
 
 	return cs;
 }
@@ -56,6 +59,8 @@ void handle_overlord_packet(int ofd)
 			server_fd = connect_to_server(&pp.data);
 			break;
 		default:
+			printf("overlord to client packet defaulted, type:%i\n",
+					pp.type);
 			err(-8,"unrecognized protolol overlord packet type");
 			break;
 	}

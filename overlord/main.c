@@ -25,9 +25,8 @@ void client_handler_loop()
 	int np = 0;
 	while(1){
 		np = accept(client_over_socket,NULL,NULL);
-		printf("Overlord accepted client connection: %i\n",np);
 		client_fd=np;
-		client_connect_to(np,"127.0.0.1");
+		add_player_to_servling(np,&servling[0]);
 	}
 }
 
@@ -36,16 +35,21 @@ void servling_acceptor()
 	int np = 0;
 	while(1){
 		np = accept(servling_over_socket,NULL,NULL);
-		printf("Overlord accepted servling connection: %i\n",np);
 		add_servling(np);
 	}
 }
 
-
-void add_player_to_servling(struct client * p, struct servling * s)
+void add_player_to_servling(int pfd, struct servling * s)
 {
-	//TODO tell the servling its about to get a player 
-	client_connect_to(p->fd,s->ascii_ip);
+	if(pfd==0 || s->fd==0){
+		printf("ERR: added player to invalid output, returning\n");
+		printf("	pfd:%i\n",pfd);
+		printf("	s: %p\n",s);
+		printf("	s->fd %i\n",s->fd);
+		return;
+	}
+	servling_expect_client(s->fd);
+	client_connect_to(pfd,s->ascii_ip);
 }
 
 int init_server(int port)

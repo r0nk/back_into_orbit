@@ -24,6 +24,7 @@ struct protolol_packet {
 	char data[sizeof(struct game_state)];
 };
 
+
 /* client-server */
 #define PROTOLOL_TYPE_GAME_STATE 1
 #define PROTOLOL_TYPE_PLAYER_INPUT 2
@@ -40,6 +41,7 @@ static inline void send_protolol(struct protolol_packet pp,int fd)
 	switch(pp.type)
 	{
 		case PROTOLOL_TYPE_GAME_STATE:
+		case PROTOLOL_TYPE_EXPECT_CLIENT:
 		case PROTOLOL_TYPE_CLIENT_TELEPORT:
 		case PROTOLOL_TYPE_CONNECT_TO:
 			write(fd,&pp,sizeof(pp));
@@ -61,6 +63,18 @@ static inline struct protolol_packet recv_protolol(int fd)
 	struct protolol_packet pp;
 	read(fd,&pp,sizeof(pp));
 	return pp;
+}
+
+static inline void servling_expect_client(int sfd)
+{
+	struct protolol_packet pp;
+	pp.magic_start[0]='o';
+	pp.magic_start[1]='H';
+	pp.magic_start[2]='a';
+	pp.magic_start[3]='i';
+	pp.type = PROTOLOL_TYPE_EXPECT_CLIENT;
+	memcpy(&pp.data,"I GIFF CLIENT KTHXBAI",strlen("I GIFF CLIENT KTHXBAI"));
+	send_protolol(pp,sfd);
 }
 
 static inline void client_connect_to(int cfd, char * ascii_ip)

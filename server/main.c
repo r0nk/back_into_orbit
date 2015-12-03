@@ -100,9 +100,11 @@ void handle_overlord_packet(int fd)
 {
 	struct protolol_packet pp;
 	pp = recv_protolol(fd);
+	printf("servling recieved packet of type: %i\n",pp.type);
 	switch(pp.type){
 		case PROTOLOL_TYPE_EXPECT_CLIENT:
 			should_accept=1;
+			printf("servling expecting client\n");
 			break;
 		default:
 			printf("server packet from overlord type defaulted, pp.type:%i, fd:%i\n",pp.type,fd);
@@ -118,7 +120,7 @@ void overlord_handler()
 	while(1){
 		handle_overlord_packet(overlord_fd);
 		if(should_accept){
-			printf("server waiting for client\n");
+			printf("servling waiting for client\n");
 			np = accept(server_socket,NULL,NULL);
 			add_client(np);
 			should_accept=0;
@@ -186,7 +188,6 @@ int connect_to_overlord()
 
 	if(e)
 		err(1,"connect_to_overlord()");
-	printf(" server Connected to overlord\n");
 
 	return cs;
 }
@@ -198,8 +199,6 @@ int main()
 	pthread_t overlord_thread;
 	pthread_create(&overlord_thread,NULL,overlord_handler,NULL);
 	world_state = init_game();
-
-	printf("Drone server: Waiting for clients to connect...\n");
 
 	while(n_clients<1)
 		sleep(1);//wait for clients to connect
