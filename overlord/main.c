@@ -13,6 +13,7 @@
 #include "servling.h"
 #include "client.h"
 #include "map.h"
+#include "networking.h"
 
 int servling_over_socket;
 int client_over_socket;
@@ -25,6 +26,7 @@ void client_handler_loop()
 	while(1){
 		np = accept(client_over_socket,NULL,NULL);
 		printf("Overlord accepted client connection: %i\n",np);
+		client_fd=np;
 		client_connect_to(np,"127.0.0.1");
 	}
 }

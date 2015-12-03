@@ -1,5 +1,6 @@
 #include <protolol.h>
 #include "servling.h"
+#include "networking.h"
 
 void handle_servling_packet(int fd)
 {
@@ -8,19 +9,20 @@ void handle_servling_packet(int fd)
 	switch(pp.type){
 		case PROTOLOL_TYPE_CLIENT_TELEPORT:
 			/*TODO fix this so it actually gives a client*/
-			client_connect_to(np,"127.0.0.1");
+			client_connect_to(client_fd,"127.0.0.1");
 			break;
 		default:
+			printf("servling packet type defaulted:%i\n",pp.type);
 			err(-20,"overlord recived unknown packet type");
 			break;
 	}
 }
 
-void servling_handler(void * servling)
+void servling_handler(void * servling_fd)
 {
-	struct servling s = (struct servling) servling;
+	int s = (int) servling_fd;
 	while(1)
-		handle_servling_packet(servling.fd);
+		handle_servling_packet(s);
 }
 
 void add_servling(int fd)
