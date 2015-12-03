@@ -53,8 +53,10 @@ void npc_update(struct game_state * gs,double delta)
 	int i,j;
 	for(j=0;j<gs->n_npcs;j++){
 		if(gs->npc[j].type == UNIT_TYPE_NEUTRAL_CREEP){
-			if(gs->npc[j].health<0)
+			if(gs->npc[j].health<0){
 				printf("dead npc \n");
+				gs->npc[j].health=100;
+			}
 			for(i=0;i<gs->n_players;i++){
 				//hit
 				if(near(gs->game_player[i].location,

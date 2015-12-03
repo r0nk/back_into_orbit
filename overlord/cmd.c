@@ -12,4 +12,3 @@ int do_cmd(char * cmd)
 		printf("n_servlings:%i\n",n_servlings);
 	return 1;
 }
-

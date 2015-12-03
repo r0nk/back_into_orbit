@@ -14,6 +14,7 @@
 #include "client.h"
 #include "map.h"
 #include "networking.h"
+#include "cmd.h"
 
 int servling_over_socket;
 int client_over_socket;
