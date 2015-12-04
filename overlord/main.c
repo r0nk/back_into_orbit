@@ -51,6 +51,7 @@ void add_player_to_servling(int pfd, struct servling * s)
 	}
 	servling_expect_client(s->fd);
 	client_connect_to(pfd,s->ascii_ip);
+	printf("adding client to sfd %i\n",s->fd);
 }
 
 int init_server(int port)
