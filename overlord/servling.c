@@ -19,11 +19,11 @@ void handle_servling_packet(int fd)
 	}
 }
 
-void servling_handler(void * servling_fd)
+void servling_handler(void * servl)
 {
-	int * s = (int * ) servling_fd;
+	struct servling * s = (struct servling * ) servl;
 	while(1)
-		handle_servling_packet(*s);
+		handle_servling_packet(s->fd);
 }
 
 void add_servling(int fd)
@@ -33,7 +33,7 @@ void add_servling(int fd)
 	servling[n_servlings].fd=fd;
 	servling[n_servlings].ascii_ip="127.0.0.1";
 	pthread_create(&servling[n_servlings].thread,NULL,
-			servling_handler,&servling[n_servlings].fd);
+			servling_handler,(void *)&servling[n_servlings]);
 	n_servlings++;
 }
 
