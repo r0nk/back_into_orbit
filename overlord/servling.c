@@ -9,7 +9,7 @@ void handle_servling_packet(int fd)
 	switch(pp.type){
 		case PROTOLOL_TYPE_CLIENT_TELEPORT:
 			/*TODO fix this so it actually gives a client*/
-			printf("overlord recieved client_teleport");
+			printf("overlord recieved client_teleport\n");
 			client_connect_to(client_fd,"127.0.0.1");
 			break;
 		default:

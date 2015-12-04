@@ -148,7 +148,7 @@ void player_movement(struct game_state * gs, double delta, int i)
 	if(world_room.tiles[(int)(gs->game_player[i].location.x)][(int)(gs->game_player[i].location.z)] == ROOM_DOOR)
 	{
 		gs->game_player[i].location = (struct vector) {5,0,5};
-		/*TODO send an actual doorno*/
+		printf("sending player teleport\n");
 		send_player_teleport(1,overlord_fd);
 	}
 
