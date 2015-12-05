@@ -20,7 +20,6 @@
 int servling_over_socket;
 int client_over_socket;
 
-struct map overmap;
 
 void client_handler_loop()
 {
