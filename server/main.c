@@ -150,27 +150,10 @@ void update_all(struct game_state * gs)
 	pthread_mutex_unlock(&clients_mutex);
 }
 
-int connect_to_overlord()
-{
-	struct sockaddr_in address;
-	int cs = socket(PF_INET,SOCK_STREAM,0);
-	int e = 0;
-
-	address.sin_family = AF_INET;
-	address.sin_port = htons(PROTOLOL_SOVER_PORT);
-	inet_aton("127.0.0.1",&address.sin_addr);
-
-	e = connect(cs,(struct sockaddr *)&address,sizeof(struct sockaddr_in));
-
-	if(e)
-		err(1,"connect_to_overlord()");
-
-	return cs;
-}
 
 int main()
 {
-	overlord_fd = connect_to_overlord();
+	overlord_fd = connect_to_overlord(PROTOLOL_SOVER_PORT);
 	server_socket = init_server(PROTOLOL_PORT);
 	init_clients();
 	pthread_t overlord_thread;

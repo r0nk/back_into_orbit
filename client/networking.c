@@ -5,7 +5,9 @@
 #include <errno.h>
 #include <sys/socket.h>
 #include <pthread.h>
+
 #include "networking.h"
+#include <net_utils.h>
 
 int overlord_fd;
 int server_fd;
@@ -31,24 +33,6 @@ int connect_to_server(char * ip_addr)
 	return cs;
 }
 
-int connect_to_overlord()
-{
-	struct sockaddr_in address;
-	int cs = socket(PF_INET,SOCK_STREAM,0);
-	int e = 0;
-
-	address.sin_family = AF_INET;
-	address.sin_port = htons(PROTOLOL_OVER_PORT);
-	inet_aton("127.0.0.1",&address.sin_addr);
-
-	e = connect(cs,(struct sockaddr *)&address,sizeof(struct sockaddr_in));
-
-	if(e)
-		err(1,"connect_to_overlord()");
-	printf("Client connected to overlord\n");
-
-	return cs;
-}
 
 void handle_overlord_packet(int ofd)
 {
@@ -100,7 +84,7 @@ void overlord_handler()
 int init_networking()
 {
 	pthread_t overlord_thread;
-	overlord_fd = connect_to_overlord();
+	overlord_fd = connect_to_overlord(PROTOLOL_OVER_PORT);
 	pthread_create(&overlord_thread,NULL,overlord_handler,NULL);
 	while(!server_fd); /* wait till we get a game server */
 	return server_fd;

@@ -22,5 +22,23 @@ static inline int init_server(int port)
 		err(3,"init_server() listen");
 	return ss;
 }
+
+static inline int connect_to_overlord(int port)
+{
+	struct sockaddr_in address;
+	int cs = socket(PF_INET,SOCK_STREAM,0);
+	int e = 0;
+
+	address.sin_family = AF_INET;
+	address.sin_port = htons(port);
+	inet_aton("127.0.0.1",&address.sin_addr);
+
+	e = connect(cs,(struct sockaddr *)&address,sizeof(struct sockaddr_in));
+
+	if(e)
+		err(1,"connect_to_overlord()");
+
+	return cs;
+}
  
 #endif
