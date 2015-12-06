@@ -2,50 +2,17 @@
 #define MAP
 
 #include <stdio.h>
-
-struct node
-{
-	int index;
-	int door;
-};
-
-struct edge
-{
-	struct node a,b;
-};
+#include <igraph/igraph.h>
 
 #define MAX_EDGES 400
 
-struct map
+static inline void dump_map(igraph_t m)
 {
-	int n_edges;
-	struct edge edge[MAX_EDGES];
-};
-
-static inline void dump_node(struct node n)
-{
-	printf(" index:%i door:%i\n",n.index,n.door);
+	igraph_write_graph_edgelist(&m,stdout);
 }
 
-static inline void dump_edge(struct edge e)
-{
-	dump_node(e.a);
-	dump_node(e.b);
-}
+igraph_t init_map();
 
-static inline void dump_map(struct map m)
-{
-	int i;
-	for(i=0;i<m.n_edges;i++){
-		printf("edge[%i]:\n",i);
-		dump_edge(m.edge[i]);
-	}
-}
+igraph_t overmap;
 
-struct map init_map();
-
-struct map overmap;
-
-struct node connected_node(struct node n);
-	
 #endif
