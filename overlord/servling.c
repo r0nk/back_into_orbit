@@ -1,18 +1,19 @@
 #include <protolol.h>
 #include "servling.h"
 #include "networking.h"
+#include "teleport.h"
 
 void handle_servling_packet(struct servling s)
 {
+	int doornum;
 	struct protolol_packet pp;
 	pp = recv_protolol(s.fd);
 	switch(pp.type){
 		case PROTOLOL_TYPE_CLIENT_TELEPORT:
 			/*TODO fix this so it actually gives a client*/
-			add_player_to_servling(client_fd,&servling[1]);
-			int f;
-			memcpy(&f,&pp.data,sizeof(f));
-			printf("over teleport recv : %i\n",f);
+			memcpy(&doornum,&pp.data,sizeof(doornum));
+			printf("over teleport recv : %i\n",doornum);
+			teleport_player(client_fd,doornum);
 			break;
 		default:
 			printf("overlord recieved servling packet type defaulted, pp.type:%i, fd:%i\n",pp.type,s.fd);

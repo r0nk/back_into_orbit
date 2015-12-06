@@ -156,7 +156,7 @@ void player_movement(struct game_state * gs, double delta, int i)
 	int t = door_at((int)(gs->game_player[i].location.x),(int)(gs->game_player[i].location.z));
 	if(t)
 	{
-		gs->game_player[i].location = (struct vector) {10,0,5};
+		gs->game_player[i].location = (struct vector) {5,0,5};
 		printf("sending player teleport: %i\n",t);
 		send_player_teleport(t,overlord_fd);
 	}

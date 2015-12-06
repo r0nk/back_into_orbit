@@ -76,11 +76,9 @@ void handle_overlord_packet(int fd)
 {
 	struct protolol_packet pp;
 	pp = recv_protolol(fd);
-	printf("servling recieved packet of type: %i\n",pp.type);
 	switch(pp.type){
 		case PROTOLOL_TYPE_EXPECT_CLIENT:
 			should_accept=1;
-			printf("servling expecting client\n");
 			break;
 		default:
 			printf("server packet from overlord type defaulted, pp.type:%i, fd:%i\n",pp.type,fd);
@@ -96,7 +94,6 @@ void overlord_handler()
 	while(1){
 		handle_overlord_packet(overlord_fd);
 		if(should_accept){
-			printf("servling waiting for client\n");
 			np = accept(server_socket,NULL,NULL);
 			add_client(np);
 			should_accept=0;
