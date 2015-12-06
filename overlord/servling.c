@@ -10,6 +10,9 @@ void handle_servling_packet(struct servling s)
 		case PROTOLOL_TYPE_CLIENT_TELEPORT:
 			/*TODO fix this so it actually gives a client*/
 			add_player_to_servling(client_fd,&servling[1]);
+			int f;
+			memcpy(&f,&pp.data,sizeof(f));
+			printf("over teleport recv : %i\n",f);
 			break;
 		default:
 			printf("overlord recieved servling packet type defaulted, pp.type:%i, fd:%i\n",pp.type,s.fd);

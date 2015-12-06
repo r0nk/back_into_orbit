@@ -12,7 +12,7 @@ struct room {
 extern struct room world_room;
 extern struct model block;
 
-#define ROOM_WALL 1
+#define ROOM_WALL '#'
 #define ROOM_DOOR 2
 
 static inline struct room mkroom(char * pathname)
@@ -28,13 +28,12 @@ static inline struct room mkroom(char * pathname)
 			y++;
 			x=0;
 			continue;
-		case '#':
-			m->tiles[x][y]=ROOM_WALL;
-			break;
-		case '@':
-			m->tiles[x][y]=ROOM_DOOR;
+		case '.':
+		case ' ':
+			m->tiles[x][y]='\0';
 			break;
 		default:
+			m->tiles[x][y]=c[0];
 			break;
 		}
 		x++;

@@ -11,6 +11,14 @@
 /*TODO FIXME: this whole file would make an italian cheif proud*/
 /* seriously, this shits Al dente */
 
+int door_at(int x, int z)
+{
+	char c = world_room.tiles[x][z];
+	if( (c>'0') && (c<'9') )
+		return (c-'0');
+	return 0;
+}
+
 void move_unit(struct unit * u,struct vector d)
 {
 	if(world_room.tiles[ (int)(u->location.x+d.x) ][(int)(u->location.z)]
@@ -145,11 +153,12 @@ void player_movement(struct game_state * gs, double delta, int i)
 		dvec.z-=d;
 	}
 
-	if(world_room.tiles[(int)(gs->game_player[i].location.x)][(int)(gs->game_player[i].location.z)] == ROOM_DOOR)
+	int t = door_at((int)(gs->game_player[i].location.x),(int)(gs->game_player[i].location.z));
+	if(t)
 	{
-		gs->game_player[i].location = (struct vector) {5,0,5};
-		printf("sending player teleport\n");
-		send_player_teleport(1,overlord_fd);
+		gs->game_player[i].location = (struct vector) {10,0,5};
+		printf("sending player teleport: %i\n",t);
+		send_player_teleport(t,overlord_fd);
 	}
 
 	move_unit(&gs->game_player[i],dvec);

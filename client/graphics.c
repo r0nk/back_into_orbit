@@ -147,7 +147,7 @@ void draw_room()
 			if(world_room.tiles[x][z]==ROOM_WALL){
 				draw_block(x,0,z);
 				draw_block(x,1,z);
-			}else if(world_room.tiles[x][z]==ROOM_DOOR){
+			}else if(world_room.tiles[x][z]>'0' && world_room.tiles[x][z]<'9'){
 				draw_model(door_model,(struct vector){x,0,z});
 			}
 		}
