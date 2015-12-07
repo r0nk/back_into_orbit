@@ -4,6 +4,7 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <err.h>
 
 struct room {
 	char tiles[100][100];
@@ -18,6 +19,9 @@ extern struct model block;
 static inline struct room mkroom(char * pathname)
 {
 	int fd = open(pathname,O_RDONLY);
+	if(fd==-1)
+		err(-29,"mkroom() couldn't open");
+
 	struct room *m = calloc(1,sizeof(struct room));
 	char c[2];
 	int x=0,y=0;

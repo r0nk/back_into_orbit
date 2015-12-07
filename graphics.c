@@ -158,12 +158,7 @@ void draw_unit(struct unit u)
 {
 	switch(u.type){
 		case UNIT_TYPE_PLAYER:
-			if(u.team==BLUE_TEAM)
-				draw_model(bp_model,u.location);
-			else if (u.team==RED_TEAM)
-				draw_model(rp_model,u.location);
-			else 
-				draw_model(p_model,u.location);
+			draw_model(p_model,u.location);
 			break;
 		case UNIT_TYPE_SHOP:
 			draw_model(shp_model,u.location);
@@ -225,19 +220,13 @@ void draw_models(struct game_state * gs)
 {
 	draw_room();
 	int i;
-	for(i=0;i<gs->n_players;i++){
-		draw_unit(gs->game_player[i]);
-	}
+	draw_unit(gs->game_player);
 	for(i=0;i<gs->n_npcs;i++){
 		draw_unit(gs->npc[i]);
 	}
 	for(i=0;i<gs->n_bullets;i++){
 		draw_model(bullet_model,gs->bullet[i].location);
 	}
-	draw_model(rflag_model,gs->red.flag.location);
-	draw_model(bflag_model,gs->blue.flag.location);
-	draw_model(fh_model,gs->red.flag_starting);
-	draw_model(fh_model,gs->blue.flag_starting);
 }
 
 void draw_health_bar(struct unit u, int x, int y)
@@ -295,8 +284,8 @@ void draw_hud(struct game_state * gs)
 	gluLookAt(0,0,0, 0,0,1, 0,1,0);
 	glBegin(GL_TRIANGLES);
 
-	draw_health_bar(gs->game_player[gs->current_player],0,-9);
-	draw_inventory(gs->game_player[gs->current_player],9,-5);
+	draw_health_bar(gs->game_player,0,-9);
+	draw_inventory(gs->game_player,9,-5);
 
 	//TODO draw this whenever we're close to the shop or whatever
 	//draw_text(3,2,"Red Flag --> $ 20 ");
@@ -323,12 +312,12 @@ void graphics_draw(struct game_state * gs)
 
 	glPushMatrix();
 	int zoom = 8;
-	gluLookAt(gs->game_player[gs->current_player].location.x+zoom,
-		gs->game_player[gs->current_player].location.y+(zoom*1.6),
-		gs->game_player[gs->current_player].location.z+zoom,
-		gs->game_player[gs->current_player].location.x,
-		gs->game_player[gs->current_player].location.y,
-		gs->game_player[gs->current_player].location.z,
+	gluLookAt(gs->game_player.location.x+zoom,
+		  gs->game_player.location.y+(zoom*1.6),
+		  gs->game_player.location.z+zoom,
+		  gs->game_player.location.x,
+		  gs->game_player.location.y,
+		  gs->game_player.location.z,
 		0,1,0);
 	draw_models(gs);
 	glPopMatrix();

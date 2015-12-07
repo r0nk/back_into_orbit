@@ -22,5 +22,7 @@ static inline void dump_player_input(struct player_input pi)
 	}
 	printf("\n");
 }
+
+struct player_input pi;
  
 #endif

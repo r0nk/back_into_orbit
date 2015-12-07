@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include "poly.h"
 #include "model.h"
-#include <inventory.h>
+#include "inventory.h"
 
 struct bullet {
 	double speed;

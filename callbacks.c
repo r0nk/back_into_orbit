@@ -2,14 +2,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include <input.h>
-
+#include "input.h"
 #include "callbacks.h"
 #include "engine.h"
 #include "game.h"
 #include "graphics.h"
-
-struct player_input pi;
 
 void err_callback(int err, const char* description)
 {

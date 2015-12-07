@@ -1,19 +1,19 @@
 #include <unistd.h>
 #include <stdio.h>
+
+#include "game_state.h"
 #include "graphics.h"
 #include "engine.h"
 #include "game.h"
-#include "networking.h"
 
 struct game_state gs;
 
 int main()
 {
 	init_graphics();
-	int server_fd = init_networking();
 	gs = init_game();
 	while(1){
-		engine_tick(server_fd,&gs);
+		engine_tick(&gs);
 		graphics_draw(&gs);
 	}
 	return 0;
