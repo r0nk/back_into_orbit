@@ -13,6 +13,8 @@ static inline void dump_map(igraph_t m)
 
 igraph_t init_map();
 
+int connected_door(int doorno);
+
 igraph_t overmap;
 
 #endif
