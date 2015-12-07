@@ -90,7 +90,8 @@ static inline void client_connect_to(int cfd, char * ascii_ip)
 	pp.magic_start[2]='a';
 	pp.magic_start[3]='i';
 	pp.type = PROTOLOL_TYPE_CONNECT_TO;
-	memcpy(&pp.data,ascii_ip,strlen(ascii_ip));
+	printf("client connect to: %s\n",ascii_ip);
+	memcpy(&pp.data,ascii_ip,1+strlen(ascii_ip));
 	send_protolol(pp,cfd);
 }
 

@@ -157,9 +157,6 @@ int main()
 	pthread_create(&overlord_thread,NULL,overlord_handler,NULL);
 	world_state = init_game();
 
-	while(n_clients<1)
-		sleep(1);//wait for clients to connect
-
 	while(1)
 		update_all(&world_state);
 }

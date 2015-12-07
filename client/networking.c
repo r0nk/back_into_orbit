@@ -39,7 +39,7 @@ void handle_overlord_packet(int ofd)
 	switch(pp.type){
 		case PROTOLOL_TYPE_CONNECT_TO:
 			server_fd = connect_to_server(&pp.data);
-			printf("connected to server %i\n",server_fd);
+			printf("connected to server %s %i\n",&pp.data,server_fd);
 			break;
 		default:
 			printf("overlord to client packet defaulted, type:%i\n",
