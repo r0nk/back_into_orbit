@@ -34,16 +34,12 @@ int connect_to_server(char * ip_addr)
 
 void handle_overlord_packet(int ofd)
 {
-	printf("handling overlord packet\n");
 	struct protolol_packet pp;
 	pp = recv_protolol(ofd);
 	switch(pp.type){
 		case PROTOLOL_TYPE_CONNECT_TO:
-			if(server_fd){
-				printf("server_fd %i, closing\n",server_fd);
-				close(server_fd);
-			}
 			server_fd = connect_to_server(&pp.data);
+			printf("connected to server %i\n",server_fd);
 			break;
 		default:
 			printf("overlord to client packet defaulted, type:%i\n",

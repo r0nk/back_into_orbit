@@ -9,6 +9,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <err.h>
+#include <errno.h>
 
 #include <game_state.h>
 #include <input.h>
@@ -23,7 +24,6 @@ struct protolol_packet {
 	char type;
 	char data[sizeof(struct game_state)];
 };
-
 
 /* client-server */
 #define PROTOLOL_TYPE_GAME_STATE 1
@@ -61,7 +61,12 @@ static inline void send_protolol(struct protolol_packet pp,int fd)
 static inline struct protolol_packet recv_protolol(int fd)
 {
 	struct protolol_packet pp;
-	read(fd,&pp,sizeof(pp));
+	int n;
+	if(fcntl(fd,F_GETFL)==-1 || errno==EBADF)
+		err(-32,"recv_protolol() cound't recieve packet");
+	n = read(fd,&pp,sizeof(pp));
+	if(!n)
+		err(-33,"recv_protolol() read 0 bytes");
 	return pp;
 }
 

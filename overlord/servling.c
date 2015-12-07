@@ -5,8 +5,8 @@
 
 void handle_servling_packet(struct servling s)
 {
-	int doornum;
 	struct protolol_packet pp;
+	int doornum;
 	pp = recv_protolol(s.fd);
 	switch(pp.type){
 		case PROTOLOL_TYPE_CLIENT_TELEPORT:
