@@ -34,7 +34,7 @@ void init_models()
 {
 	p_model=pawn();
 	d_model=player_model();
-	ai_model=tetra();
+	ai_model=scavenger();
 	bullet_model=bullet();
 	block_model=wall_block();
 	bp_model=blue_pawn_model();

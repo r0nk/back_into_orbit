@@ -1,4 +1,3 @@
-#include <stdlib.h>
 #include <GLFW/glfw3.h>
 #include <math.h>
 #include <stdio.h>
@@ -7,6 +6,15 @@
 #include "room.h"
 #include "callbacks.h"
 #include "input.h"
+
+int near(struct vector a, struct vector b,double r)
+{
+	if(( a.x > (b.x - r)  && a.x < b.x + r) &&
+			(a.z > (b.z-r) && a.z < (b.z+r))){
+		return 1;
+	}
+	return 0;
+}
 
 double delta_time()
 {
@@ -114,10 +122,47 @@ void update_player(struct game_state * gs,double delta)
 	player_attack(gs,delta);
 }
 
+void update_npcs(struct game_state * gs, double delta)
+{
+	int j;
+	for(j=0;j<gs->n_npcs;j++){
+		if(gs->npc[j].type == UNIT_TYPE_NEUTRAL_CREEP){
+			if(gs->npc[j].health<0){
+				printf("dead npc \n");
+				gs->npc[j].health=100;
+			}
+			//hit
+			if(near(gs->game_player.location,
+						gs->npc[j].location,2)){
+				gs->game_player.health-=delta*10;
+			}
+			//chase
+			if(near(gs->game_player.location,
+						gs->npc[j].location,10)){
+				struct vector v = {0};
+				if(gs->npc[j].location.x > gs->game_player.location.x)
+					v.x=-gs->npc[j].speed*delta;
+				else
+					v.x=gs->npc[j].speed*delta;
+
+				if(gs->npc[j].location.z > gs->game_player.location.z)
+					v.z=-gs->npc[j].speed*delta;
+				else
+					v.z=gs->npc[j].speed*delta;
+
+				v.x*=delta;
+				v.z*=delta;
+				move_unit(&gs->npc[j],v);
+			}
+		}
+	}
+}
+
 /* all of the game engine stuff is actually server side */
 void engine_tick(struct game_state * gs)
 {
 	double d = delta_time();
 	update_player(gs,d);
 	update_bullets(gs,d);
+	update_npcs(gs,d);
 }
