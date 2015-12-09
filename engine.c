@@ -5,6 +5,7 @@
 #include "game_state.h"
 #include "room.h"
 #include "callbacks.h"
+#include "audio.h"
 #include "input.h"
 
 double to_degrees(double r){
@@ -155,6 +156,7 @@ void update_npcs(struct game_state * gs, double delta)
 			if(near(gs->game_player.location,
 						gs->npc[j].location,1.5)){
 				gs->game_player.health-=delta*10;
+				play_audio();
 			}
 			//chase
 			if(near(gs->game_player.location,
