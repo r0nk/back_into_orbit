@@ -7,6 +7,24 @@
 #include "callbacks.h"
 #include "input.h"
 
+double to_degrees(double r){
+	return r * (180.0/M_PI);
+}
+
+double ang;
+
+void face(struct unit * u, point p)
+{
+	struct vector d;
+	d.x = u->location.x - p.x;
+	d.z = u->location.z - p.z;
+	if(d.x<0.0)
+		u->rotation_angle = to_degrees(-atan(d.z/d.x)) + 90;
+	else
+		u->rotation_angle = to_degrees(-atan(d.z/d.x)) - 90;
+	u->rotation = (struct vector) {0,1,0};
+}
+
 int near(struct vector a, struct vector b,double r)
 {
 	if(( a.x > (b.x - r)  && a.x < b.x + r) &&
@@ -139,6 +157,7 @@ void update_npcs(struct game_state * gs, double delta)
 			//chase
 			if(near(gs->game_player.location,
 						gs->npc[j].location,10)){
+				face(&gs->npc[j],gs->game_player.location);
 				struct vector v = {0};
 				if(gs->npc[j].location.x > gs->game_player.location.x)
 					v.x=-gs->npc[j].speed*delta;
