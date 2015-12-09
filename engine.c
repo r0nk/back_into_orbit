@@ -11,7 +11,9 @@ double to_degrees(double r){
 	return r * (180.0/M_PI);
 }
 
-double ang;
+double to_radians(double d){
+	return d * (M_PI/180.0);
+}
 
 void face(struct unit * u, point p)
 {
@@ -151,26 +153,19 @@ void update_npcs(struct game_state * gs, double delta)
 			}
 			//hit
 			if(near(gs->game_player.location,
-						gs->npc[j].location,2)){
+						gs->npc[j].location,1.5)){
 				gs->game_player.health-=delta*10;
 			}
 			//chase
 			if(near(gs->game_player.location,
 						gs->npc[j].location,10)){
 				face(&gs->npc[j],gs->game_player.location);
-				struct vector v = {0};
-				if(gs->npc[j].location.x > gs->game_player.location.x)
-					v.x=-gs->npc[j].speed*delta;
-				else
-					v.x=gs->npc[j].speed*delta;
+				struct vector v = (struct vector) {0,0,0};
+				double s = gs->npc[j].speed*delta;
 
-				if(gs->npc[j].location.z > gs->game_player.location.z)
-					v.z=-gs->npc[j].speed*delta;
-				else
-					v.z=gs->npc[j].speed*delta;
+				v.x= sin(to_radians(gs->npc[j].rotation_angle)) * s;
+				v.z= cos(to_radians(gs->npc[j].rotation_angle)) * s;
 
-				v.x*=delta;
-				v.z*=delta;
 				move_unit(&gs->npc[j],v);
 			}
 		}
