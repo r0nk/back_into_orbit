@@ -106,11 +106,13 @@ void draw_poly(struct polygon p)
 	draw_vertice(p.v[2]);
 }
 
-void draw_model(struct model model,struct vector loc)
+void draw_model(struct model model,struct vector loc,
+		double angle, struct vector rotation)
 {
 	unsigned int i;
 	glPushMatrix();
 	glTranslatef(loc.x,loc.y,loc.z);
+	glRotated(angle,rotation.x,rotation.y,rotation.z);
 	glBegin(GL_TRIANGLES);
 	for(i=0;i<model.cardinality;i++)
 		draw_poly(model.poly[i]);
@@ -148,7 +150,8 @@ void draw_room()
 				draw_block(x,0,z);
 				draw_block(x,1,z);
 			}else if(world_room.tiles[x][z]>'0' && world_room.tiles[x][z]<'9'){
-				draw_model(door_model,(struct vector){x,0,z});
+				draw_model(door_model,(struct vector){x,0,z},
+						0.0, (struct vector){0,0,0});
 			}
 		}
 	}
@@ -156,20 +159,26 @@ void draw_room()
 
 void draw_unit(struct unit u)
 {
+	glPushMatrix();
 	switch(u.type){
 		case UNIT_TYPE_PLAYER:
-			draw_model(p_model,u.location);
+			draw_model(p_model,u.location,
+					u.rotation_angle,u.rotation);
 			break;
 		case UNIT_TYPE_SHOP:
-			draw_model(shp_model,u.location);
+			draw_model(shp_model,u.location,
+					u.rotation_angle,u.rotation);
 			break;
 		case UNIT_TYPE_COIN:
-			draw_model(coin_model,u.location);
+			draw_model(coin_model,u.location,
+					u.rotation_angle,u.rotation);
 			break;
 		case UNIT_TYPE_NEUTRAL_CREEP:
-			draw_model(ai_model,u.location);
+			draw_model(ai_model,u.location,
+					u.rotation_angle,u.rotation);
 			break;
 	}
+	glPopMatrix();
 }
 
 void draw_letter(double x, double y, char bits[24])
@@ -225,7 +234,8 @@ void draw_models(struct game_state * gs)
 		draw_unit(gs->npc[i]);
 	}
 	for(i=0;i<gs->n_bullets;i++){
-		draw_model(bullet_model,gs->bullet[i].location);
+		draw_model(bullet_model,gs->bullet[i].location,
+				0.0, (struct vector){0,0,0});
 	}
 }
 

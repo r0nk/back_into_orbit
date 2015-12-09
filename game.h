@@ -15,6 +15,8 @@ struct bullet {
 
 struct unit {
 	double speed;
+	struct vector rotation;
+	double rotation_angle;
 	point location;
 	point destination;
 	double health;
