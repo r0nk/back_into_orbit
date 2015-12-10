@@ -166,8 +166,8 @@ void update_npcs(struct game_state * gs, double delta)
 				struct vector v = (struct vector) {0,0,0};
 				double s = gs->npc[j].speed*delta;
 
-				v.x= sin(to_radians(gs->npc[j].rotation_angle)) * s;
-				v.z= cos(to_radians(gs->npc[j].rotation_angle)) * s;
+				v.x=sin(to_radians(gs->npc[j].rotation_angle))*s;
+				v.z=cos(to_radians(gs->npc[j].rotation_angle))*s;
 
 				move_unit(&gs->npc[j],v);
 			}
