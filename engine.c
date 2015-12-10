@@ -40,6 +40,14 @@ double delta_time()
 	return s;
 }
 
+int door_at(int x, int z)
+{
+	char c = world_room.tiles[x][z];
+	if( (c>'0') && (c<'9') )
+		return (c-'0');
+	return 0;
+}
+
 void update_bullets(struct game_state * gs, double delta)
 {
 	int i,j;
@@ -143,14 +151,23 @@ void player_attack(struct game_state * gs, double delta)
 
 void update_player(struct game_state * gs,double delta)
 {
+	int t;
 	if(gs->game_player.health<0){
 		printf("MISSON FAILED; B0T DESTORYED\n");
 		deathplosion();
-		sleep(1);/* give them time to look at their failures*/
+		sleep(1);/* give them time to look at their failures >:( */
 		exit(0);
 	}
 	player_movement(gs,delta);
 	player_attack(gs,delta);
+
+	t = door_at((int)(gs->game_player.location.x),
+			(int)(gs->game_player.location.z));
+	if(t)
+	{
+		gs->game_player.location = (struct vector) {5,0,5};
+		printf("sending player teleport: %i\n",t);
+	}
 }
 
 void update_npcs(struct game_state * gs, double delta)
