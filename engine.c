@@ -9,6 +9,9 @@
 #include "input.h"
 #include "engine.h"
 
+double spawner_countdown;
+#define SCM 10
+
 void face(struct unit * u, point p)
 {
 	struct vector d;
@@ -179,10 +182,31 @@ void update_npcs(struct game_state * gs, double delta)
 	}
 }
 
+void spawner (struct game_state * gs, double delta)
+{
+	struct unit npc;
+
+	if(spawner_countdown>0){
+		printf("spawner_countdown:%f\n",spawner_countdown);
+		spawner_countdown-=delta;
+		return;
+	}
+	spawner_countdown=SCM;
+	npc.speed=2.0;
+	npc.health=100;
+	npc.location=(struct vector) {15,0,3};
+	npc.destination=(struct vector) {15,0,3};
+	npc.type = UNIT_TYPE_NEUTRAL_CREEP;
+	npc.rotation_angle = 90;
+	npc.rotation = (struct vector) {0,1,0};
+	add_npc(gs,npc);
+}
+
 /* all of the game engine stuff is actually server side */
 void engine_tick(struct game_state * gs)
 {
 	double d = delta_time();
+	spawner(gs,d);
 	update_player(gs,d);
 	update_bullets(gs,d);
 	update_npcs(gs,d);
