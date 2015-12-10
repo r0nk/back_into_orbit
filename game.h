@@ -28,9 +28,9 @@ struct unit {
 #define UNIT_TYPE_COIN   		3
 #define UNIT_TYPE_NEUTRAL_CREEP   	4
 	int team;
-#define NEUTRAL_TEAM 0
-#define RED_TEAM 1
-#define BLUE_TEAM 2
+#define NEUTRAL_TEAM 			0
+#define RED_TEAM 			1
+#define BLUE_TEAM 			2
 };
 
 static inline void dump_bullet(struct bullet b){

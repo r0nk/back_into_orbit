@@ -31,6 +31,21 @@ static inline void add_bullet(struct game_state * gs, struct bullet b)
 	gs->n_bullets++;
 }
 
+static inline void remove_npc(struct game_state * gs, int i)
+{
+	for(;i<gs->n_npcs;i++)
+		gs->npc[i] = gs->npc[i+1];
+	gs->n_npcs--;
+}
+
+static inline void add_npc(struct game_state * gs, struct unit n)
+{
+	if(gs->n_npcs>MAX_NPCS)
+		return;
+	gs->npc[gs->n_npcs]=n;
+	gs->n_npcs++;
+}
+
 struct game_state init_game();
  
 #endif
