@@ -187,7 +187,6 @@ void spawner (struct game_state * gs, double delta)
 	struct unit npc;
 
 	if(spawner_countdown>0){
-		printf("spawner_countdown:%f\n",spawner_countdown);
 		spawner_countdown-=delta;
 		return;
 	}
