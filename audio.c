@@ -24,15 +24,27 @@ void fill_audio(void *udata, Uint8 *stream, int len)
 	audio_len -= len;
 }
 
-void play_audio(){
+void tzztzzz(){
 	int i;
 	for(i=0;i<1000;i++){
-		audio_chunk[i]=(unsigned char)(sin(i*(freq/10000.0))*50)+1;
+		audio_chunk[i]=(unsigned char)
+			(sin(i*(freq/1000.0))*30)+1;
 	}
 	audio_pos = (char *)audio_chunk;
-	audio_len = strlen((char * )audio_chunk);
+	audio_len = 100;
 
-	/* Let the callback function play the audio chunk */
+	SDL_PauseAudio(0);
+}
+
+void pew(){
+	int i;
+	for(i=0;i<1000;i++){
+		audio_chunk[i]=(unsigned char)
+			((sin(i*(freq/5000.0))*50)/(i%100))+1;
+	}
+	audio_pos = (char *)audio_chunk;
+	audio_len = 500;
+
 	SDL_PauseAudio(0);
 }
 

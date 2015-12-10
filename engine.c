@@ -70,6 +70,7 @@ void fire_bullet(struct game_state * gs,
 	b.direction = direction;
 	b.speed = 5;
 	b.duration = 100;
+	pew();
 	add_bullet(gs,b);
 }
 
@@ -156,7 +157,7 @@ void update_npcs(struct game_state * gs, double delta)
 			if(near(gs->game_player.location,
 						gs->npc[j].location,1.5)){
 				gs->game_player.health-=delta*10;
-				play_audio();
+				tzztzzz();
 			}
 			//chase
 			if(near(gs->game_player.location,

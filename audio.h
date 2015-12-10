@@ -2,6 +2,7 @@
 #define AUDIO
 
 void init_audio();
-void play_audio();
+void tzztzzz();
+void pew();
  
 #endif
