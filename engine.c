@@ -50,10 +50,8 @@ void update_bullets(struct game_state * gs, double delta)
 	double s;
 	for(i=0;i<gs->n_bullets;i++){
 		s = gs->bullet[i].speed*delta;
-		gs->bullet[i].location.x+=
-			gs->bullet[i].direction.x * s;
-		gs->bullet[i].location.z+=
-			gs->bullet[i].direction.z * s;
+		gs->bullet[i].location.x+=gs->bullet[i].direction.x*s;
+		gs->bullet[i].location.z+=gs->bullet[i].direction.z*s;
 		if(world_room.tiles[(int)gs->bullet[i].location.x]
 				[(int)gs->bullet[i].location.z])
 			remove_bullet(gs,i);
@@ -66,7 +64,6 @@ void update_bullets(struct game_state * gs, double delta)
 				remove_bullet(gs,i);
 			}
 		}
-
 	}
 }
 
@@ -158,11 +155,9 @@ void update_npcs(struct game_state * gs, double delta)
 {
 	int j;
 	for(j=0;j<gs->n_npcs;j++){
+		if(gs->npc[j].health<0)
+			remove_npc(gs,j);
 		if(gs->npc[j].type == UNIT_TYPE_NEUTRAL_CREEP){
-			if(gs->npc[j].health<0){
-				printf("dead npc \n");
-				gs->npc[j].health=100;
-			}
 			//hit
 			if(near(gs->game_player.location,
 						gs->npc[j].location,1.5)){
