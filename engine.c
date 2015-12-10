@@ -7,14 +7,7 @@
 #include "callbacks.h"
 #include "audio.h"
 #include "input.h"
-
-double to_degrees(double r){
-	return r * (180.0/M_PI);
-}
-
-double to_radians(double d){
-	return d * (M_PI/180.0);
-}
+#include "engine.h"
 
 void face(struct unit * u, point p)
 {
@@ -147,6 +140,12 @@ void player_attack(struct game_state * gs, double delta)
 
 void update_player(struct game_state * gs,double delta)
 {
+	if(gs->game_player.health<0){
+		printf("MISSON FAILED; B0T DESTORYED\n");
+		deathplosion();
+		sleep(1);/* give them time to look at their failures*/
+		exit(0);
+	}
 	player_movement(gs,delta);
 	player_attack(gs,delta);
 }
@@ -155,17 +154,17 @@ void update_npcs(struct game_state * gs, double delta)
 {
 	int j;
 	for(j=0;j<gs->n_npcs;j++){
-		if(gs->npc[j].health<0)
+		if(gs->npc[j].health<0){
+			deathplosion();
 			remove_npc(gs,j);
+		}
 		if(gs->npc[j].type == UNIT_TYPE_NEUTRAL_CREEP){
 			//hit
 			if(near(gs->game_player.location,
 						gs->npc[j].location,1.5)){
-				gs->game_player.health-=delta*10;
+				gs->game_player.health-=delta*30;
 				tzztzzz();
-			}
-			//chase
-			if(near(gs->game_player.location,
+			} else if(near(gs->game_player.location,
 						gs->npc[j].location,10)){
 				face(&gs->npc[j],gs->game_player.location);
 				struct vector v = (struct vector) {0,0,0};

@@ -6,7 +6,9 @@
 
 int freq=143707;
 
-static unsigned char audio_chunk[1000];
+#define AUDIO_BUFF_SIZE 10000
+
+static unsigned char audio_chunk[AUDIO_BUFF_SIZE];
 static long audio_len;
 static char * audio_pos;
 
@@ -28,7 +30,7 @@ void tzztzzz(){
 	int i;
 	for(i=0;i<1000;i++){
 		audio_chunk[i]=(unsigned char)
-			(sin(i*(freq/1000.0))*30)+1;
+			(sin(i*(freq/1000.0))*80)+1;
 	}
 	audio_pos = (char *)audio_chunk;
 	audio_len = 100;
@@ -44,6 +46,19 @@ void pew(){
 	}
 	audio_pos = (char *)audio_chunk;
 	audio_len = 500;
+
+	SDL_PauseAudio(0);
+}
+
+void deathplosion()
+{
+	int i;
+	for(i=0;i<AUDIO_BUFF_SIZE;i++){
+		audio_chunk[i]=(unsigned char)
+			((tan(i*(freq/35000.0))*30))+1;
+	}
+	audio_pos = (char *)audio_chunk;
+	audio_len = AUDIO_BUFF_SIZE- 3000;
 
 	SDL_PauseAudio(0);
 }
