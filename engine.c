@@ -46,7 +46,7 @@ double delta_time()
 
 void update_bullets(struct game_state * gs, double delta)
 {
-	int i;
+	int i,j;
 	double s;
 	for(i=0;i<gs->n_bullets;i++){
 		s = gs->bullet[i].speed*delta;
@@ -57,6 +57,16 @@ void update_bullets(struct game_state * gs, double delta)
 		if(world_room.tiles[(int)gs->bullet[i].location.x]
 				[(int)gs->bullet[i].location.z])
 			remove_bullet(gs,i);
+
+		for(j=0;j<gs->n_npcs;j++){
+			if(near(gs->bullet[i].location,
+						gs->npc[j].location,1.5)){
+				gs->npc[j].health-=10;
+				tzztzzz();
+				remove_bullet(gs,i);
+			}
+		}
+
 	}
 }
 
