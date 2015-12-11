@@ -42,7 +42,7 @@ double delta_time()
 
 int door_at(int x, int z)
 {
-	char c = world_room.tiles[x][z];
+	char c = world_room.layout.tiles[x][z];
 	if( (c>'0') && (c<'9') )
 		return (c-'0');
 	return 0;
@@ -56,7 +56,7 @@ void update_bullets(struct game_state * gs, double delta)
 		s = gs->bullet[i].speed*delta;
 		gs->bullet[i].location.x+=gs->bullet[i].direction.x*s;
 		gs->bullet[i].location.z+=gs->bullet[i].direction.z*s;
-		if(world_room.tiles[(int)gs->bullet[i].location.x]
+		if(world_room.layout.tiles[(int)gs->bullet[i].location.x]
 				[(int)gs->bullet[i].location.z])
 			remove_bullet(gs,i);
 
@@ -87,10 +87,10 @@ void fire_bullet(struct game_state * gs,
 
 void move_unit(struct unit * u,struct vector d)
 {
-	if(world_room.tiles[ (int)(u->location.x+d.x) ][(int)(u->location.z)]
+	if(world_room.layout.tiles[ (int)(u->location.x+d.x) ][(int)(u->location.z)]
 			!= LAYOUT_WALL)
 		u->location.x+=d.x;
-	if(world_room.tiles[ (int)(u->location.x)][(int)(u->location.z+d.z)]
+	if(world_room.layout.tiles[ (int)(u->location.x)][(int)(u->location.z+d.z)]
 			!= LAYOUT_WALL)
 		u->location.z+=d.z;
 }

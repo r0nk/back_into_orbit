@@ -10,7 +10,11 @@ struct layout {
 	char tiles[100][100];
 };
 
-extern struct layout world_room;
+struct room {
+	struct layout layout;
+};
+
+extern struct room world_room;
 extern struct model block;
 
 #define LAYOUT_WALL '#'
