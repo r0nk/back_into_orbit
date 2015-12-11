@@ -210,7 +210,7 @@ void spawner (struct game_state * gs, double delta)
 	spawner_countdown=SCM;
 	npc.speed=2.0;
 	npc.health=100;
-	npc.location=(struct vector) {15,0,3};
+	npc.location=(struct vector) {15 + delta*10,0,3};
 	npc.destination=(struct vector) {15,0,3};
 	npc.type = UNIT_TYPE_NEUTRAL_CREEP;
 	npc.rotation_angle = 90;
