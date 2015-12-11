@@ -6,23 +6,22 @@
 #include <stdlib.h>
 #include <err.h>
 
-struct room {
+struct layout {
 	char tiles[100][100];
 };
 
-extern struct room world_room;
+extern struct layout world_room;
 extern struct model block;
 
-#define ROOM_WALL '#'
-#define ROOM_DOOR 2
+#define LAYOUT_WALL '#'
 
-static inline struct room mkroom(char * pathname)
+static inline struct layout get_layout(char * pathname)
 {
 	int fd = open(pathname,O_RDONLY);
 	if(fd==-1)
-		err(-29,"mkroom() couldn't open");
+		err(-29,"get_layout() couldn't open");
 
-	struct room *m = calloc(1,sizeof(struct room));
+	struct layout *m = calloc(1,sizeof(struct layout));
 	char c[2];
 	int x=0,y=0;
 

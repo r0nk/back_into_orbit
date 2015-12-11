@@ -5,7 +5,7 @@
 #include "room.h"
 #include "model.h"
 
-struct room world_room;
+struct layout world_room;
 
 struct game_state init_game()
 {
@@ -17,7 +17,7 @@ struct game_state init_game()
 	gs.game_player.speed=2.5;
 	gs.game_player.health=100;
 	gs.game_player.type=UNIT_TYPE_PLAYER;
-	world_room=mkroom("rooms/simple.room");
+	world_room=get_layout("layouts/simple.layout");
 
 	gs.n_bullets=0;
 	gs.n_npcs=0;

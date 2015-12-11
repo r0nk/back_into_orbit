@@ -88,10 +88,10 @@ void fire_bullet(struct game_state * gs,
 void move_unit(struct unit * u,struct vector d)
 {
 	if(world_room.tiles[ (int)(u->location.x+d.x) ][(int)(u->location.z)]
-			!= ROOM_WALL)
+			!= LAYOUT_WALL)
 		u->location.x+=d.x;
 	if(world_room.tiles[ (int)(u->location.x)][(int)(u->location.z+d.z)]
-			!= ROOM_WALL)
+			!= LAYOUT_WALL)
 		u->location.z+=d.z;
 }
 

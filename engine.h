@@ -1,5 +1,6 @@
 #ifndef ENGINE
 #define ENGINE
+#include <math.h>
 
 extern struct game_state gs;
 

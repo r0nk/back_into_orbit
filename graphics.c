@@ -146,7 +146,7 @@ void draw_room()
 	int x,z;
 	for(x=0;x<100;x++){
 		for(z=0;z<100;z++){
-			if(world_room.tiles[x][z]==ROOM_WALL){
+			if(world_room.tiles[x][z]==LAYOUT_WALL){
 				draw_block(x,0,z);
 				draw_block(x,1,z);
 			}else if(world_room.tiles[x][z]>'0' && world_room.tiles[x][z]<'9'){
