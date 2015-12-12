@@ -3,14 +3,14 @@
 
 struct doorway * get_doorway_by_index(struct map * map, int index)
 {
-	int i,j,loop_index = 0;
+	int i,j;
 	for(i=0;i<map->n_rooms;i++){
 		for(j=0;j<(map->room[i].n_doorways);j++){
-			loop_index++;
-			if(loop_index == index)
+			if(map->room[i].doorway[j].index == index)
 				return &map->room[i].doorway[j];
 		}
 	}
+	fprintf(stderr,"ERR: get_doorway_by_index: door not found\n");
 	return NULL;
 }
 
@@ -21,11 +21,13 @@ struct doorway * next_nonconnected_door(struct map * map)
 	for(i=0;i<MAX_EDGES;i++){
 		doorway = get_doorway_by_index(map,i);
 		if(doorway==NULL)
-			err(-80," null doorway");
+			continue;
 
 		if(!doorway->is_connected)
 			return doorway;
 	}
+	fprintf(stderr,"ERR: next_nonconnected_door: no nonconnected door\n");
+	err(-203,"no nonconnected door");
 	return NULL;
 }
 
