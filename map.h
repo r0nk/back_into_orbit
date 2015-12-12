@@ -20,6 +20,7 @@ struct map {
 };
 
 struct map generate_map();
+struct doorway * connected_doorway(struct map * map,int i);
 
 extern struct map world_map;
  

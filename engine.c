@@ -8,6 +8,7 @@
 #include "audio.h"
 #include "input.h"
 #include "engine.h"
+#include "map.h"
 
 double spawner_countdown;
 #define SCM 10
@@ -157,6 +158,7 @@ void game_over()
 	exit(0);
 }
 
+
 void update_player(struct game_state * gs,double delta)
 {
 	int t;
@@ -171,6 +173,8 @@ void update_player(struct game_state * gs,double delta)
 	{
 		gs->game_player.location = (struct vector) {5,0,5};
 		printf("sending player teleport: %i\n",t);
+		struct doorway * d = connected_doorway(&world_map,t);
+		printf("connected_door(%i):%i\n",t,d->index);
 	}
 }
 

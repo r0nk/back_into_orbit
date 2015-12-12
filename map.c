@@ -87,3 +87,20 @@ struct map generate_map()
 	generate_edges(&map);
 	return map;
 }
+
+int other_edge(struct map * map,int index){
+	int i;
+	for(i=0;i<MAX_EDGES;i++){
+		if(map->edge[i].a==index)
+			return map->edge[i].b;
+		if(map->edge[i].b==index)
+			return map->edge[i].a;
+	}
+	fprintf(stderr,"other edge for %i not found\n",i);
+	return -1;
+}
+
+struct doorway * connected_doorway(struct map * map,int i)
+{
+	return get_doorway_by_index(map,other_edge(map,i));
+}
