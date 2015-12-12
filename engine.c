@@ -149,15 +149,19 @@ void player_attack(struct game_state * gs, double delta)
 	}
 }
 
+void game_over()
+{
+	printf("MISSON FAILED; B0T DESTORYED\n");
+	deathplosion();
+	sleep(1);/* give them time to look at their failures >:( */
+	exit(0);
+}
+
 void update_player(struct game_state * gs,double delta)
 {
 	int t;
-	if(gs->game_player.health<0){
-		printf("MISSON FAILED; B0T DESTORYED\n");
-		deathplosion();
-		sleep(1);/* give them time to look at their failures >:( */
-		exit(0);
-	}
+	if(gs->game_player.health<0)
+		game_over();
 	player_movement(gs,delta);
 	player_attack(gs,delta);
 
