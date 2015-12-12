@@ -158,6 +158,11 @@ void game_over()
 	exit(0);
 }
 
+void move_through_doorway(struct game_state * gs, struct doorway * doorway)
+{
+	printf("moving to doorway %i\n",doorway->index);
+	gs->game_player.location = (struct vector) {doorway->x+2,0,doorway->z};
+}
 
 void update_player(struct game_state * gs,double delta)
 {
@@ -171,10 +176,7 @@ void update_player(struct game_state * gs,double delta)
 			(int)(gs->game_player.location.z));
 	if(t)
 	{
-		gs->game_player.location = (struct vector) {5,0,5};
-		printf("sending player teleport: %i\n",t);
-		struct doorway * d = connected_doorway(&world_map,t);
-		printf("connected_door(%i):%i\n",t,d->index);
+		move_through_doorway(gs,connected_doorway(&world_map,t));
 	}
 }
 
