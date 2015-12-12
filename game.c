@@ -32,7 +32,7 @@ struct game_state init_game()
 	add_npc(&gs,npc);
 
 	world_map=generate_map();
-	world_room.layout=get_layout("layouts/simple.layout");
+	world_map.current_room=&world_map.room[0];
 
 	return gs;
 }

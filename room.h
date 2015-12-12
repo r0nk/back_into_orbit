@@ -25,7 +25,6 @@ struct room {
 	struct doorway doorway[MAX_DOORWAYS];
 };
 
-extern struct room world_room;
 extern struct model block;
 
 #define LAYOUT_WALL '#'

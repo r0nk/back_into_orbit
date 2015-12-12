@@ -13,6 +13,7 @@ struct edge {
 };
 
 struct map {
+	struct room * current_room;
 	int n_rooms;
 	struct room room[MAX_ROOMS];
 	int n_edges;
