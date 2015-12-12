@@ -45,14 +45,11 @@ int door_at(int x, int z)
 {
 	char c = world_map.current_room->layout.tiles[x][z];
 	int i=0;
-	if( (c>'0') && (c<'9') )
+	if( (c>'0') && (c<'9') ){
 		i=(c-'0');
-	if(!i)
-		return 0;
-
-	printf("%i\n",i);
-
-	return world_map.current_room->doorway[i].index;
+		return world_map.current_room->doorway[i].index;
+	}
+	return -1;
 }
 
 void update_bullets(struct game_state * gs, double delta)
@@ -180,7 +177,7 @@ void update_player(struct game_state * gs,double delta)
 
 	t = door_at((int)(gs->game_player.location.x),
 			(int)(gs->game_player.location.z));
-	if(t)
+	if(t!=-1)
 	{
 		move_through_doorway(gs,connected_doorway(&world_map,t));
 	}
