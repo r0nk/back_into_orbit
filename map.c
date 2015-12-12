@@ -4,8 +4,12 @@
 struct doorway * get_doorway_by_index(struct map * map, int index)
 {
 	int i,j;
+	printf("\n\ngetting doorway by index:%i\n",index);
+	printf("map->n_rooms: %i\n",map->n_rooms);
 	for(i=0;i<map->n_rooms;i++){
 		for(j=0;j<(map->room[i].n_doorways);j++){
+			printf("map->room[%i].doorway[%i].index = %i\n",i,j,
+					map->room[i].doorway[j].index);
 			if(map->room[i].doorway[j].index == index)
 				return &map->room[i].doorway[j];
 		}
@@ -18,7 +22,7 @@ struct doorway * next_nonconnected_door(struct map * map)
 {
 	int i;
 	struct doorway * doorway;
-	for(i=0;i<MAX_EDGES;i++){
+	for(i=0;i<(MAX_EDGES*2);i++){
 		doorway = get_doorway_by_index(map,i);
 		if(doorway==NULL)
 			continue;
