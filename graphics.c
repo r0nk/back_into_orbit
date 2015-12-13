@@ -72,7 +72,7 @@ void init_gl()
 {
 	glViewport(0,0,window_width,window_height);
 	ratio = window_width / (float) window_height;
-	glClearColor(0.1,0.1,0.1,1.0);
+	glClearColor(0.4,0.4,0.4,1.0);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);
@@ -313,7 +313,6 @@ void graphics_draw(struct game_state * gs)
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 
-	//Add ambient light
 	GLfloat ambientColor[] = {0.2f, 0.2f, 0.2f, 1.0f}; 
 	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambientColor);
 
