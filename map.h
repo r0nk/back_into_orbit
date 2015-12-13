@@ -21,7 +21,8 @@ struct map {
 };
 
 struct map generate_map();
-struct doorway * connected_doorway(struct map * map,int i);
+
+void move_through_doorway(struct map * map,int t);
 
 extern struct map world_map;
  

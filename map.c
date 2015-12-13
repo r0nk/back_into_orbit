@@ -14,6 +14,19 @@ struct doorway * get_doorway_by_index(struct map * map, int index)
 	return NULL;
 }
 
+struct room * get_room_by_doorway_index(struct map * map, int index)
+{
+	int i,j;
+	for(i=0;i<map->n_rooms;i++){
+		for(j=0;j<(map->room[i].n_doorways);j++){
+			if(map->room[i].doorway[j].index == index)
+				return &map->room[i];
+		}
+	}
+	fprintf(stderr,"ERR: get_room_by_doorway_index: door not found\n");
+	return NULL;
+}
+
 struct doorway * next_nonconnected_door(struct map * map)
 {
 	int i;
@@ -104,4 +117,22 @@ int other_edge(struct map * map,int index){
 struct doorway * connected_doorway(struct map * map,int i)
 {
 	return get_doorway_by_index(map,other_edge(map,i));
+}
+
+void transfer_rooms(struct map * map, struct room * dest)
+{
+	dest->gs.game_player = map->current_room->gs.game_player;
+	map->current_room=dest;
+	printf("transffering rooms\n");
+}
+
+void move_through_doorway(struct map * map,int t)
+{
+	struct doorway * dest_door = connected_doorway(map,t);
+	struct room *  dest_room = get_room_by_doorway_index(map,
+			dest_door->index);
+	if(dest_room!=map->current_room)
+		transfer_rooms(map,dest_room);
+	map->current_room->gs.game_player.location.x = (dest_door->x)+2;
+	map->current_room->gs.game_player.location.z = (dest_door->z);
 }
