@@ -121,9 +121,9 @@ struct doorway * connected_doorway(struct map * map,int i)
 
 void transfer_rooms(struct map * map, struct room * dest)
 {
+	printf("transfering rooms\n");
 	dest->gs.game_player = map->current_room->gs.game_player;
 	map->current_room=dest;
-	printf("transffering rooms\n");
 }
 
 void move_through_doorway(struct map * map,int t)
@@ -131,8 +131,11 @@ void move_through_doorway(struct map * map,int t)
 	struct doorway * dest_door = connected_doorway(map,t);
 	struct room *  dest_room = get_room_by_doorway_index(map,
 			dest_door->index);
+
 	if(dest_room!=map->current_room)
 		transfer_rooms(map,dest_room);
+
 	map->current_room->gs.game_player.location.x = (dest_door->x)+2;
 	map->current_room->gs.game_player.location.z = (dest_door->z);
+
 }

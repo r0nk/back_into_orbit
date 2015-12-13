@@ -16,7 +16,7 @@ void err_callback(int err, const char* description)
 void key_callback(GLFWwindow * win, int key, int scanc, int action, int mods)
 {
 	if(key>255)
-		err(-23,"key>255");
+		err(-23,"key>255, key=%i",key);
 	pi.keys[key]=(char)action; /*action is a binary (press||depress)*/
 }
 

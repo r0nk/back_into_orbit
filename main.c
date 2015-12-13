@@ -14,6 +14,7 @@ int main()
 	init_audio();
 	world_map=generate_map();
 	world_map.current_room=&world_map.room[0];
+	dump_map(&world_map);
 	while(1){
 		engine_tick(&(world_map.current_room->gs));
 		graphics_draw(&(world_map.current_room->gs));

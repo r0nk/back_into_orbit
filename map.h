@@ -12,6 +12,11 @@ struct edge {
 	int b;
 };
 
+static inline void dump_edge(struct edge * e)
+{
+	printf("%i -> %i\n",e->a,e->b);
+}
+
 struct map {
 	struct room * current_room;
 	int n_rooms;
@@ -19,6 +24,23 @@ struct map {
 	int n_edges;
 	struct edge edge[MAX_EDGES];
 };
+
+static inline void dump_map(struct map * map)
+{
+	printf("\n --- dumping map --- \n");
+	printf("map->n_rooms: %i\n",map->n_rooms);
+	printf("map->current_room: %p\n",map->current_room);
+	printf("map->n_edges: %i\n",map->n_edges);
+	int i;
+	for(i=0;i<map->n_rooms;i++){
+		printf("map->room[%i]:\n",i);
+		dump_room(&(map->room[i]));
+	}
+	for(i=0;i<map->n_edges;i++){
+		printf("map->edge[%i]: ",i);
+		dump_edge(&(map->edge[i]));
+	}
+}
 
 struct map generate_map();
 

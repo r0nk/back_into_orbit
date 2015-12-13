@@ -151,7 +151,7 @@ void draw_room()
 			if(world_map.current_room->layout.tiles[x][z]==LAYOUT_WALL){
 				draw_block(x,0,z);
 				draw_block(x,1,z);
-			}else if(world_map.current_room->layout.tiles[x][z]>'0' && world_map.current_room->layout.tiles[x][z]<'9'){
+			}else if(world_map.current_room->layout.tiles[x][z]>='0' && world_map.current_room->layout.tiles[x][z]<'9'){
 				draw_model(door_model,(struct vector){x,0,z},
 						0.0, (struct vector){0,0,0});
 			}
