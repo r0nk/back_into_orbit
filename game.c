@@ -31,8 +31,6 @@ struct game_state init_game()
 	npc.rotation = (struct vector) {0,1,0};
 	add_npc(&gs,npc);
 
-	world_map=generate_map();
-	world_map.current_room=&world_map.room[0];
 
 	return gs;
 }
