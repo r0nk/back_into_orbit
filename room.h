@@ -7,6 +7,8 @@
 #include <stdlib.h>
 #include <err.h>
 
+#include "game_state.h"
+
 #define MAX_DOORWAYS 6
 
 struct layout {
@@ -23,6 +25,7 @@ struct room {
 	struct layout layout;
 	int n_doorways;
 	struct doorway doorway[MAX_DOORWAYS];
+	struct game_state gs;
 };
 
 extern struct model block;
