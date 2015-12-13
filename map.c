@@ -1,4 +1,5 @@
 #include <err.h>
+#include <stdlib.h>
 #include "map.h"
 
 struct doorway * get_doorway_by_index(struct map * map, int index)
@@ -27,10 +28,23 @@ struct room * get_room_by_doorway_index(struct map * map, int index)
 	return NULL;
 }
 
-struct doorway * next_nonconnected_door(struct map * map)
+struct doorway * get_nonconnected_door(struct map * map)
 {
 	int i;
 	struct doorway * doorway;
+	int rando=rand();
+
+	for(i=0;i<(MAX_EDGES*2);i++){
+		rando=rand();
+		doorway = get_doorway_by_index(map,rando%(MAX_EDGES*2));
+		if(doorway==NULL)
+			continue;
+
+		if(!doorway->is_connected)
+			return doorway;
+	}
+
+	/* fine rando you selfish bastard, we'll just brute force it then */
 	for(i=0;i<(MAX_EDGES*2);i++){
 		doorway = get_doorway_by_index(map,i);
 		if(doorway==NULL)
@@ -39,6 +53,7 @@ struct doorway * next_nonconnected_door(struct map * map)
 		if(!doorway->is_connected)
 			return doorway;
 	}
+
 	fprintf(stderr,"ERR: next_nonconnected_door: no nonconnected door\n");
 	err(-203,"no nonconnected door");
 	return NULL;
@@ -53,11 +68,11 @@ void generate_edge(struct map * map)
 		return;
 	}
 
-	doorway = next_nonconnected_door(map);
+	doorway = get_nonconnected_door(map);
 	doorway->is_connected=1;
 	map->edge[map->n_edges].a=doorway->index;
 
-	doorway = next_nonconnected_door(map);
+	doorway = get_nonconnected_door(map);
 	doorway->is_connected=1;
 	map->edge[map->n_edges].b=doorway->index;
 

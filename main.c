@@ -1,3 +1,5 @@
+#include <stdlib.h>
+#include <time.h>
 #include <unistd.h>
 #include <stdio.h>
 
@@ -10,6 +12,7 @@
 
 int main()
 {
+	srand(time(NULL));
 	init_graphics();
 	init_audio();
 	world_map=generate_map();
