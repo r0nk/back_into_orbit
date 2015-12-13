@@ -35,7 +35,6 @@ void count_doorways(struct room * room)
 		for(x=0;x<100;x++){
 			if((room->layout.tiles[x][z]) > ('0'-1)
 					&& room->layout.tiles[x][z]<'9'){
-				printf("counting %c as %i\n",room->layout.tiles[x][z],n);
 				room->doorway[n].x=x;
 				room->doorway[n].z=z;
 				room->doorway[n].is_connected=0;
