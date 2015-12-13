@@ -50,5 +50,6 @@ struct room generate_room()
 	struct room room;
 	get_layout(&room,"layouts/simple.layout");
 	count_doorways(&room);
+	room.gs = init_game();
 	return room;
 }
