@@ -19,6 +19,7 @@ static inline void dump_edge(struct edge * e)
 
 struct map {
 	struct room * current_room;
+	int n_doorways;
 	int n_rooms;
 	struct room room[MAX_ROOMS];
 	int n_edges;

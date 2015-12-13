@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "room.h"
 
-#define N_LAYOUTS 2
+#define N_LAYOUTS 6
 
 void get_layout(struct room * room,char * pathname)
 {
@@ -21,8 +21,8 @@ void get_layout(struct room * room,char * pathname)
 			y++;
 			x=0;
 			continue;
-		case '.':
 		case ' ':
+		case '.':
 			room->layout.tiles[x][y]='\0';
 			break;
 		default:
@@ -60,6 +60,18 @@ void pick_layout(struct room * room)
 			break;
 		case 1:
 			get_layout(room,"layouts/ring.layout");
+			break;
+		case 2:
+			get_layout(room,"layouts/L.layout");
+			break;
+		case 3:
+			get_layout(room,"layouts/U.layout");
+			break;
+		case 4:
+			get_layout(room,"layouts/double.layout");
+			break;
+		case 5:
+			get_layout(room,"layouts/choke.layout");
 			break;
 		default:
 			fprintf(stderr,"ERR: pick_layout() defaulted");

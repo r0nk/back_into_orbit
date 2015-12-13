@@ -32,6 +32,5 @@ struct game_state init_game()
 	npc.rotation = (struct vector) {0,1,0};
 	add_npc(&gs,npc);
 
-
 	return gs;
 }

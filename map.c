@@ -34,9 +34,9 @@ struct doorway * get_nonconnected_door(struct map * map)
 	struct doorway * doorway;
 	int rando=rand();
 
-	for(i=0;i<(MAX_EDGES*2);i++){
+	for(i=0;i<(map->n_doorways);i++){
 		rando=rand();
-		doorway = get_doorway_by_index(map,rando%(MAX_EDGES*2));
+		doorway = get_doorway_by_index(map,rando%(map->n_doorways));
 		if(doorway==NULL)
 			continue;
 
@@ -45,7 +45,7 @@ struct doorway * get_nonconnected_door(struct map * map)
 	}
 
 	/* fine rando you selfish bastard, we'll just brute force it then */
-	for(i=0;i<(MAX_EDGES*2);i++){
+	for(i=0;i<(map->n_doorways);i++){
 		doorway = get_doorway_by_index(map,i);
 		if(doorway==NULL)
 			continue;
@@ -83,7 +83,7 @@ void generate_edges(struct map * map)
 {
 	int i;
 	map->n_edges=0;
-	for(i=0;i<MAX_EDGES;i++){
+	for(i=0;i<(map->n_doorways/2);i++){
 		generate_edge(map);
 	}
 }
@@ -97,6 +97,7 @@ void index_doorways(struct map * map)
 			index++;
 		}
 	}
+	map->n_doorways=index;
 }
 
 void generate_rooms(struct map * map)
@@ -136,7 +137,6 @@ struct doorway * connected_doorway(struct map * map,int i)
 
 void transfer_rooms(struct map * map, struct room * dest)
 {
-	printf("transfering rooms\n");
 	dest->gs.game_player = map->current_room->gs.game_player;
 	map->current_room=dest;
 }
@@ -152,5 +152,4 @@ void move_through_doorway(struct map * map,int t)
 
 	map->current_room->gs.game_player.location.x = (dest_door->x)+2;
 	map->current_room->gs.game_player.location.z = (dest_door->z);
-
 }
