@@ -54,6 +54,7 @@ void generate_edge(struct map * map)
 void generate_edges(struct map * map)
 {
 	int i;
+	map->n_edges=0;
 	for(i=0;i<MAX_EDGES;i++){
 		generate_edge(map);
 	}

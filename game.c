@@ -19,6 +19,7 @@ struct game_state init_game()
 	gs.game_player.speed=2.5;
 	gs.game_player.health=100;
 	gs.game_player.type=UNIT_TYPE_PLAYER;
+	gs.game_player.cooldown=1;
 	gs.n_bullets=0;
 	gs.n_npcs=0;
 

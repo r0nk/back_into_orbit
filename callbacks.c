@@ -15,9 +15,9 @@ void err_callback(int err, const char* description)
 
 void key_callback(GLFWwindow * win, int key, int scanc, int action, int mods)
 {
-	if(key==256)/* 256 is ESC */
-		exit(0);
-	pi.keys[key]=action; /*action is a binary (press||depress)*/
+	if(key>255)
+		err(-23,"key>255");
+	pi.keys[key]=(char)action; /*action is a binary (press||depress)*/
 }
 
 void cursor_callback(GLFWwindow * win, double xpos, double ypos)
