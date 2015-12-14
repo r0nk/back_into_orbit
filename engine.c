@@ -9,7 +9,6 @@
 #include "input.h"
 #include "engine.h"
 #include "map.h"
-#include "cursor.h"
 
 double spawner_countdown;
 #define SCM 10
@@ -175,6 +174,7 @@ void update_player(struct game_state * gs,double delta)
 	if(t!=-1){
 		move_through_doorway(&world_map,t);
 	}
+	face(&gs->game_player,screen_to_world(pi.mouse_x,pi.mouse_y));
 }
 
 void update_npcs(struct game_state * gs, double delta)
@@ -233,5 +233,4 @@ void engine_tick(struct game_state * gs)
 	update_player(gs,d);
 	update_bullets(gs,d);
 	update_npcs(gs,d);
-	pixel_to_view(pi.mouse_x,pi.mouse_y);
 }
