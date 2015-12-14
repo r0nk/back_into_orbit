@@ -91,10 +91,10 @@ void fire_bullet(struct game_state * gs,
 
 void move_unit(struct unit * u,struct vector d)
 {
-	if(world_map.current_room->layout.tiles[ (int)(u->location.x+d.x) ][(int)(u->location.z)]
+	if(world_map.current_room->layout.tiles[(int)(u->location.x+d.x)][(int)(u->location.z)]
 			!= LAYOUT_WALL)
 		u->location.x+=d.x;
-	if(world_map.current_room->layout.tiles[ (int)(u->location.x)][(int)(u->location.z+d.z)]
+	if(world_map.current_room->layout.tiles[(int)(u->location.x)][(int)(u->location.z+d.z)]
 			!= LAYOUT_WALL)
 		u->location.z+=d.z;
 }
@@ -127,25 +127,13 @@ void player_movement(struct game_state * gs, double delta)
 void player_attack(struct game_state * gs, double delta)
 {
 #define FR 4
+	struct vector v;
+	v.x=sin(to_radians(gs->game_player.rotation_angle));
+	v.y=1.0;
+	v.z=cos(to_radians(gs->game_player.rotation_angle));
 	if(gs->game_player.cooldown<1){
-		if(pi.keys['J']){
-			fire_bullet(gs,gs->game_player.location,
-					(struct vector) {1,0,1});
-			gs->game_player.cooldown = FR;
-		}
-		if(pi.keys['H']){
-			fire_bullet(gs,gs->game_player.location,
-					(struct vector) {-1,0,1});
-			gs->game_player.cooldown = FR;
-		}
-		if(pi.keys['K']){
-			fire_bullet(gs,gs->game_player.location,
-					(struct vector) {-1,0,-1});
-			gs->game_player.cooldown = FR;
-		}
-		if(pi.keys['L']){
-			fire_bullet(gs,gs->game_player.location,
-					(struct vector) {1,0,-1});
+		if(pi.left_click){
+			fire_bullet(gs,gs->game_player.location,v);
 			gs->game_player.cooldown = FR;
 		}
 	} else {
