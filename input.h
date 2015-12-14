@@ -2,6 +2,7 @@
 #define INPUT
 
 #include <stdio.h>
+#include "graphics.h"
 #include "poly.h"
 #include "map.h"
 
@@ -36,6 +37,8 @@ static inline struct vector screen_to_world(struct game_state * gs,int x, int y)
 #define N_Y_TILES 18.0
 #define TILE_WIDTH (640.0/N_X_TILES)
 #define TILE_HEIGHT (480.0/N_Y_TILES)
+	x -= (window_width/2);
+	y -= (window_height/2);
 
 	double virtual_Tile_X = x / TILE_WIDTH;
 	double virtual_Tile_Y = y / TILE_HEIGHT;
@@ -43,9 +46,6 @@ static inline struct vector screen_to_world(struct game_state * gs,int x, int y)
 	ret.x=virtual_Tile_X+virtual_Tile_Y;
 	ret.y=0;
 	ret.z=virtual_Tile_Y-virtual_Tile_X;
-
-	ret.x-=N_X_TILES;
-	ret.y+=2.0; /* http://imgur.com/gallery/YsbKHg1 */
 
 	ret.x+= gs->game_player.location.x;
 	ret.z+= gs->game_player.location.z;

@@ -18,6 +18,7 @@ void face(struct unit * u, point p)
 	struct vector d;
 	d.x = u->location.x - p.x;
 	d.z = u->location.z - p.z;
+
 	if(d.x<0.0)
 		u->rotation_angle = to_degrees(-atan(d.z/d.x)) + 90;
 	else
@@ -83,7 +84,7 @@ void fire_bullet(struct game_state * gs,
 	b.location.y = starting.y+direction.y;
 	b.location.z = starting.z+direction.z;
 	b.direction = direction;
-	b.speed = 5;
+	b.speed = 10;
 	b.duration = 100;
 	pew();
 	add_bullet(gs,b);
@@ -129,7 +130,7 @@ void player_attack(struct game_state * gs, double delta)
 #define FR 4
 	struct vector v;
 	v.x=sin(to_radians(gs->game_player.rotation_angle));
-	v.y=1.0;
+	v.y=0.0;
 	v.z=cos(to_radians(gs->game_player.rotation_angle));
 	if(gs->game_player.cooldown<1){
 		if(pi.left_click){
