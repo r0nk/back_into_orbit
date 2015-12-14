@@ -13,6 +13,7 @@ PROJ:= r0uge
 all: $(PROJ)
 
 $(PROJ): $(OBJFILES)
+	./generate_layouts.sh > layouts.c
 	$(CC) -o $(PROJ) $(CFLAGS) $(OBJFILES) $(LIBS)
 
 %.o: %.c

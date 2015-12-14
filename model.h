@@ -18,6 +18,7 @@ struct model gold_coin_model();
 struct model shop_model();
 struct model doorway_model();
 struct model scavenger();
+struct model portal_model();
 
 struct vertice { 
 	struct vector p;/*position*/
