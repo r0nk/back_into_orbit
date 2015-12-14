@@ -145,8 +145,7 @@ void transfer_rooms(struct map * map, struct room * dest)
 void move_through_doorway(struct map * map,int t)
 {
 	struct doorway * dest_door = connected_doorway(map,t);
-	struct room * dest_room = get_room_by_doorway_index(map,
-			dest_door->index);
+	struct room * dest_room = get_room_by_doorway_index(map,dest_door->index);
 
 	if(dest_room!=map->current_room)
 		transfer_rooms(map,dest_room);

@@ -35,7 +35,7 @@ void init_models()
 	d_model=player_model();
 	ai_model=scavenger();
 	bullet_model=bullet();
-	block_model=wall_block();
+	block_model=wall_block((struct vector) { 250,250,250});
 	fh_model = flag_holder_model();
 	shp_model = shop_model();
 	coin_model = gold_coin_model();
@@ -146,6 +146,7 @@ void draw_doorway(struct doorway * d)
 void draw_room()
 {
 	int x,z,i;
+	block_model=wall_block(world_map.current_room->color);
 	for(x=0;x<100;x++){
 		for(z=0;z<100;z++){
 			if(world_map.current_room->layout.tiles[x][z]==LAYOUT_WALL){

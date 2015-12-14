@@ -56,5 +56,6 @@ struct room generate_room()
 	pick_layout(&room);
 	count_doorways(&room);
 	room.gs = init_game();
+	room.color = (struct vector){rand()%255,rand()%255,rand()%255};
 	return room;
 }
