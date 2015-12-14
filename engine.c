@@ -229,7 +229,7 @@ void spawner (struct game_state * gs, double delta)
 void engine_tick(struct game_state * gs)
 {
 	double d = delta_time();
-	spawner(gs,d);
+//	spawner(gs,d);
 	update_player(gs,d);
 	update_bullets(gs,d);
 	update_npcs(gs,d);

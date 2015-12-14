@@ -54,7 +54,7 @@ int init_window_lib()
 	glfwSetErrorCallback(err_callback);
 	if(!glfwInit())
 		return -1;
-	window = glfwCreateWindow(640, 640, "corvus", NULL, NULL);
+	window = glfwCreateWindow(640, 480, "corvus", NULL, NULL);
 	if(!window)
 		return -2;
 	glfwMakeContextCurrent(window);
@@ -296,8 +296,8 @@ void draw_hud(struct game_state * gs)
 	gluLookAt(0,0,0, 0,0,1, 0,1,0);
 	glBegin(GL_TRIANGLES);
 
-	draw_health_bar(gs->game_player,0,-9);
-	draw_inventory(gs->game_player,9,-5);
+	draw_health_bar(gs->game_player,0,-7);
+	draw_inventory(gs->game_player,9,-3.8);
 
 	//TODO draw this whenever we're close to the shop or whatever
 	//draw_text(3,2,"Red Flag --> $ 20 ");
@@ -317,14 +317,14 @@ void graphics_draw(struct game_state * gs)
 	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambientColor);
 
 	float frame = 10;
-	glOrtho(-frame,frame,-frame,frame,0.0f,1000.0f);
+	glOrtho(-frame,frame,-frame/1.333,frame/1.333,0.0f,1000.0f);
 //	glFrustum(-1.0,1.0,-1.0f,1.0f,1.0f,100.0f);
 	glMatrixMode(GL_MODELVIEW);
 
 	glPushMatrix();
-	int zoom = 8;
+	int zoom = 10;
 	gluLookAt(gs->game_player.location.x+zoom,
-		  gs->game_player.location.y+(zoom*1.6),
+		  gs->game_player.location.y+zoom,
 		  gs->game_player.location.z+zoom,
 		  gs->game_player.location.x,
 		  gs->game_player.location.y,

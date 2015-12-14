@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "room.h"
 
-#define N_LAYOUTS 6
+#define N_LAYOUTS 7
 
 void get_layout(struct room * room,char * pathname)
 {
@@ -73,10 +73,14 @@ void pick_layout(struct room * room)
 		case 5:
 			get_layout(room,"layouts/choke.layout");
 			break;
+		case 6:
+			get_layout(room,"layouts/measure.layout");
+			break;
 		default:
 			fprintf(stderr,"ERR: pick_layout() defaulted");
 			break;
 	}
+			get_layout(room,"layouts/measure.layout");
 }
 
 struct room generate_room()
