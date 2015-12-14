@@ -52,5 +52,6 @@ extern struct model block;
 #define LAYOUT_WALL '#'
 
 struct room generate_room();
+void get_layout(struct room * room,char * pathname);
 
 #endif

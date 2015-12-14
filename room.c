@@ -1,8 +1,7 @@
 #include <string.h>
 #include <stdlib.h>
+#include "layouts.h"
 #include "room.h"
-
-#define N_LAYOUTS 7
 
 void get_layout(struct room * room,char * pathname)
 {
@@ -49,37 +48,6 @@ void count_doorways(struct room * room)
 		}
 	}
 	room->n_doorways=n;
-}
-
-void pick_layout(struct room * room)
-{
-	int r = (rand()%N_LAYOUTS);
-	switch (r) {
-		case 0:
-			get_layout(room,"layouts/simple.layout");
-			break;
-		case 1:
-			get_layout(room,"layouts/ring.layout");
-			break;
-		case 2:
-			get_layout(room,"layouts/L.layout");
-			break;
-		case 3:
-			get_layout(room,"layouts/U.layout");
-			break;
-		case 4:
-			get_layout(room,"layouts/double.layout");
-			break;
-		case 5:
-			get_layout(room,"layouts/choke.layout");
-			break;
-		case 6:
-			get_layout(room,"layouts/measure.layout");
-			break;
-		default:
-			fprintf(stderr,"ERR: pick_layout() defaulted");
-			break;
-	}
 }
 
 struct room generate_room()
