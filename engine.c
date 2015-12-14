@@ -9,6 +9,7 @@
 #include "input.h"
 #include "engine.h"
 #include "map.h"
+#include "cursor.h"
 
 double spawner_countdown;
 #define SCM 10
@@ -232,4 +233,5 @@ void engine_tick(struct game_state * gs)
 	update_player(gs,d);
 	update_bullets(gs,d);
 	update_npcs(gs,d);
+	pixel_to_view(pi.mouse_x,pi.mouse_y);
 }
