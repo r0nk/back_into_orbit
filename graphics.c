@@ -24,10 +24,6 @@ struct model d_model;
 struct model ai_model;
 struct model bullet_model;
 struct model block_model;
-struct model bp_model;
-struct model rp_model;
-struct model bflag_model;
-struct model rflag_model;
 struct model fh_model;
 struct model shp_model;
 struct model coin_model;
@@ -40,14 +36,10 @@ void init_models()
 	ai_model=scavenger();
 	bullet_model=bullet();
 	block_model=wall_block();
-	bp_model=blue_pawn_model();
-	rp_model=red_pawn_model();
-	bflag_model=blue_flag_model();
-	rflag_model=red_flag_model();
 	fh_model = flag_holder_model();
 	shp_model = shop_model();
 	coin_model = gold_coin_model();
-	door_model = portal_model();
+	door_model = portal_model((struct vector) {0,255,255});
 }
 
 int init_window_lib()
