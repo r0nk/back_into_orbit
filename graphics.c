@@ -136,19 +136,26 @@ void draw_block(int x, int y, int z)
 	glPopMatrix();
 }
 
+void draw_doorway(struct doorway * d)
+{
+	door_model=portal_model(d->color);
+	draw_model(door_model,(struct vector) {d->x,0,d->z},
+				0.0, (struct vector){0,0,0});
+}
+
 void draw_room()
 {
-	int x,z;
+	int x,z,i;
 	for(x=0;x<100;x++){
 		for(z=0;z<100;z++){
 			if(world_map.current_room->layout.tiles[x][z]==LAYOUT_WALL){
 				draw_block(x,0,z);
 				draw_block(x,1,z);
-			}else if(world_map.current_room->layout.tiles[x][z]>='0' && world_map.current_room->layout.tiles[x][z]<'9'){
-				draw_model(door_model,(struct vector){x,0,z},
-						0.0, (struct vector){0,0,0});
 			}
 		}
+	}
+	for(i=0;i<(world_map.current_room->n_doorways);i++){
+		draw_doorway(&world_map.current_room->doorway[i]);
 	}
 }
 

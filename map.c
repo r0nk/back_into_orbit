@@ -94,6 +94,7 @@ void index_doorways(struct map * map)
 	for(i=0;i<map->n_rooms;i++){
 		for(j=0;j<(map->room[i].n_doorways);j++){
 			map->room[i].doorway[j].index=index;
+			map->room[i].doorway[j].color=(struct vector){10,j*50,i*25};
 			index++;
 		}
 	}
@@ -144,7 +145,7 @@ void transfer_rooms(struct map * map, struct room * dest)
 void move_through_doorway(struct map * map,int t)
 {
 	struct doorway * dest_door = connected_doorway(map,t);
-	struct room *  dest_room = get_room_by_doorway_index(map,
+	struct room * dest_room = get_room_by_doorway_index(map,
 			dest_door->index);
 
 	if(dest_room!=map->current_room)

@@ -19,6 +19,7 @@ struct doorway {
 	int index;
 	int x,z;
 	int is_connected;
+	struct vector color;
 };
 
 static inline void dump_doorway(struct doorway * doorway)
