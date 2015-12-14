@@ -61,20 +61,26 @@ struct doorway * get_nonconnected_door(struct map * map)
 
 void generate_edge(struct map * map)
 {
-	struct doorway * doorway;
+	struct doorway * d1, * d2;
+	struct room *room;
 	if(map->n_edges >= MAX_EDGES)
 	{
 		printf("WARNING: tried to generate over max edges\n");
 		return;
 	}
 
-	doorway = get_nonconnected_door(map);
-	doorway->is_connected=1;
-	map->edge[map->n_edges].a=doorway->index;
+	d1 = get_nonconnected_door(map);
+	d1->is_connected=1;
+	map->edge[map->n_edges].a=d1->index;
 
-	doorway = get_nonconnected_door(map);
-	doorway->is_connected=1;
-	map->edge[map->n_edges].b=doorway->index;
+	d2 = get_nonconnected_door(map);
+	d2->is_connected=1;
+	map->edge[map->n_edges].b=d2->index;
+
+	room = get_room_by_doorway_index(map,d2->index);
+	d1->color=room->color;
+	room = get_room_by_doorway_index(map,d1->index);
+	d2->color=room->color;
 
 	map->n_edges++;
 }
@@ -94,7 +100,7 @@ void index_doorways(struct map * map)
 	for(i=0;i<map->n_rooms;i++){
 		for(j=0;j<(map->room[i].n_doorways);j++){
 			map->room[i].doorway[j].index=index;
-			map->room[i].doorway[j].color=(struct vector){10,j*50,i*25};
+			map->room[i].doorway[j].color=(struct vector){0,255,0};
 			index++;
 		}
 	}
