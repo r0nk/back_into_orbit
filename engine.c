@@ -174,7 +174,7 @@ void update_player(struct game_state * gs,double delta)
 	if(t!=-1){
 		move_through_doorway(&world_map,t);
 	}
-	face(&gs->game_player,screen_to_world(pi.mouse_x,pi.mouse_y));
+	face(&gs->game_player,screen_to_world(gs,pi.mouse_x,pi.mouse_y));
 }
 
 void update_npcs(struct game_state * gs, double delta)

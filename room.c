@@ -80,7 +80,6 @@ void pick_layout(struct room * room)
 			fprintf(stderr,"ERR: pick_layout() defaulted");
 			break;
 	}
-			get_layout(room,"layouts/measure.layout");
 }
 
 struct room generate_room()

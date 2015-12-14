@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include "poly.h"
+#include "map.h"
 
 #define MAX_KEYS 255
 
@@ -28,23 +29,28 @@ static inline void dump_player_input(struct player_input pi)
 
 struct player_input pi;
 
-static inline struct vector screen_to_world(int x, int y)
+static inline struct vector screen_to_world(struct game_state * gs,int x, int y)
 {
 	struct vector ret;
-#define N_X_TILES 14
-#define N_Y_TILES 18
-#define TILE_WIDTH (640.0/14.0)
-#define TILE_HEIGHT (480.0/18.0)
+#define N_X_TILES 14.0
+#define N_Y_TILES 18.0
+#define TILE_WIDTH (640.0/N_X_TILES)
+#define TILE_HEIGHT (480.0/N_Y_TILES)
 
 	double virtual_Tile_X = x / TILE_WIDTH;
 	double virtual_Tile_Y = y / TILE_HEIGHT;
 
-	ret.x=virtual_Tile_X+virtual_Tile_Y ;
+	ret.x=virtual_Tile_X+virtual_Tile_Y;
 	ret.y=0;
 	ret.z=virtual_Tile_Y-virtual_Tile_X;
 
+	ret.x-=N_X_TILES;
+	ret.y+=2.0; /* http://imgur.com/gallery/YsbKHg1 */
+
+	ret.x+= gs->game_player.location.x;
+	ret.z+= gs->game_player.location.z;
+
 	return ret;
 }
-
  
 #endif

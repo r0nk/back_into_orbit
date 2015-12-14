@@ -240,8 +240,6 @@ void draw_models(struct game_state * gs)
 		draw_model(bullet_model,gs->bullet[i].location,
 				0.0, (struct vector){0,0,0});
 	}
-	draw_model(fh_model,screen_to_world(pi.mouse_x,pi.mouse_y),
-				0.0, (struct vector){0,0,0});
 }
 
 void draw_health_bar(struct unit u, int x, int y)
