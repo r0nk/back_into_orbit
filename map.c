@@ -155,21 +155,10 @@ void transfer_rooms(struct map * map, struct room * dest)
 
 void move_through_doorway(struct map * map,int t)
 {
-	struct doorway * dest_door, * from_door;
+	struct doorway * dest_door;
 	struct room * dest_room;
-	from_door = get_doorway_by_index(map,t);
 	dest_door = connected_doorway(map,t);
 	dest_room = get_room_by_doorway_index(map,dest_door->index);
-
-	printf("%i -> %i\n",t,dest_door->index);
-
-	if((((int)map->current_room->gs.game_player.location.x) != from_door->x) ||
-	   (((int)map->current_room->gs.game_player.location.z) != from_door->z))
-	{
-		printf("weird bug detected!\n");
-		printf("player: (%f,%f,%f)\n",map->current_room->gs.game_player.location.x,map->current_room->gs.game_player.location.y,map->current_room->gs.game_player.location.z);
-		printf("door: (%i,0,%i)\n",from_door->x,from_door->z);
-	}
 
 	map->current_room->gs.game_player.location.x = (dest_door->x)+2;
 	map->current_room->gs.game_player.location.z = (dest_door->z);

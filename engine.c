@@ -42,16 +42,14 @@ double delta_time()
 	return s;
 }
 
-/*FIXME this sometimes returns the wrong doorway */
 int door_at(int x, int z)
 {
-	char c = world_map.current_room->layout.tiles[x][z];
-	int i=0;
-	if( (c>='0') && (c<'9') ){
-		i=(c-'0');
-		printf("door at (%i,0,%i): %i ; index:%i\n",x,z,i,
-				world_map.current_room->doorway[i].index);
-		return world_map.current_room->doorway[i].index;
+	int i;
+	for(i=0;i<world_map.current_room->n_doorways;i++){
+		if(world_map.current_room->doorway[i].x == x &&
+				world_map.current_room->doorway[i].z == z){
+			return world_map.current_room->doorway[i].index;
+		}
 	}
 	return -1;
 }
