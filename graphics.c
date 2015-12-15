@@ -70,6 +70,7 @@ void init_gl()
 	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);
 	glEnable(GL_COLOR_MATERIAL);
+	//glPolygonMode(GL_FRONT_AND_BACK,GL_LINE); //for wireframe mode
 }
 
 
