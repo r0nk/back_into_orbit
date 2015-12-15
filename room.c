@@ -24,6 +24,9 @@ void get_layout(struct room * room,char * pathname)
 		case '.':
 			room->layout.tiles[x][y]='\0';
 			break;
+		case 's':
+			room->layout.tiles[x][y]='s';
+			break;
 		default:
 			room->layout.tiles[x][y]=c[0];
 			break;
@@ -87,7 +90,7 @@ struct room generate_room(int i)
 	struct room room;
 	pick_layout(&room);
 	count_doorways(&room);
-	room.gs = init_game();
+	room.gs = init_game(&room);
 	room.color= pick_colors(i);
 	return room;
 }

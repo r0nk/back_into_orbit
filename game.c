@@ -6,31 +6,47 @@
 #include "model.h"
 #include "map.h"
 
-struct room world_room;
 struct map world_map;
 
-struct game_state init_game()
+struct unit scavenger_npc(struct vector location)
 {
-	struct game_state gs;
 	struct unit npc;
-	gs.game_player.location.x=5;
-	gs.game_player.location.y=0;
-	gs.game_player.location.z=5;
-	gs.game_player.speed=3.0;
-	gs.game_player.health=100;
-	gs.game_player.type=UNIT_TYPE_PLAYER;
-	gs.game_player.cooldown=1;
-	gs.n_bullets=0;
-	gs.n_npcs=0;
-
 	npc.speed=2.0;
 	npc.health=20;
-	npc.location=(struct vector) {15,0,3};
-	npc.destination=(struct vector) {15,0,3};
+	npc.location=location;
 	npc.type = UNIT_TYPE_NEUTRAL_CREEP;
 	npc.rotation_angle = 90;
 	npc.rotation = (struct vector) {0,1,0};
-	add_npc(&gs,npc);
+	return npc;
+}
 
-	return gs;
+void spawn_mobs(struct room * room)
+{
+	struct vector loc = {0,0,0};
+	int i,j;
+	for(i=0;i<100;i++){
+		for(j=0;j<100;j++){
+			if(room->layout.tiles[i][j] == 's'){
+				loc.x=i;loc.z=j;
+				add_npc(&room->gs,scavenger_npc(loc));
+			}
+		}
+	}
+}
+
+struct game_state init_game(struct room * room)
+{
+	room->gs.game_player.location.x=5;
+	room->gs.game_player.location.y=0;
+	room->gs.game_player.location.z=5;
+	room->gs.game_player.speed=3.0;
+	room->gs.game_player.health=100;
+	room->gs.game_player.type=UNIT_TYPE_PLAYER;
+	room->gs.game_player.cooldown=1;
+	room->gs.n_bullets=0;
+	room->gs.n_npcs=0;
+
+	spawn_mobs(room);
+
+	return room->gs;
 }
