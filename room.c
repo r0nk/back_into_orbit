@@ -50,12 +50,44 @@ void count_doorways(struct room * room)
 	room->n_doorways=n;
 }
 
-struct room generate_room()
+struct vector pick_colors(int i)
+{
+	switch(i){
+		case 0:
+			return (struct vector) {0,0,230};
+			break;
+		case 1:
+			return (struct vector) {0,230,0};
+			break;
+		case 2:
+			return (struct vector) {0,230,230};
+			break;
+		case 3:
+			return (struct vector) {230,0,0};
+			break;
+		case 4:
+			return (struct vector) {230,0,230};
+			break;
+		case 5:
+			return (struct vector) {230,230,0};
+			break;
+		case 6:
+			return (struct vector) {230,230,230};
+			break;
+		default:
+			return (struct vector) {rand()%255,rand()%255,rand()%255};
+			break;
+	}
+}
+
+
+
+struct room generate_room(int i)
 {
 	struct room room;
 	pick_layout(&room);
 	count_doorways(&room);
 	room.gs = init_game();
-	room.color = (struct vector){rand()%255,rand()%255,rand()%255};
+	room.color= pick_colors(i);
 	return room;
 }

@@ -114,7 +114,7 @@ void generate_rooms(struct map * map)
 {
 	int i;
 	for(i=0;i<MAX_ROOMS;i++){
-		map->room[i]=generate_room();
+		map->room[i]=generate_room(i);
 	}
 	map->n_rooms=MAX_ROOMS;
 	index_doorways(map);
