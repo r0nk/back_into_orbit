@@ -63,7 +63,7 @@ void update_bullets(struct game_state * gs, double delta)
 		gs->bullet[i].location.x+=gs->bullet[i].direction.x*s;
 		gs->bullet[i].location.z+=gs->bullet[i].direction.z*s;
 		if(world_map.current_room->layout.tiles[(int)gs->bullet[i].location.x]
-				[(int)gs->bullet[i].location.z])
+				[(int)gs->bullet[i].location.z] == LAYOUT_WALL)
 			remove_bullet(gs,i);
 
 		for(j=0;j<gs->n_npcs;j++){
