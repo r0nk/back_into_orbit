@@ -24,7 +24,7 @@ struct game_state init_game()
 	gs.n_npcs=0;
 
 	npc.speed=2.0;
-	npc.health=100;
+	npc.health=20;
 	npc.location=(struct vector) {15,0,3};
 	npc.destination=(struct vector) {15,0,3};
 	npc.type = UNIT_TYPE_NEUTRAL_CREEP;

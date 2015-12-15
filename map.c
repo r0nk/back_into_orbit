@@ -7,8 +7,10 @@ struct doorway * get_doorway_by_index(struct map * map, int index)
 	int i,j;
 	for(i=0;i<map->n_rooms;i++){
 		for(j=0;j<(map->room[i].n_doorways);j++){
-			if(map->room[i].doorway[j].index == index)
+			if(map->room[i].doorway[j].index == index){
+				//printf("dbi(%i): (r:%i,d[%i])\n",index,i,j);
 				return &map->room[i].doorway[j];
+			}
 		}
 	}
 	fprintf(stderr,"ERR: get_doorway_by_index: door not found\n");
@@ -20,8 +22,9 @@ struct room * get_room_by_doorway_index(struct map * map, int index)
 	int i,j;
 	for(i=0;i<map->n_rooms;i++){
 		for(j=0;j<(map->room[i].n_doorways);j++){
-			if(map->room[i].doorway[j].index == index)
+			if(map->room[i].doorway[j].index == index){
 				return &map->room[i];
+			}
 		}
 	}
 	fprintf(stderr,"ERR: get_room_by_doorway_index: door not found\n");
@@ -127,13 +130,15 @@ struct map generate_map()
 
 int other_edge(struct map * map,int index){
 	int i;
-	for(i=0;i<MAX_EDGES;i++){
-		if(map->edge[i].a==index)
+	for(i=0;i<map->n_edges;i++){
+		if(map->edge[i].a==index){
 			return map->edge[i].b;
-		if(map->edge[i].b==index)
+		}
+		if(map->edge[i].b==index){
 			return map->edge[i].a;
+		}
 	}
-	fprintf(stderr,"other edge for %i not found\n",i);
+	err(-25,"other edge not found");
 	return -1;
 }
 
@@ -150,8 +155,24 @@ void transfer_rooms(struct map * map, struct room * dest)
 
 void move_through_doorway(struct map * map,int t)
 {
-	struct doorway * dest_door = connected_doorway(map,t);
-	struct room * dest_room = get_room_by_doorway_index(map,dest_door->index);
+	struct doorway * dest_door, * from_door;
+	struct room * dest_room;
+	from_door = get_doorway_by_index(map,t);
+	dest_door = connected_doorway(map,t);
+	dest_room = get_room_by_doorway_index(map,dest_door->index);
+
+	printf("%i -> %i\n",t,dest_door->index);
+
+	if((((int)map->current_room->gs.game_player.location.x) != from_door->x) ||
+	   (((int)map->current_room->gs.game_player.location.z) != from_door->z))
+	{
+		printf("weird bug detected!\n");
+		printf("player: (%f,%f,%f)\n",map->current_room->gs.game_player.location.x,map->current_room->gs.game_player.location.y,map->current_room->gs.game_player.location.z);
+		printf("door: (%i,0,%i)\n",from_door->x,from_door->z);
+	}
+
+	map->current_room->gs.game_player.location.x = (dest_door->x)+2;
+	map->current_room->gs.game_player.location.z = (dest_door->z);
 
 	if(dest_room!=map->current_room)
 		transfer_rooms(map,dest_room);
