@@ -3,6 +3,7 @@
 #include "poly.h"
 
 struct model pawn();
+struct model floor_tile();
 struct model bullet();
 struct model player_model();
 struct model wall_block();

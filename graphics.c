@@ -28,6 +28,7 @@ struct model fh_model;
 struct model shp_model;
 struct model coin_model;
 struct model door_model;
+struct model floort_model;
 
 void init_models()
 {
@@ -40,6 +41,7 @@ void init_models()
 	shp_model = shop_model();
 	coin_model = gold_coin_model();
 	door_model = portal_model((struct vector) {0,255,255});
+	floort_model=floor_tile();
 }
 
 int init_window_lib()
@@ -65,7 +67,7 @@ void init_gl()
 {
 	glViewport(0,0,window_width,window_height);
 	ratio = window_width / (float) window_height;
-	glClearColor(0.4,0.4,0.4,1.0);
+	glClearColor(0.0,0.0,0.0,1.0);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);
@@ -125,6 +127,17 @@ struct vector normal(struct vector v)
 	return n;
 }
 
+void draw_floor(int x, int y, int z){
+	unsigned int i;
+	glPushMatrix();
+	glTranslatef((double)x,(double)y,(double)z);
+	glBegin(GL_TRIANGLES);
+	draw_poly(floort_model.poly[0]);
+	draw_poly(floort_model.poly[1]);
+	glEnd();
+	glPopMatrix();
+}
+
 void draw_block(int x, int y, int z)
 {
 	unsigned int i;
@@ -153,6 +166,9 @@ void draw_room()
 			if(world_map.current_room->layout.tiles[x][z]==LAYOUT_WALL){
 				draw_block(x,0,z);
 				draw_block(x,1,z);
+			}
+			if(world_map.current_room->layout.tiles[x][z]){
+				draw_floor(x,0,z);
 			}
 		}
 	}

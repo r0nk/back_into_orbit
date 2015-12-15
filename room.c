@@ -21,7 +21,6 @@ void get_layout(struct room * room,char * pathname)
 			x=0;
 			continue;
 		case ' ':
-		case '.':
 			room->layout.tiles[x][y]='\0';
 			break;
 		case 's':
