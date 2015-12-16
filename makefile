@@ -1,5 +1,5 @@
 CFLAGS=-fbuiltin -Wall -Wextra -g
-LIBS= -lgcc -lGL -lGLU -lglfw3 -lX11 -lXxf86vm -lXrandr -lpthread -lXi -lm -lXinerama -lXft -lXcursor -I../common -I"/usr/include/SDL" -lSDL 
+LIBS= -lgcc -lGL -lGLU -lglfw3 -lX11 -lXxf86vm -lXrandr -lpthread -lXi -lm -lXinerama -lXft -lXcursor -I../common -I"/usr/include/SDL" -lSDL -lprofiler
 CC=gcc
 
 SRCFILES:= $(shell find -type f -name "*.c")
@@ -13,7 +13,6 @@ PROJ:= back_into_orbit
 all: $(PROJ)
 
 $(PROJ): $(OBJFILES)
-	./generate_layouts.sh > layouts.c
 	$(CC) -o $(PROJ) $(CFLAGS) $(OBJFILES) $(LIBS)
 
 %.o: %.c

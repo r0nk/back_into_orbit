@@ -6,7 +6,7 @@
 #include "poly.h"
 #include "map.h"
 
-#define MAX_KEYS 255
+#define MAX_KEYS 500
 
 struct player_input {
 	char left_click,right_click;
