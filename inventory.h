@@ -5,12 +5,13 @@
 
 struct item {
 	char name[10];
+	int active; /* whether or not the player activated this item */
 	int stackable;
 	int amount;
 	void (*effects)(void);
 };
 
-#define MAX_INVENTORY_SPACE 6
+#define MAX_INVENTORY_SPACE 4
 
 struct inventory {
 	int n_items;

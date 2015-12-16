@@ -1,6 +1,8 @@
 #ifndef FONTS
 #define FONTS
 
+#include "poly.h"
+
 /* some credit for the font goes to "Tom Thumb" */
 /* http://robey.lag.net/2010/01/23/tiny-monospace-font.html */
 
@@ -14,6 +16,6 @@
 #define FONT_WIDTH 0.4
 #define FONT_HEIGHT 0.6
 
-void draw_text(double x, double y, char * text);
+void draw_text(double x, double y, char * text, struct vector color);
 
 #endif

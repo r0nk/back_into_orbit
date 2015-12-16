@@ -151,6 +151,14 @@ void game_over()
 	exit(0);
 }
 
+void player_items(struct game_state * gs, double delta)
+{
+	gs->game_player.inventory.item[0].active=pi.keys['1'];
+	gs->game_player.inventory.item[1].active=pi.keys['2'];
+	gs->game_player.inventory.item[2].active=pi.keys['3'];
+	gs->game_player.inventory.item[3].active=pi.keys['4'];
+}
+
 void update_player(struct game_state * gs,double delta)
 {
 	int t;
@@ -158,6 +166,7 @@ void update_player(struct game_state * gs,double delta)
 		game_over();
 	player_movement(gs,delta);
 	player_attack(gs,delta);
+	player_items(gs,delta);
 
 	t = door_at((int)(gs->game_player.location.x),
 			(int)(gs->game_player.location.z));

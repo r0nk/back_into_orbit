@@ -200,7 +200,7 @@ void draw_unit(struct unit u)
 	glPopMatrix();
 }
 
-void draw_letter(double x, double y, char bits[24])
+void draw_letter(double x, double y, char bits[24], struct vector color)
 {
 	int i,j;
 	struct polygon a,b;
@@ -217,13 +217,13 @@ void draw_letter(double x, double y, char bits[24])
 			b.v[1].p = (struct vector) {x+w  ,y+h  ,0.0};
 			b.v[2].p = (struct vector) {x+w  ,y    ,0.0};
 
-			b.v[0].c = (struct vector) {0,1,1};
-			b.v[1].c = (struct vector) {0,1,1};
-			b.v[2].c = (struct vector) {0,1,1};
+			b.v[0].c = color;
+			b.v[1].c = color;
+			b.v[2].c = color;
 
-			a.v[0].c = (struct vector) {0,1,1};
-			a.v[1].c = (struct vector) {0,1,1};
-			a.v[2].c = (struct vector) {0,1,1};
+			a.v[0].c = color;
+			a.v[1].c = color;
+			a.v[2].c = color;
 
 			a.v[0].n = normal(a.v[0].p);
 			a.v[1].n = normal(a.v[1].p);
@@ -299,7 +299,8 @@ void draw_inventory(struct unit u,double x, double y)
 			sprintf(str,"[%i] %s",
 					u.inventory.item[i].amount,
 					u.inventory.item[i].name);
-			draw_text(x,y-(i*FONT_HEIGHT),str);
+			draw_text(x,y-(i*FONT_HEIGHT),str,
+			    (struct vector) {u.inventory.item[i].active,1,1});
 		}
 	}
 }
@@ -308,7 +309,7 @@ void draw_fps(double x, double y)
 {
 	char str[30];
 	sprintf(str,"%i",(int)fps);
-	draw_text(x,y,str);
+	draw_text(x,y,str,(struct vector) {0,1,1} );
 }
 
 void draw_hud(struct game_state * gs)
@@ -320,7 +321,7 @@ void draw_hud(struct game_state * gs)
 	glBegin(GL_TRIANGLES);
 
 	draw_health_bar(gs->game_player,0,-7);
-	draw_inventory(gs->game_player,9,-3.8);
+	draw_inventory(gs->game_player,9,-4.8);
 	draw_fps(9,7);
 
 	glEnd();

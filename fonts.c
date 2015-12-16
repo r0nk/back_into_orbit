@@ -518,13 +518,13 @@ char * font_letter(char input)
 		" #  ";
 }
 
-void draw_text(double x, double y, char * text)
+void draw_text(double x, double y, char * text, struct vector color)
 {
 	int i;
 	int l = strlen(text);
 	for(i=0;i<l;i++)
 	{
-		draw_letter(x,y,font_letter(text[i]));
+		draw_letter(x,y,font_letter(text[i]),color);
 		x-=FONT_WIDTH;
 	}
 }
