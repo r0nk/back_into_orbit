@@ -5,6 +5,13 @@
 char * font_letter(char input)
 {
 	switch(input){
+		case '.':
+			return 	"    "
+				"    "
+				"    "
+				"    "
+				"  # "
+				"    ";
 		case ']':
 			return 	"### "
 				"  # "

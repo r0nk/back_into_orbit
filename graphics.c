@@ -128,7 +128,6 @@ struct vector normal(struct vector v)
 }
 
 void draw_floor(int x, int y, int z){
-	unsigned int i;
 	glPushMatrix();
 	glTranslatef((double)x,(double)y,(double)z);
 	glBegin(GL_TRIANGLES);
@@ -305,6 +304,12 @@ void draw_inventory(struct unit u,double x, double y)
 	}
 }
 
+void draw_fps(double x, double y)
+{
+	char str[30];
+	sprintf(str,"%i",(int)fps);
+	draw_text(x,y,str);
+}
 
 void draw_hud(struct game_state * gs)
 {
@@ -316,9 +321,7 @@ void draw_hud(struct game_state * gs)
 
 	draw_health_bar(gs->game_player,0,-7);
 	draw_inventory(gs->game_player,9,-3.8);
-
-	//TODO draw this whenever we're close to the shop or whatever
-	//draw_text(3,2,"Red Flag --> $ 20 ");
+	draw_fps(9,7);
 
 	glEnd();
 	glPopMatrix();

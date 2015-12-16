@@ -2,6 +2,10 @@
 #define ENGINE
 #include <math.h>
 
+double fps;
+long double frames;
+long double seconds;
+
 extern struct game_state gs;
 
 void engine_tick();

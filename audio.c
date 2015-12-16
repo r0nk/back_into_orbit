@@ -55,7 +55,7 @@ void deathplosion()
 	int i;
 	for(i=0;i<AUDIO_BUFF_SIZE;i++){
 		audio_chunk[i]=(unsigned char)
-			((tan(i*(freq/(1922+(rand()%5000))))*30))+1;
+			((sin(i*(freq/(1922+(rand()%5000))))*20))+1;
 	}
 	audio_pos = (char *)audio_chunk;
 	audio_len = AUDIO_BUFF_SIZE- 3000;

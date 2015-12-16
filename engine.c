@@ -215,6 +215,17 @@ void spawner (struct game_state * gs, double delta)
 	add_npc(gs,npc);
 }
 
+void count_fps(double d)
+{
+	frames++;
+	seconds+=d;
+	fps=frames/seconds;
+	if(seconds>5){
+		frames=1;
+		seconds=d;
+	}
+}
+
 /* all of the game engine stuff is actually server side */
 void engine_tick(struct game_state * gs)
 {
@@ -223,4 +234,5 @@ void engine_tick(struct game_state * gs)
 	update_player(gs,d);
 	update_bullets(gs,d);
 	update_npcs(gs,d);
+	count_fps(d);
 }
