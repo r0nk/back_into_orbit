@@ -6,7 +6,7 @@ SRCFILES:= $(shell find -type f -name "*.c")
 
 OBJFILES:= $(patsubst %.c,%.o,$(SRCFILES)) 
 
-PROJ:= r0uge
+PROJ:= back_into_orbit
 	
 .PHONY:all clean run
 
