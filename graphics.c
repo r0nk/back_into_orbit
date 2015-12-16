@@ -164,7 +164,6 @@ void draw_room()
 		for(z=0;z<100;z++){
 			if(world_map.current_room->layout.tiles[x][z]==LAYOUT_WALL){
 				draw_block(x,0,z);
-				draw_block(x,1,z);
 			}
 			if(world_map.current_room->layout.tiles[x][z]){
 				draw_floor(x,0,z);
