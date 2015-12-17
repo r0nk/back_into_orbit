@@ -93,26 +93,80 @@ struct vector pick_colors(int i)
 	}
 }
 
-struct model model_room(struct room * room)
+struct model model_floors(struct room * room)
 {
-	struct model m = wall_block(room->color,(struct vector) {1,2,1},(struct vector){0,0,0});
-	struct model w = wall_block(room->color,(struct vector) {1,2,1},(struct vector){0,0,0});
-	struct model f = floor_tile((struct vector) {1,0,1},(struct vector){0,0,0});
 	int x,z;
-	for(x=0;x<100;x++){
-		for(z=0;z<100;z++){
-			if(room->layout.tiles[x][z]==LAYOUT_WALL){
-				free(w.poly);
-				w = wall_block(room->color,(struct vector) {1,2,1},(struct vector){x,0,z});
-				add_submodel(&m,&w);
-			}
-			if(room->layout.tiles[x][z]){
+	struct vector d;
+	struct model m = wall_block(room->color,(struct vector) {1,2,1},
+			(struct vector){0,0,0});
+	struct model f = floor_tile((struct vector) {1,2,1},
+			(struct vector){0,0,0});
+	char wm[MAX_ROOM_WIDTH][MAX_ROOM_HEIGHT];//boolean for done floors
+	for(x=0;x<MAX_ROOM_WIDTH;x++){
+		for(z=0;z<MAX_ROOM_HEIGHT;z++){
+			if(room->layout.tiles[x][z] && !wm[x][z]){
+				for(d.x=0;d.x<MAX_ROOM_WIDTH;d.x++){
+					if(room->layout.tiles[(int)d.x+x][z] && !wm[(int)d.x+x][z]){
+						wm[(int)d.x+x][z]=1;
+					}else{
+						break;
+					}
+				}
+
 				free(f.poly);
-				f = floor_tile((struct vector) {1,0,1},(struct vector){x,0,z});
+				f = floor_tile((struct vector) {d.x,2,1},
+						(struct vector){x,0,z});
 				add_submodel(&m,&f);
+				d = (struct vector) {0,0,0};
 			}
 		}
 	}
+	return m;
+}
+
+struct model model_walls(struct room * room)
+{
+	int x,z;
+	struct vector d = (struct vector) {0,0,0};
+	struct model m = wall_block(room->color,(struct vector) {1,2,1},
+			(struct vector){0,0,0});
+	struct model w = wall_block(room->color,(struct vector) {1,2,1},
+			(struct vector){0,0,0});
+	char wm[MAX_ROOM_WIDTH][MAX_ROOM_HEIGHT];//boolean for done walls
+	
+	for(x=0;x<MAX_ROOM_WIDTH;x++){
+		for(z=0;z<MAX_ROOM_HEIGHT;z++){
+			wm[x][z]=0;
+		}
+	}
+	for(x=0;x<MAX_ROOM_WIDTH;x++){
+		for(z=0;z<MAX_ROOM_HEIGHT;z++){
+			if(room->layout.tiles[x][z]==LAYOUT_WALL && !wm[x][z]){
+				for(d.x=0;d.x<MAX_ROOM_WIDTH;d.x++){
+					if(room->layout.tiles[(int)d.x+x][z]==LAYOUT_WALL && !wm[(int)d.x+x][z]){
+						wm[(int)d.x+x][z]=1;
+					}else{
+						break;
+					}
+				}
+
+				free(w.poly);
+				w = wall_block(room->color,
+						(struct vector) {d.x,2,1},
+						(struct vector){x,0,z});
+				add_submodel(&m,&w);
+				d = (struct vector) {0,0,0};
+			}
+		}
+	}
+	return m;
+}
+
+struct model model_room(struct room * room)
+{
+	struct model m = model_walls(room);
+	struct model f = model_floors(room);
+	add_submodel(&m,&f);
 	printf("modeled room, cardinality: %i\n",m.cardinality);
 	return m;
 }

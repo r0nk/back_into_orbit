@@ -9,10 +9,13 @@
 
 #include "game_state.h"
 
+#define MAX_ROOM_WIDTH 100
+#define MAX_ROOM_HEIGHT 100
+
 #define MAX_DOORWAYS 6
 
 struct layout {
-	char tiles[100][100];
+	char tiles[MAX_ROOM_WIDTH][MAX_ROOM_HEIGHT];
 };
 
 struct doorway {
