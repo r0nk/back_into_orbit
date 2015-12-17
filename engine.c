@@ -106,6 +106,7 @@ void player_movement(struct game_state * gs, double delta)
 	double d = gs->game_player.speed*delta;
 	struct vector dvec = (struct vector){0,0,0};
 
+
 	if(pi.keys['W']){
 		dvec.x-=d;
 		dvec.z-=d;

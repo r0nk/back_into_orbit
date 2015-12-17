@@ -86,18 +86,18 @@ struct vector pick_colors(int i)
 
 struct model model_room(struct room * room)
 {
-	struct model m = wall_block(room->color);
-	struct model b = wall_block(room->color);
+	struct model m = wall_block(room->color,(struct vector) {1,2,1},(struct vector){0,0,0});
+	struct model w = wall_block(room->color,(struct vector) {1,2,1},(struct vector){0,0,0});
 	int x,z;
 	for(x=0;x<100;x++){
 		for(z=0;z<100;z++){
 			if(room->layout.tiles[x][z]==LAYOUT_WALL){
-				add_submodel(&m,&b);
+				free(w.poly);
+				w = wall_block(room->color,(struct vector) {1,2,1},(struct vector){x,0,z});
+				add_submodel(&m,&w);
 			}
 		}
 	}
-	if(b.poly!=NULL)
-		free(b.poly);
 	printf("modeled room, cardinality: %i\n",m.cardinality);
 	return m;
 }
