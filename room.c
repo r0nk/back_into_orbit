@@ -167,7 +167,7 @@ struct model model_room(struct room * room)
 	struct model m = model_walls(room);
 	struct model f = model_floors(room);
 	add_submodel(&m,&f);
-	printf("modeled room, cardinality: %i\n",m.cardinality);
+//	printf("modeled room, cardinality: %i\n",m.cardinality);
 	return m;
 }
 
