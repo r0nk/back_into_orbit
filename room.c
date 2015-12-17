@@ -78,6 +78,15 @@ struct vector pick_colors(int i)
 		case 6:
 			return (struct vector) {230,230,230};
 			break;
+		case 7:
+			return (struct vector) {207,107,76};
+			break;
+		case 8:
+			return (struct vector) {255,185,100};
+			break;
+		case 9:
+			return (struct vector) {153,173,106};
+			break;
 		default:
 			return (struct vector) {rand()%255,rand()%255,rand()%255};
 			break;
