@@ -1,5 +1,7 @@
 #include <string.h>
 #include <stdlib.h>
+
+#include "model.h"
 #include "layouts.h"
 #include "room.h"
 
@@ -82,7 +84,23 @@ struct vector pick_colors(int i)
 	}
 }
 
-
+struct model model_room(struct room * room)
+{
+	struct model m = wall_block(room->color);
+	struct model b = wall_block(room->color);
+	int x,z;
+	for(x=0;x<100;x++){
+		for(z=0;z<100;z++){
+			if(room->layout.tiles[x][z]==LAYOUT_WALL){
+				add_submodel(&m,&b);
+			}
+		}
+	}
+	if(b.poly!=NULL)
+		free(b.poly);
+	printf("modeled room, cardinality: %i\n",m.cardinality);
+	return m;
+}
 
 struct room generate_room(int i)
 {
@@ -91,5 +109,6 @@ struct room generate_room(int i)
 	count_doorways(&room);
 	room.gs = init_game(&room);
 	room.color= pick_colors(i);
+	room.model = model_room(&room);
 	return room;
 }

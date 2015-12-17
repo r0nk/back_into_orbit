@@ -72,7 +72,7 @@ void init_gl()
 	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);
 	glEnable(GL_COLOR_MATERIAL);
-	//glPolygonMode(GL_FRONT_AND_BACK,GL_LINE); //for wireframe mode
+//	glPolygonMode(GL_FRONT_AND_BACK,GL_LINE); //for wireframe mode
 }
 
 
@@ -156,22 +156,42 @@ void draw_doorway(struct doorway * d)
 				0.0, (struct vector){0,0,0});
 }
 
-void draw_room()
+void draw_walls()
 {
-	int x,z,i;
+	int x,z;
 	block_model=wall_block(world_map.current_room->color);
 	for(x=0;x<100;x++){
 		for(z=0;z<100;z++){
-			if(world_map.current_room->layout.tiles[x][z]==LAYOUT_WALL){
+			if(world_map.current_room->layout.tiles[x][z]
+					==LAYOUT_WALL){
 				draw_block(x,0,z);
-			} else if(world_map.current_room->layout.tiles[x][z]){
-				draw_floor(x,0,z);
 			}
 		}
 	}
+}
+
+void draw_floors()
+{
+	int x,z;
+	for(x=0;x<100;x++){
+		for(z=0;z<100;z++){
+			if(world_map.current_room->layout.tiles[x][z]){
+				draw_floor(x,0,z);
+			} 
+		}
+	}
+}
+
+void draw_room()
+{
+	int i;
+	draw_walls();
+	draw_floors();
 	for(i=0;i<(world_map.current_room->n_doorways);i++){
 		draw_doorway(&world_map.current_room->doorway[i]);
 	}
+	draw_model(world_map.current_room->model,(struct vector){0,0,0},
+				0.0, (struct vector){0,0,0});
 }
 
 void draw_unit(struct unit u)

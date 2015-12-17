@@ -35,6 +35,7 @@ struct room {
 	struct doorway doorway[MAX_DOORWAYS];
 	struct game_state gs;
 	struct vector color;
+	struct model model;
 };
 
 static inline void dump_room(struct room * room)

@@ -20,15 +20,14 @@ int main()
 	init_audio();
 	world_map=generate_map();
 	world_map.current_room=&world_map.room[0];
-	ProfilerStart("profdata");
+//	ProfilerStart("profdata");
 	while(1){
 		engine_tick(&(world_map.current_room->gs));
 		graphics_draw(&(world_map.current_room->gs));
 		if(pi.keys[256])
 			break;
 	}
-	ProfilerStop();
-	printf("main finishged\n");
+//	ProfilerStop();
 	return 0;
 }
 
