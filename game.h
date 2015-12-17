@@ -48,7 +48,6 @@ static inline void dump_unit(struct unit p){
 	printf("\ndestination:");
 	dump_vector(p.destination);
 	printf("\nhealth:%f\n",p.health);
-	printf("\nteam:%i\n",p.team);
 }
 
 #endif

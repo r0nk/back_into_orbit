@@ -9,6 +9,7 @@
 #include "input.h"
 #include "engine.h"
 #include "map.h"
+#include "effects.h"
 
 double spawner_countdown;
 #define SCM 10
@@ -158,6 +159,14 @@ void player_items(struct game_state * gs, double delta)
 	gs->game_player.inventory.item[1].active=pi.keys['2'];
 	gs->game_player.inventory.item[2].active=pi.keys['3'];
 	gs->game_player.inventory.item[3].active=pi.keys['4'];
+
+	gs->game_player.inventory.item[0]=regen_item();
+	gs->game_player.inventory.item[0].effect=regen_effect;
+	 
+	int i;
+	for(i=0;i<gs->game_player.inventory.n_items;i++){
+		item_effect(gs,gs->game_player.inventory.item[i],delta);
+	}
 }
 
 void update_player(struct game_state * gs,double delta)
