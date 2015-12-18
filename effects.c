@@ -11,22 +11,24 @@ void regen_effect(struct game_state * gs, double delta){
 
 void puzzle_effect(struct game_state * gs, double delta)
 {
-	printf("doing puzzle effect\n");
 	generate_edges(&world_map);
-	sleep(1);
 }
 
-void item_effect(struct game_state * gs, struct item item, double delta)
+void item_effect(struct game_state * gs, struct item * item, double delta)
 {
-
-	if(!item.active && !item.passive)
+	if(item->cooldown>0){
+		item->cooldown-=delta;
 		return;
-	switch(item.type){
+	}
+	if(!item->active && !item->passive)
+		return;
+	switch(item->type){
 		case ITEM_REGEN:
 			regen_effect(gs,delta);
 			break;
 		case ITEM_PUZZLE:
 			puzzle_effect(gs,delta);
+			item->cooldown=10;
 			break;
 		case ITEM_DICE:
 		case ITEM_TRIGGER:
@@ -43,7 +45,7 @@ void item_effect(struct game_state * gs, struct item item, double delta)
 		case ITEM_ACCELERATOR:
 		case ITEM_DASH:
 		default:
-			printf("ERR: unrecognized item effect: %i\n",item.type);
+			printf("ERR: unrecognized item effect: %i\n",item->type);
 			break;
 	}
 }

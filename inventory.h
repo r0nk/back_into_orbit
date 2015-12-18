@@ -8,6 +8,7 @@
 
 struct item {
 	int type;
+	double cooldown;
 	int active; /* whether or not the player activated this item */
 	int stackable;
 	int passive; /*if set, it ignores int active entirely*/
@@ -42,6 +43,7 @@ inline static struct item regen_item()
 {
 	struct item item;
 	item.type = ITEM_REGEN;
+	item.cooldown = 0;
 	item.passive = 1;
 	item.stackable = 0;
 	item.amount = 1;
@@ -52,18 +54,12 @@ inline static struct item puzzle_item()
 {
 	struct item item;
 	item.type = ITEM_PUZZLE;
+	item.cooldown = 2;
 	item.active = 0;
 	item.passive = 0;
 	item.stackable = 0;
 	item.amount = 1;
 	return item;
-}
-inline static struct item coin_item()
-{
-	struct item coin;
-	coin.stackable = 1;
-	coin.amount = 1;
-	return coin;
 }
 
 inline static char * get_item_name(struct item item)
@@ -100,7 +96,7 @@ inline static char * get_item_name(struct item item)
 		case ITEM_ACCELERATOR:
 			return "accelerator";
 		case ITEM_DASH:
-			return "dash circuitry";
+			return "dash circuit";
 		default:
 			return "NAME_NOT_FOUND";
 			break;

@@ -163,7 +163,7 @@ void player_items(struct game_state * gs, double delta)
 
 	int i;
 	for(i=0;i<gs->game_player.inventory.n_items;i++){
-		item_effect(gs,gs->game_player.inventory.item[i],delta);
+		item_effect(gs,&(gs->game_player.inventory.item[i]),delta);
 	}
 }
 

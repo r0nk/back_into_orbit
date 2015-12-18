@@ -45,7 +45,6 @@ void spawn_mobs(struct room * room)
 		}
 	}
 	loc.x=10;loc.z=10;
-	add_npc(&room->gs,item_npc(loc,ITEM_REGEN));
 }
 
 struct game_state init_game(struct room * room)
