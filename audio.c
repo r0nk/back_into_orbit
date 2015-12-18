@@ -40,9 +40,10 @@ void tzztzzz(){
 
 void pew(){
 	int i;
+	int r = 1+rand()%4;
 	for(i=0;i<AUDIO_BUFF_SIZE;i++){
 		audio_chunk[i]=(unsigned char)
-			(sin(i*(freq/(i+100.0)))*10)+1;
+			(sin(i*(freq/(1+(r*(i+100.0)))))*5)+1;
 	}
 	audio_pos = (char *)audio_chunk;
 	audio_len = AUDIO_BUFF_SIZE;
