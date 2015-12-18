@@ -16,8 +16,8 @@ void puzzle_effect(struct game_state * gs, double delta)
 
 void teledice_effect(struct game_state * gs, double delta)
 {
-	gs->game_player.location.x+=(rand()%10)-5;
-	gs->game_player.location.z+=(rand()%10)-5;
+	gs->game_player.location.x+=((rand()%4)-2)*2;
+	gs->game_player.location.z+=((rand()%4)-2)*2;
 }
 
 void item_effect(struct game_state * gs, struct item * item, double delta)
