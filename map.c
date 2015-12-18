@@ -91,7 +91,13 @@ void generate_edge(struct map * map)
 void generate_edges(struct map * map)
 {
 	int i;
+	struct doorway * d;
 	map->n_edges=0;
+	/* we reset all the connections first */
+	for(i=0;i<map->n_doorways;i++){
+		d = get_doorway_by_index(map,i);
+		d->is_connected=0;
+	}
 	for(i=0;i<(map->n_doorways/2);i++){
 		generate_edge(map);
 	}

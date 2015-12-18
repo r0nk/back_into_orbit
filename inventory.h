@@ -48,6 +48,16 @@ inline static struct item regen_item()
 	return item;
 }
 
+inline static struct item puzzle_item()
+{
+	struct item item;
+	item.type = ITEM_PUZZLE;
+	item.active = 0;
+	item.passive = 0;
+	item.stackable = 0;
+	item.amount = 1;
+	return item;
+}
 inline static struct item coin_item()
 {
 	struct item coin;
@@ -61,7 +71,36 @@ inline static char * get_item_name(struct item item)
 	switch(item.type){
 		case ITEM_REGEN:
 			return "regen kit";
-			break;
+		case ITEM_PUZZLE:
+			return "puzzle cube";
+		case ITEM_DICE:
+			return "teledice";
+		case ITEM_TRIGGER:
+			return "hair trigger";
+		case ITEM_VAIL:
+			return "vail";
+		case ITEM_VECTOR_FEILD:
+			return "vector feild";
+		case ITEM_ENTROPY_BATTERY:
+			return "entropy battery";
+		case ITEM_SHEILD:
+			return "sheild";
+		case ITEM_KITE:
+			return "kite";
+		case ITEM_REMOTE:
+			return "remote";
+		case ITEM_CAPACITOR:
+			return "capacitor";
+		case ITEM_BEACON:
+			return "beacon";
+		case ITEM_BOX:
+			return "black box";
+		case ITEM_COIN:
+			return "coin";
+		case ITEM_ACCELERATOR:
+			return "accelerator";
+		case ITEM_DASH:
+			return "dash circuitry";
 		default:
 			return "NAME_NOT_FOUND";
 			break;

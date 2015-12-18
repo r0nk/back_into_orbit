@@ -44,6 +44,7 @@ static inline void dump_map(struct map * map)
 }
 
 struct map generate_map();
+void generate_edges(struct map * map);
 
 void move_through_doorway(struct map * map,int t);
 
