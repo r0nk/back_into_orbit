@@ -250,22 +250,27 @@ void draw_models(struct game_state * gs)
 void draw_health_bar(struct unit u, int x, int y)
 {
 	struct polygon a,b;
-	double h = u.health/50;
-	a.v[0].p = (struct vector) {x+0.0,y+0.0,0.0};
-	a.v[1].p = (struct vector) {x+ h ,y+0.0,0.0};
-	a.v[2].p = (struct vector) {x+0.0,y+1.0,0.0};
+	struct vector c = {0,1,0};
+	if(u.health<75)
+		c = (struct vector) {1,1,0};
+	if(u.health<25)
+		c = (struct vector) {1,0,0};
 
-	b.v[0].p = (struct vector) {x+0.0,y+1.0,0.0};
-	b.v[1].p = (struct vector) {x+h  ,y+1.0,0.0};
-	b.v[2].p = (struct vector) {x+h  ,y+0.0,0.0};
+	double h = u.health/40;
+	a.v[0].p = (struct vector) {x-h  ,y+0.0,0.0};
+	a.v[1].p = (struct vector) {x+0.0,y+0.0,0.0};
+	a.v[2].p = (struct vector) {x-h  ,y+1.0,0.0};
 
-	b.v[0].c = (struct vector) {0,1,0};
-	b.v[1].c = (struct vector) {0,1,0};
-	b.v[2].c = (struct vector) {0,1,0};
+	b.v[0].p = (struct vector) {x-h  ,y+1.0,0.0};
+	b.v[1].p = (struct vector) {x+0.0,y+1.0,0.0};
+	b.v[2].p = (struct vector) {x+0.0,y+0.0,0.0};
 
-	a.v[0].c = (struct vector) {0,1,0};
-	a.v[1].c = (struct vector) {0,1,0};
-	a.v[2].c = (struct vector) {0,1,0};
+	b.v[0].c = c;
+	b.v[1].c = c;
+	b.v[2].c = c;
+	a.v[0].c = c;
+	a.v[1].c = c;
+	a.v[2].c = c;
 
 	a.v[0].n = normal(a.v[0].p);
 	a.v[1].n = normal(a.v[1].p);
@@ -285,11 +290,11 @@ void draw_inventory(struct unit u,double x, double y)
 	char str[30];
 	for(i=0;i<u.inventory.n_items;i++){
 		if(u.inventory.item[i].cooldown<=0){
-			sprintf(str,"%s",get_item_name(u.inventory.item[i]));
+			sprintf(str,"%i| %s",i+1,get_item_name(u.inventory.item[i]));
 			draw_text(x,y-(i*FONT_HEIGHT),str,
 					(struct vector) {u.inventory.item[i].active,1,1});
 		}else{
-			sprintf(str,"[%.2f] %s",
+			sprintf(str,"%i| %s [%.2f]",i+1,
 					u.inventory.item[i].cooldown,
 					get_item_name(u.inventory.item[i]));
 			draw_text(x,y-(i*FONT_HEIGHT),str,
@@ -313,7 +318,7 @@ void draw_hud(struct game_state * gs)
 	gluLookAt(0,0,0, 0,0,1, 0,1,0);
 	glBegin(GL_TRIANGLES);
 
-	draw_health_bar(gs->game_player,0,-7);
+	draw_health_bar(gs->game_player,3,-7);
 	draw_inventory(gs->game_player,9,-4.8);
 	draw_fps(9,7);
 
