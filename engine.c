@@ -100,6 +100,8 @@ void move_unit(struct unit * u,struct vector d)
 	if(world_map.current_room->layout.tiles[(int)(u->location.x)][(int)(u->location.z+d.z)]
 			!= LAYOUT_WALL)
 		u->location.z+=d.z;
+	if(!world_map.current_room->layout.tiles[(int)(u->location.x)][(int)(u->location.z)])
+		u->health=0;/* oops, they wen't out of the map */
 }
 
 void player_movement(struct game_state * gs, double delta)
@@ -170,7 +172,7 @@ void player_items(struct game_state * gs, double delta)
 void update_player(struct game_state * gs,double delta)
 {
 	int t;
-	if(gs->game_player.health<0)
+	if(gs->game_player.health<=0)
 		game_over();
 	player_movement(gs,delta);
 	player_attack(gs,delta);
