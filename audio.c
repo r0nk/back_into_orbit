@@ -40,12 +40,30 @@ void tzztzzz(){
 
 void pew(){
 	int i;
-	for(i=0;i<1000;i++){
+	for(i=0;i<AUDIO_BUFF_SIZE;i++){
 		audio_chunk[i]=(unsigned char)
-			((sin(i*(freq/5000.0))*50)/(i%100))+1;
+			(sin(i*(freq/(i+100.0)))*10)+1;
 	}
 	audio_pos = (char *)audio_chunk;
-	audio_len = 500;
+	audio_len = AUDIO_BUFF_SIZE;
+
+	SDL_PauseAudio(0);
+}
+
+void bzewerwwww(int to, int from)
+{
+	int i;
+	int length = AUDIO_BUFF_SIZE/2;
+	for(i=0;i<length/2;i++){
+		audio_chunk[i]=(unsigned char)
+			(sin(i*(freq/(from+1)))*20)+1;
+	}
+	for(;i<length;i++){
+		audio_chunk[i]=(unsigned char)
+			(sin(i*(freq/(to+1)))*20)+1;
+	}
+	audio_pos = (char *)audio_chunk;
+	audio_len = length;
 
 	SDL_PauseAudio(0);
 }

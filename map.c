@@ -170,6 +170,8 @@ void move_through_doorway(struct map * map,int t)
 	if(dest_room!=map->current_room)
 		transfer_rooms(map,dest_room);
 
+	bzewerwwww(t,dest_door->index);
+
 	map->current_room->gs.game_player.location = dest_door->location;
 	map->current_room->gs.game_player.location.x += 2;
 }
