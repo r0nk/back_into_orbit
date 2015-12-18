@@ -68,5 +68,21 @@ inline static char * get_item_name(struct item item)
 	}
 }
 
- 
+inline static void add_item(struct inventory * inven, struct item item)
+{
+	if(inven->n_items >= MAX_INVENTORY_SPACE)
+	{
+		printf("ERR: too many items in inven to add another\n");
+	}
+	inven->item[inven->n_items] = item;
+	inven->n_items++;
+}
+
+inline static void remove_item(struct inventory * inven,int i)
+{
+	for(;i<inven->n_items;i++)
+		inven->item[i] = inven->item[i+1];
+	inven->n_items--;
+}
+
 #endif

@@ -177,7 +177,7 @@ void draw_unit(struct unit u)
 			draw_model(shp_model,u.location,
 					u.rotation_angle,u.rotation);
 			break;
-		case UNIT_TYPE_COIN:
+		case UNIT_TYPE_ITEM:
 			draw_model(coin_model,u.location,
 					u.rotation_angle,u.rotation);
 			break;

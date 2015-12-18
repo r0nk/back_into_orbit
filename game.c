@@ -46,6 +46,7 @@ struct game_state init_game(struct room * room)
 	room->gs.game_player.cooldown=1;
 	room->gs.n_bullets=0;
 	room->gs.n_npcs=0;
+	add_item(&(room->gs.game_player.inventory),regen_item());
 
 	spawn_mobs(room);
 
