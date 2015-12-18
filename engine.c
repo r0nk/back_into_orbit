@@ -43,12 +43,11 @@ double delta_time()
 	return s;
 }
 
-int door_at(int x, int z)
+int door_at(struct vector l)
 {
 	int i;
 	for(i=0;i<world_map.current_room->n_doorways;i++){
-		if(world_map.current_room->doorway[i].x == x &&
-				world_map.current_room->doorway[i].z == z){
+		if(near(world_map.current_room->doorway[i].location,l,1)){
 			return world_map.current_room->doorway[i].index;
 		}
 	}
@@ -169,20 +168,24 @@ void player_items(struct game_state * gs, double delta)
 	}
 }
 
-void update_player(struct game_state * gs,double delta)
+void door_check(struct game_state * gs)
 {
 	int t;
+	t = door_at(gs->game_player.location);
+	if(t!=-1){
+		move_through_doorway(&world_map,t);
+	}
+}
+
+void update_player(struct game_state * gs,double delta)
+{
 	if(gs->game_player.health<=0)
 		game_over();
 	player_movement(gs,delta);
 	player_attack(gs,delta);
 	player_items(gs,delta);
+	door_check(gs);
 
-	t = door_at((int)(gs->game_player.location.x),
-			(int)(gs->game_player.location.z));
-	if(t!=-1){
-		move_through_doorway(&world_map,t);
-	}
 	face(&gs->game_player,screen_to_world(gs,pi.mouse_x,pi.mouse_y));
 }
 

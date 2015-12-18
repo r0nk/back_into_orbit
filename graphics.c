@@ -151,7 +151,7 @@ void draw_block(int x, int y, int z)
 void draw_doorway(struct doorway * d)
 {
 	door_model=portal_model(d->color);
-	draw_model(door_model,(struct vector) {d->x,0,d->z},
+	draw_model(door_model,d->location,
 				0.0, (struct vector){0,0,0});
 }
 

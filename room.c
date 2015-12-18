@@ -44,8 +44,7 @@ void count_doorways(struct room * room)
 		for(x=0;x<100;x++){
 			if((room->layout.tiles[x][z]) > ('0'-1)
 					&& room->layout.tiles[x][z]<'9'){
-				room->doorway[n].x=x;
-				room->doorway[n].z=z;
+				room->doorway[n].location =(struct vector){x,0,z};
 				room->doorway[n].is_connected=0;
 				n++;
 			}

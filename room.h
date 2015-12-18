@@ -20,7 +20,7 @@ struct layout {
 
 struct doorway {
 	int index;
-	int x,z;
+	struct vector location;
 	int is_connected;
 	struct vector color;
 };
@@ -28,7 +28,8 @@ struct doorway {
 static inline void dump_doorway(struct doorway * doorway)
 {
 	printf("doorway->index:%i\n",doorway->index);
-	printf("doorway->location:(%i,0,%i)\n",doorway->x,doorway->z);
+	printf("doorway->location:(%f,%f,%f)\n",doorway->location.x,
+			doorway->location.y,doorway->location.z);
 	printf("doorway->is_connected:%i\n",doorway->is_connected);
 }
 
