@@ -8,6 +8,18 @@
 
 struct map world_map;
 
+struct unit item_npc(struct vector location,int item_id)
+{
+	struct unit npc;
+	npc.speed=2.0;
+	npc.health=2000;
+	npc.location=location;
+	npc.type = UNIT_TYPE_ITEM;
+	npc.rotation_angle = 90;
+	npc.rotation = (struct vector) {0,1,0};
+	return npc;
+}
+
 struct unit scavenger_npc(struct vector location)
 {
 	struct unit npc;
@@ -32,6 +44,8 @@ void spawn_mobs(struct room * room)
 			}
 		}
 	}
+	loc.x=10;loc.z=10;
+	add_npc(&room->gs,item_npc(loc,ITEM_REGEN));
 }
 
 struct game_state init_game(struct room * room)
