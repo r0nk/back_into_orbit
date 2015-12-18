@@ -54,10 +54,10 @@ void pew(){
 void teledice_sound(int a, int b)
 {
 	int i;
-	int length = AUDIO_BUFF_SIZE/2;
-	for(i=0;i<length/2;i++){
+	int length = AUDIO_BUFF_SIZE/3;
+	for(i=0;i<length;i++){
 		audio_chunk[i]=(unsigned char)
-			(cos(freq*a/sin(i*b)));
+			(sin(i*(freq/(a*1000.0)))*50)+1;
 	}
 	audio_pos = (char *)audio_chunk;
 	audio_len = length;
