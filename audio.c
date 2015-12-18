@@ -51,6 +51,18 @@ void pew(){
 	SDL_PauseAudio(0);
 }
 
+void teledice_sound(int a, int b)
+{
+	int i;
+	int length = AUDIO_BUFF_SIZE/2;
+	for(i=0;i<length/2;i++){
+		audio_chunk[i]=(unsigned char)
+			(cos(freq*a/sin(i*b)));
+	}
+	audio_pos = (char *)audio_chunk;
+	audio_len = length;
+	SDL_PauseAudio(0);
+}
 void bzewerwwww(int to, int from)
 {
 	int i;

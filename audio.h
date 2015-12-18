@@ -4,7 +4,8 @@
 void init_audio();
 void tzztzzz();
 void pew();
-void bzewerwwww();
+void teledice_sound(int a, int b);
+void bzewerwwww(int to, int from);
 void deathplosion();
  
 #endif
