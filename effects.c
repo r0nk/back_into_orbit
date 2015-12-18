@@ -6,8 +6,7 @@
 void item_effect(struct game_state * gs, struct item item, double delta)
 {
 
-	printf("item effect called, active:%i\n",item.active);
-	if(!item.active)
+	if(!item.active && !item.passive)
 		return;
 	switch(item.type){
 		case ITEM_REGEN:
@@ -20,6 +19,7 @@ void item_effect(struct game_state * gs, struct item item, double delta)
 }
 
 void regen_effect(struct game_state * gs, double delta){
-	printf("regeneratoing %f\n",delta);
-	gs->game_player.health+=delta;
+	if((gs->game_player.health) < (gs->game_player.max_health)){
+		gs->game_player.health+=delta;
+	}
 }

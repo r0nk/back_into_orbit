@@ -10,6 +10,7 @@ struct item {
 	int type;
 	int active; /* whether or not the player activated this item */
 	int stackable;
+	int passive; /*if set, it ignores int active entirely*/
 	int amount;
 };
 
@@ -41,18 +42,10 @@ inline static struct item regen_item()
 {
 	struct item item;
 	item.type = ITEM_REGEN;
-	item.active=1;
+	item.passive = 1;
 	item.stackable = 0;
 	item.amount = 1;
 	return item;
-}
-
-inline static struct item flag_item()
-{
-	struct item flag;
-	flag.stackable = 0;
-	flag.amount = 1;
-	return flag;
 }
 
 inline static struct item coin_item()

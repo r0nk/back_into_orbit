@@ -20,6 +20,7 @@ struct unit {
 	point location;
 	point destination;
 	double health;
+	double max_health;
 	double cooldown;
 	struct inventory inventory;
 	int type;

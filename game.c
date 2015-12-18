@@ -41,6 +41,7 @@ struct game_state init_game(struct room * room)
 	room->gs.game_player.location.z=5;
 	room->gs.game_player.speed=3.0;
 	room->gs.game_player.health=100;
+	room->gs.game_player.max_health=100;
 	room->gs.game_player.type=UNIT_TYPE_PLAYER;
 	room->gs.game_player.cooldown=1;
 	room->gs.n_bullets=0;
