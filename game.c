@@ -44,8 +44,10 @@ struct game_state init_game(struct room * room)
 	room->gs.game_player.max_health=100;
 	room->gs.game_player.type=UNIT_TYPE_PLAYER;
 	room->gs.game_player.cooldown=1;
+	room->gs.game_player.inventory.n_items=0;
 	room->gs.n_bullets=0;
 	room->gs.n_npcs=0;
+
 	add_item(&(room->gs.game_player.inventory),regen_item());
 
 	spawn_mobs(room);
