@@ -17,7 +17,7 @@ struct item {
 
 #define ITEM_REGEN 1
 #define ITEM_PUZZLE 2
-#define ITEM_DICE 3
+#define ITEM_TELEDICE 3
 #define ITEM_TRIGGER 4
 #define ITEM_VAIL 5
 #define ITEM_VECTOR_FEILD 6
@@ -50,6 +50,18 @@ inline static struct item regen_item()
 	return item;
 }
 
+inline static struct item teledice_item()
+{
+	struct item item;
+	item.type = ITEM_TELEDICE;
+	item.cooldown = 2;
+	item.active = 0;
+	item.passive = 0;
+	item.stackable = 0;
+	item.amount = 1;
+	return item;
+}
+
 inline static struct item puzzle_item()
 {
 	struct item item;
@@ -69,7 +81,7 @@ inline static char * get_item_name(struct item item)
 			return "regen kit";
 		case ITEM_PUZZLE:
 			return "puzzle cube";
-		case ITEM_DICE:
+		case ITEM_TELEDICE:
 			return "teledice";
 		case ITEM_TRIGGER:
 			return "hair trigger";

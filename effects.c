@@ -14,6 +14,12 @@ void puzzle_effect(struct game_state * gs, double delta)
 	generate_edges(&world_map);
 }
 
+void teledice_effect(struct game_state * gs, double delta)
+{
+	gs->game_player.location.x+=(rand()%10)-5;
+	gs->game_player.location.z+=(rand()%10)-5;
+}
+
 void item_effect(struct game_state * gs, struct item * item, double delta)
 {
 	if(item->cooldown>0){
@@ -30,7 +36,10 @@ void item_effect(struct game_state * gs, struct item * item, double delta)
 			puzzle_effect(gs,delta);
 			item->cooldown=10;
 			break;
-		case ITEM_DICE:
+		case ITEM_TELEDICE:
+			teledice_effect(gs,delta);
+			item->cooldown=2;
+			break;
 		case ITEM_TRIGGER:
 		case ITEM_VAIL:
 		case ITEM_VECTOR_FEILD:
