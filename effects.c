@@ -5,11 +5,21 @@
 
 void item_effect(struct game_state * gs, struct item item, double delta)
 {
-	if(item.active)
-		item.effect(gs,delta);
+
+	printf("item effect called, active:%i\n",item.active);
+	if(!item.active)
+		return;
+	switch(item.type){
+		case ITEM_REGEN:
+			regen_effect(gs,delta);
+			break;
+		default:
+			printf("ERR: unrecognized item effect: %i\n",item.type);
+			break;
+	}
 }
 
 void regen_effect(struct game_state * gs, double delta){
 	printf("regeneratoing %f\n",delta);
-	world_map.current_room->gs.game_player.health+=delta;
+	gs->game_player.health+=delta;
 }

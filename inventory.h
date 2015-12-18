@@ -7,12 +7,28 @@
 /* units are in the game world, items are in inventories */
 
 struct item {
-	char name[10];
+	int type;
 	int active; /* whether or not the player activated this item */
 	int stackable;
 	int amount;
-	void (*effect)(void * gs, double delta);
 };
+
+#define ITEM_REGEN 1
+#define ITEM_PUZZLE 2
+#define ITEM_DICE 3
+#define ITEM_TRIGGER 4
+#define ITEM_VAIL 5
+#define ITEM_VECTOR_FEILD 6
+#define ITEM_ENTROPY_BATTERY 7
+#define ITEM_SHEILD 8
+#define ITEM_KITE 9
+#define ITEM_REMOTE 10
+#define ITEM_CAPACITOR 11
+#define ITEM_BEACON 12
+#define ITEM_BOX 13
+#define ITEM_COIN 14
+#define ITEM_ACCELERATOR 15
+#define ITEM_DASH 16
 
 #define MAX_INVENTORY_SPACE 4
 
@@ -24,8 +40,8 @@ struct inventory {
 inline static struct item regen_item()
 {
 	struct item item;
-	sprintf(item.name,"regen");
-	item.effect=NULL;
+	item.type = ITEM_REGEN;
+	item.active=1;
 	item.stackable = 0;
 	item.amount = 1;
 	return item;
@@ -34,8 +50,6 @@ inline static struct item regen_item()
 inline static struct item flag_item()
 {
 	struct item flag;
-	sprintf(flag.name,"Flag");
-	flag.effect=NULL;
 	flag.stackable = 0;
 	flag.amount = 1;
 	return flag;
@@ -44,11 +58,21 @@ inline static struct item flag_item()
 inline static struct item coin_item()
 {
 	struct item coin;
-	sprintf(coin.name,"coin");
-	coin.effect=NULL;
 	coin.stackable = 1;
 	coin.amount = 1;
 	return coin;
+}
+
+inline static char * get_item_name(struct item item)
+{
+	switch(item.type){
+		case ITEM_REGEN:
+			return "regen kit";
+			break;
+		default:
+			return "NAME_NOT_FOUND";
+			break;
+	}
 }
 
  

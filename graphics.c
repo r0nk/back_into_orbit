@@ -283,14 +283,12 @@ void draw_inventory(struct unit u,double x, double y)
 {
 	int i;
 	char str[30];
-	for(i=0;i<MAX_INVENTORY_SPACE;i++){
-		if(u.inventory.item[i].name !=NULL){
-			sprintf(str,"[%i] %s",
-					u.inventory.item[i].amount,
-					u.inventory.item[i].name);
-			draw_text(x,y-(i*FONT_HEIGHT),str,
-			    (struct vector) {u.inventory.item[i].active,1,1});
-		}
+	for(i=0;i<u.inventory.n_items;i++){
+		sprintf(str,"[%i] %s",
+				u.inventory.item[i].amount,
+				get_item_name(u.inventory.item[i]));
+		draw_text(x,y-(i*FONT_HEIGHT),str,
+		    (struct vector) {u.inventory.item[i].active,1,1});
 	}
 }
 
