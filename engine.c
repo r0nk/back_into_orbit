@@ -129,20 +129,31 @@ void player_movement(struct game_state * gs, double delta)
 	move_unit(&gs->game_player,dvec);
 }
 
+int player_fired;
+
 void player_attack(struct game_state * gs, double delta)
 {
-#define FR 4
 	struct vector v;
 	v.x=sin(to_radians(gs->game_player.rotation_angle));
 	v.y=0.0;
 	v.z=cos(to_radians(gs->game_player.rotation_angle));
-	if(gs->game_player.cooldown<1){
-		if(pi.left_click){
+	if(gs->game_player.cooldown>0){
+		gs->game_player.cooldown-=delta;
+		return;
+	}
+	if(pi.left_click){
+		if(gs->game_player.flags&HAS_TRIGGER){
+			if(!player_fired){
+				fire_bullet(gs,gs->game_player.location,v);
+				player_fired=1;
+				gs->game_player.cooldown = 0.0;
+			}
+		}else{
 			fire_bullet(gs,gs->game_player.location,v);
-			gs->game_player.cooldown = FR;
+			gs->game_player.cooldown = 0.5;
 		}
-	} else {
-		gs->game_player.cooldown-=10*delta;
+	}else{
+		player_fired=0;
 	}
 }
 
@@ -267,7 +278,7 @@ void count_fps(double d)
 void engine_tick(struct game_state * gs)
 {
 	double d = delta_time();
-	//	spawner(gs,d);
+	//spawner(gs,d);
 	update_player(gs,d);
 	update_bullets(gs,d);
 	update_npcs(gs,d);

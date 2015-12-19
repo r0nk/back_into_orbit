@@ -45,6 +45,8 @@ void item_effect(struct game_state * gs, struct item * item, double delta)
 			item->cooldown=2;
 			break;
 		case ITEM_TRIGGER:
+			gs->game_player.flags|=HAS_TRIGGER;
+			break;
 		case ITEM_VAIL:
 		case ITEM_VECTOR_FEILD:
 		case ITEM_ENTROPY_BATTERY:

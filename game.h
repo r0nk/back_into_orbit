@@ -32,6 +32,8 @@ struct unit {
 #define NEUTRAL_TEAM 			0
 #define RED_TEAM 			1
 #define BLUE_TEAM 			2
+	int flags;
+#define HAS_TRIGGER			1
 };
 
 static inline void dump_bullet(struct bullet b){
