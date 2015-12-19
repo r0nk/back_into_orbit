@@ -9,6 +9,7 @@
 struct item {
 	int type;
 	double cooldown;
+	double duration;
 	int active; /* whether or not the player activated this item */
 	int stackable;
 	int passive; /*if set, it ignores int active entirely*/
@@ -38,6 +39,17 @@ struct inventory {
 	int n_items;
 	struct item item[MAX_INVENTORY_SPACE];
 };
+
+inline static struct item sheild_item()
+{
+	struct item item;
+	item.type = ITEM_SHEILD;
+	item.cooldown = 1;
+	item.passive = 0;
+	item.stackable = 0;
+	item.amount = 1;
+	return item;
+}
 
 inline static struct item vector_field_item()
 {

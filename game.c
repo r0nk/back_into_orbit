@@ -23,7 +23,7 @@ struct unit item_npc(struct vector location,int item_id)
 struct unit scavenger_npc(struct vector location)
 {
 	struct unit npc;
-	npc.speed=2.0;
+	npc.speed=3.1;
 	npc.health=20;
 	npc.location=location;
 	npc.type = UNIT_TYPE_NEUTRAL_CREEP;
@@ -62,7 +62,7 @@ struct game_state init_game(struct room * room)
 	room->gs.n_bullets=0;
 	room->gs.n_npcs=0;
 
-	add_item(&(room->gs.game_player.inventory),vector_field_item());
+	add_item(&(room->gs.game_player.inventory),sheild_item());
 	spawn_mobs(room);
 
 	return room->gs;

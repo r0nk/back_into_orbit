@@ -30,19 +30,21 @@ void item_effect(struct game_state * gs, struct item * item, double delta)
 		item->cooldown-=delta;
 		return;
 	}
-	if(!item->active && !item->passive)
-		return;
 	switch(item->type){
 		case ITEM_REGEN:
 			regen_effect(gs,delta);
 			break;
 		case ITEM_PUZZLE:
-			puzzle_effect(gs,delta);
-			item->cooldown=10;
+			if(item->active){
+				puzzle_effect(gs,delta);
+				item->cooldown=10;
+			}
 			break;
 		case ITEM_TELEDICE:
-			teledice_effect(gs,delta);
-			item->cooldown=2;
+			if(item->active){
+				teledice_effect(gs,delta);
+				item->cooldown=2;
+			}
 			break;
 		case ITEM_TRIGGER:
 			gs->game_player.flags|=HAS_TRIGGER;
@@ -53,8 +55,16 @@ void item_effect(struct game_state * gs, struct item * item, double delta)
 		case ITEM_VECTOR_FIELD:
 			gs->game_player.flags|=HAS_VECTOR_FIELD;
 			break;
-		case ITEM_ENTROPY_BATTERY:
 		case ITEM_SHEILD:
+			if(item->active){
+				gs->game_player.speed=1.5;
+				gs->game_player.resist=0.5;
+			}else{
+				gs->game_player.speed=3;
+				gs->game_player.resist=1;
+			}
+			break;
+		case ITEM_ENTROPY_BATTERY:
 		case ITEM_KITE:
 		case ITEM_REMOTE:
 		case ITEM_CAPACITOR:

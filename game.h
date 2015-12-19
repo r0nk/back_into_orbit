@@ -23,6 +23,7 @@ struct unit {
 	double health;
 	double max_health;
 	double cooldown;
+	double resist;
 	struct inventory inventory;
 	int type;
 #define UNIT_TYPE_PLAYER 		1

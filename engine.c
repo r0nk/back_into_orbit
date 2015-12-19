@@ -110,35 +110,34 @@ void move_unit(struct unit * u,struct vector d)
 {
 	if(world_map.current_room->layout.tiles[(int)(u->location.x+d.x)][(int)(u->location.z)]
 			!= LAYOUT_WALL)
-		u->location.x+=d.x;
+		u->location.x+=d.x*u->speed;
 	if(world_map.current_room->layout.tiles[(int)(u->location.x)][(int)(u->location.z+d.z)]
 			!= LAYOUT_WALL)
-		u->location.z+=d.z;
+		u->location.z+=d.z*u->speed;
 	if(!world_map.current_room->layout.tiles[(int)(u->location.x)][(int)(u->location.z)])
 		u->health=0;/* oops, they wen't out of the map */
 }
 
 void player_movement(struct game_state * gs, double delta)
 {
-	double d = gs->game_player.speed*delta;
 	struct vector dvec = (struct vector){0,0,0};
 
 
 	if(pi.keys['W']){
-		dvec.x-=d;
-		dvec.z-=d;
+		dvec.x-=delta;
+		dvec.z-=delta;
 	}
 	if(pi.keys['A']){
-		dvec.x-=d;
-		dvec.z+=d;
+		dvec.x-=delta;
+		dvec.z+=delta;
 	}
 	if(pi.keys['S']){
-		dvec.x+=d;
-		dvec.z+=d;
+		dvec.x+=delta;
+		dvec.z+=delta;
 	}
 	if(pi.keys['D']){
-		dvec.x+=d;
-		dvec.z-=d;
+		dvec.x+=delta;
+		dvec.z-=delta;
 	}
 
 	move_unit(&gs->game_player,dvec);
@@ -218,15 +217,14 @@ void update_player(struct game_state * gs,double delta)
 void update_scavenger(struct game_state * gs, double delta, int j)
 {
 	if(near(gs->game_player.location,gs->npc[j].location,1.5)){
-		gs->game_player.health-=delta*30;
+		gs->game_player.health-=delta*30*gs->game_player.resist;
 		tzztzzz();
 	} else if(near(gs->game_player.location,gs->npc[j].location,10)){
 		face(&gs->npc[j],gs->game_player.location);
 		struct vector v = (struct vector) {0,0,0};
-		double s = gs->npc[j].speed*delta;
 
-		v.x=sin(to_radians(gs->npc[j].rotation_angle))*s;
-		v.z=cos(to_radians(gs->npc[j].rotation_angle))*s;
+		v.x=sin(to_radians(gs->npc[j].rotation_angle))*delta;
+		v.z=cos(to_radians(gs->npc[j].rotation_angle))*delta;
 
 		move_unit(&gs->npc[j],v);
 	}
