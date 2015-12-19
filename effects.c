@@ -64,6 +64,12 @@ void item_effect(struct game_state * gs, struct item * item, double delta)
 				gs->game_player.resist=1;
 			}
 			break;
+		case ITEM_DASH:
+			if(item->active){
+				item->cooldown=5;
+				gs->game_player.dash_timer=0.20;
+			}
+			break;
 		case ITEM_ENTROPY_BATTERY:
 		case ITEM_KITE:
 		case ITEM_REMOTE:
@@ -72,7 +78,6 @@ void item_effect(struct game_state * gs, struct item * item, double delta)
 		case ITEM_BOX:
 		case ITEM_COIN:
 		case ITEM_ACCELERATOR:
-		case ITEM_DASH:
 		default:
 			printf("ERR: unrecognized item effect: %i\n",item->type);
 			break;

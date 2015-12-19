@@ -122,6 +122,15 @@ void player_movement(struct game_state * gs, double delta)
 {
 	struct vector dvec = (struct vector){0,0,0};
 
+	if(gs->game_player.dash_timer>0){
+
+		dvec.x=sin(to_radians(gs->game_player.rotation_angle))*delta*11;
+		dvec.z=cos(to_radians(gs->game_player.rotation_angle))*delta*11;
+
+		move_unit(&gs->game_player,dvec);
+		gs->game_player.dash_timer-=delta;
+		return;
+	}
 
 	if(pi.keys['W']){
 		dvec.x-=delta;

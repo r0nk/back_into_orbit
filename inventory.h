@@ -40,6 +40,18 @@ struct inventory {
 	struct item item[MAX_INVENTORY_SPACE];
 };
 
+
+inline static struct item dash_item()
+{
+	struct item item;
+	item.type = ITEM_DASH;
+	item.cooldown = 3;
+	item.passive = 0;
+	item.active = 0;
+	item.stackable = 0;
+	item.amount = 1;
+	return item;
+}
 inline static struct item sheild_item()
 {
 	struct item item;

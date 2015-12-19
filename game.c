@@ -62,7 +62,7 @@ struct game_state init_game(struct room * room)
 	room->gs.n_bullets=0;
 	room->gs.n_npcs=0;
 
-	add_item(&(room->gs.game_player.inventory),sheild_item());
+	add_item(&(room->gs.game_player.inventory),dash_item());
 	spawn_mobs(room);
 
 	return room->gs;
