@@ -59,7 +59,6 @@ void aoe_damage(struct game_state * gs,struct vector location,int amount, int ra
 	int i;
 	for(i=0;i<gs->n_npcs;i++){
 		if(near(gs->npc[i].location,location,radius)){
-			printf("dealing aoe to:%i\n",i);
 			gs->npc[i].health-=amount;
 		}
 	}
