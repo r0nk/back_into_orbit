@@ -39,6 +39,17 @@ struct inventory {
 	struct item item[MAX_INVENTORY_SPACE];
 };
 
+inline static struct item vail_item()
+{
+	struct item item;
+	item.type = ITEM_VAIL;
+	item.cooldown = 0;
+	item.passive = 1;
+	item.stackable = 0;
+	item.amount = 1;
+	return item;
+}
+
 inline static struct item trigger_item()
 {
 	struct item item;

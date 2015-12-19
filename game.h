@@ -11,6 +11,7 @@ struct bullet {
 	point location;
 	struct vector direction;
 	double duration;
+	int flags;
 };
 
 struct unit {
@@ -34,6 +35,8 @@ struct unit {
 #define BLUE_TEAM 			2
 	int flags;
 #define HAS_TRIGGER			1
+#define HAS_VAIL			2
+	double poison_timer;
 };
 
 static inline void dump_bullet(struct bullet b){
