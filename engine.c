@@ -54,6 +54,17 @@ int door_at(struct vector l)
 	return -1;
 }
 
+void aoe_damage(struct game_state * gs,struct vector location,int amount, int radius)
+{
+	int i;
+	for(i=0;i<gs->n_npcs;i++){
+		if(near(gs->npc[i].location,location,radius)){
+			printf("dealing aoe to:%i\n",i);
+			gs->npc[i].health-=amount;
+		}
+	}
+}
+
 void update_bullets(struct game_state * gs, double delta)
 {
 	int i,j;
@@ -73,6 +84,8 @@ void update_bullets(struct game_state * gs, double delta)
 				tzztzzz();
 				if(gs->bullet[i].flags&HAS_VAIL)
 					gs->npc[j].poison_timer+=5;
+				if(gs->bullet[i].flags&HAS_VECTOR_FIELD)
+					aoe_damage(gs,gs->bullet[i].location,5,3);
 				remove_bullet(gs,i);
 			}
 		}
@@ -219,7 +232,6 @@ void update_scavenger(struct game_state * gs, double delta, int j)
 		move_unit(&gs->npc[j],v);
 	}
 	if(gs->npc[j].poison_timer>0.0){
-		printf("dealing poison damage\n");
 		gs->npc[j].health-=delta*3;
 		gs->npc[j].poison_timer-=delta;
 	}

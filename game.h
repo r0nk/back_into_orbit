@@ -36,6 +36,7 @@ struct unit {
 	int flags;
 #define HAS_TRIGGER			1
 #define HAS_VAIL			2
+#define HAS_VECTOR_FIELD		4
 	double poison_timer;
 };
 

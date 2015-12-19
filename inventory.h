@@ -20,7 +20,7 @@ struct item {
 #define ITEM_TELEDICE 3
 #define ITEM_TRIGGER 4
 #define ITEM_VAIL 5
-#define ITEM_VECTOR_FEILD 6
+#define ITEM_VECTOR_FIELD 6
 #define ITEM_ENTROPY_BATTERY 7
 #define ITEM_SHEILD 8
 #define ITEM_KITE 9
@@ -38,6 +38,17 @@ struct inventory {
 	int n_items;
 	struct item item[MAX_INVENTORY_SPACE];
 };
+
+inline static struct item vector_field_item()
+{
+	struct item item;
+	item.type = ITEM_VECTOR_FIELD;
+	item.cooldown = 0;
+	item.passive = 1;
+	item.stackable = 0;
+	item.amount = 1;
+	return item;
+}
 
 inline static struct item vail_item()
 {
@@ -109,7 +120,7 @@ inline static char * get_item_name(struct item item)
 			return "hair trigger";
 		case ITEM_VAIL:
 			return "vail";
-		case ITEM_VECTOR_FEILD:
+		case ITEM_VECTOR_FIELD:
 			return "vector feild";
 		case ITEM_ENTROPY_BATTERY:
 			return "entropy battery";
