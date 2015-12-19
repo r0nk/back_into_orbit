@@ -40,6 +40,17 @@ struct inventory {
 	struct item item[MAX_INVENTORY_SPACE];
 };
 
+inline static struct item kite_item()
+{
+	struct item item;
+	item.type = ITEM_KITE;
+	item.cooldown = 0;
+	item.passive = 1;
+	item.active = 0;
+	item.stackable = 0;
+	item.amount = 1;
+	return item;
+}
 
 inline static struct item dash_item()
 {

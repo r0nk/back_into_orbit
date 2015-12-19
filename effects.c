@@ -24,6 +24,20 @@ void teledice_effect(struct game_state * gs, double delta)
 	gs->game_player.location.z+=b;
 }
 
+int kite_effect(struct game_state * gs, double delta)
+{
+	int i;
+	for(i=0;i<gs->n_npcs;i++){
+		if(near(gs->game_player.location,gs->npc[i].location,5)){
+			gs->game_player.speed=3;
+			return 0;
+		}
+	}
+	/*if we've reached this point, then the kite effect is active*/
+	gs->game_player.speed=4;
+	return 1;
+}
+
 void item_effect(struct game_state * gs, struct item * item, double delta)
 {
 	if(item->cooldown>0){
@@ -70,8 +84,11 @@ void item_effect(struct game_state * gs, struct item * item, double delta)
 				gs->game_player.dash_timer=0.20;
 			}
 			break;
-		case ITEM_ENTROPY_BATTERY:
 		case ITEM_KITE:
+			if(kite_effect(gs,delta))
+				item->cooldown=1;
+			break;
+		case ITEM_ENTROPY_BATTERY:
 		case ITEM_REMOTE:
 		case ITEM_CAPACITOR:
 		case ITEM_BEACON:
