@@ -25,6 +25,7 @@ struct unit scavenger_npc(struct vector location)
 	struct unit npc;
 	npc.speed=3.1;
 	npc.health=20;
+	npc.damage=20;
 	npc.location=location;
 	npc.type = UNIT_TYPE_NEUTRAL_CREEP;
 	npc.rotation_angle = 90;
@@ -60,6 +61,7 @@ struct game_state init_game(struct room * room)
 	room->gs.game_player.damage=10;
 	room->gs.game_player.inventory.n_items=0;
 	room->gs.game_player.flags=0;
+	room->gs.game_player.resist=1;
 	room->gs.n_bullets=0;
 	room->gs.n_npcs=0;
 

@@ -230,7 +230,7 @@ void update_player(struct game_state * gs,double delta)
 void update_scavenger(struct game_state * gs, double delta, int j)
 {
 	if(near(gs->game_player.location,gs->npc[j].location,1.5)){
-		gs->game_player.health-=delta*30*gs->game_player.resist;
+		gs->game_player.health-=delta*gs->npc[j].damage*gs->game_player.resist;
 		tzztzzz();
 	} else if(near(gs->game_player.location,gs->npc[j].location,10)){
 		face(&gs->npc[j],gs->game_player.location);
