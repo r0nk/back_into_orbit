@@ -209,9 +209,18 @@ inline static char * get_item_name(struct item item)
 
 inline static void add_item(struct inventory * inven, struct item item)
 {
+	int i;
 	if(inven->n_items >= MAX_INVENTORY_SPACE)
 	{
 		printf("ERR: too many items in inven to add another\n");
+	}
+	if(item.stackable){
+		for(i=0;i<inven->n_items;i++){
+			if(item.type == inven->item[i].type){
+				inven->item[i].amount++;
+				return;
+			}
+		}
 	}
 	inven->item[inven->n_items] = item;
 	inven->n_items++;

@@ -19,6 +19,20 @@ char * font_letter(char input)
 				"    "
 				"  # "
 				"    ";
+		case ')':
+			return 	" #  "
+				"  # "
+				"  # "
+				"  # "
+				" #  "
+				"    ";
+		case '(':
+			return 	" #  "
+				"#   "
+				"#   "
+				"#   "
+				" #  "
+				"    ";
 		case ']':
 			return 	"### "
 				"  # "

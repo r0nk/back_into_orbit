@@ -262,7 +262,7 @@ void update_npcs(struct game_state * gs, double delta)
 	for(j=0;j<gs->n_npcs;j++){
 		if(gs->npc[j].health<0){
 			deathplosion();
-			if(!(rand()%5)){
+			if(!(rand()%2)){
 				add_npc(gs,item_npc(gs->npc[j].location,ITEM_COIN));
 			}
 
