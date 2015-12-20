@@ -11,6 +11,6 @@ echo "#define N_LAYOUTS " $(echo $lim)
 echo "int r = (rand()%N_LAYOUTS); "
 echo "	switch (r) {"
 ls layouts/*.layout -1 | sed 's/.*/case magic: get_layout(room,"&"); break;/' \
-	| awk '{gsub("magic",NR,$0);print}'
+	| awk '{gsub("magic",NR-1,$0);print}'
 echo "	}"
 echo "}"
