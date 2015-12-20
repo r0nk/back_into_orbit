@@ -109,12 +109,14 @@ void fire_bullet(struct game_state * gs,
 
 void move_unit(struct unit * u,struct vector d)
 {
+	d.x*=u->speed;
+	d.z*=u->speed;
 	if(world_map.current_room->layout.tiles[(int)(u->location.x+d.x)][(int)(u->location.z)]
 			!= LAYOUT_WALL)
-		u->location.x+=d.x*u->speed;
+		u->location.x+=d.x;
 	if(world_map.current_room->layout.tiles[(int)(u->location.x)][(int)(u->location.z+d.z)]
 			!= LAYOUT_WALL)
-		u->location.z+=d.z*u->speed;
+		u->location.z+=d.z;
 	if(!world_map.current_room->layout.tiles[(int)(u->location.x)][(int)(u->location.z)])
 		u->health=0;/* oops, they went out of the map */
 }
