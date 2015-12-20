@@ -94,6 +94,22 @@ void deathplosion()
 	SDL_PauseAudio(0);
 }
 
+/* TODO this POS doesn't even remotely do what I want it to */
+void sin_sound(double f)
+{
+	int i;
+	int length = AUDIO_BUFF_SIZE;
+
+	for(i=0;i<length;i++){
+		audio_chunk[i]=(unsigned char)
+			(sin(i*(freq/(f+1)))*20)+1;
+	}
+	audio_pos = (char *)audio_chunk;
+	audio_len = length;
+
+	SDL_PauseAudio(0);
+}
+
 void init_audio()
 {
 	int error;

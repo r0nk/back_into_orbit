@@ -54,7 +54,8 @@ int door_at(struct vector l)
 	return -1;
 }
 
-void aoe_damage(struct game_state * gs,struct vector location,int amount, int radius)
+void aoe_damage(struct game_state * gs,struct vector location,
+		int amount, int radius)
 {
 	int i;
 	for(i=0;i<gs->n_npcs;i++){
@@ -79,7 +80,7 @@ void update_bullets(struct game_state * gs, double delta)
 		for(j=0;j<gs->n_npcs;j++){
 			if(near(gs->bullet[i].location,
 						gs->npc[j].location,1.5)){
-				gs->npc[j].health-=10;
+				gs->npc[j].health-=gs->bullet[i].damage;
 				tzztzzz();
 				if(gs->bullet[i].flags&HAS_VAIL)
 					gs->npc[j].poison_timer+=5;
@@ -101,6 +102,7 @@ void fire_bullet(struct game_state * gs,
 	b.direction = direction;
 	b.speed = 10;
 	b.duration = 100;
+	b.damage = u.damage;
 	b.flags=u.flags;
 	pew();
 	add_bullet(gs,b);
@@ -115,7 +117,7 @@ void move_unit(struct unit * u,struct vector d)
 			!= LAYOUT_WALL)
 		u->location.z+=d.z*u->speed;
 	if(!world_map.current_room->layout.tiles[(int)(u->location.x)][(int)(u->location.z)])
-		u->health=0;/* oops, they wen't out of the map */
+		u->health=0;/* oops, they went out of the map */
 }
 
 void player_movement(struct game_state * gs, double delta)
@@ -170,10 +172,12 @@ void player_attack(struct game_state * gs, double delta)
 				fire_bullet(gs,gs->game_player,v);
 				player_fired=1;
 				gs->game_player.cooldown = 0.0;
+				gs->game_player.damage=10;
 			}
 		}else{
 			fire_bullet(gs,gs->game_player,v);
 			gs->game_player.cooldown = 0.5;
+			gs->game_player.damage=10;
 		}
 	}else{
 		player_fired=0;

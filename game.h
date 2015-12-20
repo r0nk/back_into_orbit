@@ -11,6 +11,7 @@ struct bullet {
 	point location;
 	struct vector direction;
 	double duration;
+	double damage;
 	int flags;
 };
 
@@ -24,6 +25,7 @@ struct unit {
 	double max_health;
 	double cooldown;
 	double resist;
+	double damage;
 	struct inventory inventory;
 	int type;
 #define UNIT_TYPE_PLAYER 		1
