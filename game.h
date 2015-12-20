@@ -61,4 +61,7 @@ static inline void dump_unit(struct unit p){
 	printf("\nhealth:%f\n",p.health);
 }
 
+struct unit scavenger_npc(struct vector location);
+struct unit item_npc(struct vector location,int item_id);
+
 #endif

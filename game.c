@@ -11,7 +11,7 @@ struct map world_map;
 struct unit item_npc(struct vector location,int item_id)
 {
 	struct unit npc;
-	npc.speed=2.0;
+	npc.speed=0.0;
 	npc.health=2000;
 	npc.location=location;
 	npc.type = UNIT_TYPE_ITEM;
@@ -65,7 +65,6 @@ struct game_state init_game(struct room * room)
 	room->gs.n_bullets=0;
 	room->gs.n_npcs=0;
 
-	add_item(&(room->gs.game_player.inventory),capacitor_item());
 	spawn_mobs(room);
 
 	return room->gs;

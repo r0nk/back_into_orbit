@@ -11,7 +11,6 @@
 #include "map.h"
 #include "effects.h"
 
-double spawner_countdown;
 #define SCM 10
 
 void face(struct unit * u, point p)
@@ -230,7 +229,8 @@ void update_player(struct game_state * gs,double delta)
 void update_scavenger(struct game_state * gs, double delta, int j)
 {
 	if(near(gs->game_player.location,gs->npc[j].location,1.5)){
-		gs->game_player.health-=delta*gs->npc[j].damage*gs->game_player.resist;
+		gs->game_player.health-=
+			delta*gs->npc[j].damage*gs->game_player.resist;
 		tzztzzz();
 	} else if(near(gs->game_player.location,gs->npc[j].location,10)){
 		face(&gs->npc[j],gs->game_player.location);
@@ -249,9 +249,10 @@ void update_scavenger(struct game_state * gs, double delta, int j)
 
 void update_item_npc(struct game_state * gs, double delta, int j)
 {
+	gs->npc[j].rotation_angle += 15*delta;
 	if(near(gs->game_player.location, gs->npc[j].location,1.5)){
 		remove_npc(gs,j);
-		add_item(&(gs->game_player.inventory),regen_item());
+		add_item(&(gs->game_player.inventory),coin_item());
 	} 	
 }
 
@@ -261,6 +262,10 @@ void update_npcs(struct game_state * gs, double delta)
 	for(j=0;j<gs->n_npcs;j++){
 		if(gs->npc[j].health<0){
 			deathplosion();
+			if(!(rand()%5)){
+				add_npc(gs,item_npc(gs->npc[j].location,ITEM_COIN));
+			}
+
 			remove_npc(gs,j);
 		}
 		if(gs->npc[j].type == UNIT_TYPE_NEUTRAL_CREEP){
@@ -273,6 +278,7 @@ void update_npcs(struct game_state * gs, double delta)
 	}
 }
 
+/*
 void spawner (struct game_state * gs, double delta)
 {
 	struct unit npc;
@@ -291,6 +297,7 @@ void spawner (struct game_state * gs, double delta)
 	npc.rotation = (struct vector) {0,1,0};
 	add_npc(gs,npc);
 }
+*/
 
 void count_fps(double d)
 {
