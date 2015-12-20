@@ -249,7 +249,7 @@ void update_scavenger(struct game_state * gs, double delta, int j)
 
 void update_item_npc(struct game_state * gs, double delta, int j)
 {
-	gs->npc[j].rotation_angle += 15*delta;
+	gs->npc[j].rotation_angle += 30*delta;
 	if(near(gs->game_player.location, gs->npc[j].location,1.5)){
 		remove_npc(gs,j);
 		add_item(&(gs->game_player.inventory),coin_item());
