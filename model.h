@@ -9,7 +9,7 @@ struct model player_model();
 struct model wall_block(struct vector c,struct vector d,struct vector l);
 struct model flag_holder_model();
 struct model gold_coin_model();
-struct model shop_model();
+struct model shopkeeper_model();
 struct model doorway_model();
 struct model scavenger();
 struct model portal_model();

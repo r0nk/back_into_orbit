@@ -37,7 +37,7 @@ void init_models()
 	ai_model=scavenger();
 	bullet_model=bullet();
 	fh_model = flag_holder_model();
-	shp_model = shop_model();
+	shp_model = shopkeeper_model();
 	coin_model = gold_coin_model();
 	door_model = portal_model((struct vector) {0,255,255});
 	floort_model=floor_tile((struct vector){1,0,1},(struct vector){0,0,0} );
@@ -155,13 +155,28 @@ void draw_doorway(struct doorway * d)
 				0.0, (struct vector){0,0,0});
 }
 
-void draw_room()
+void draw_shop(struct room * room)
+{
+	int x,z;
+	for(z=0;z<100;z++){
+		for(x=0;x<100;x++){
+			if(room->layout.tiles[x][z]=='K'){
+				draw_model(shp_model,(struct vector){x,0,z},
+				15.0, (struct vector){0,1,0});
+			}
+		}
+	}
+}
+
+void draw_room(struct room * room)
 {
 	int i;
-	for(i=0;i<(world_map.current_room->n_doorways);i++){
-		draw_doorway(&world_map.current_room->doorway[i]);
+	for(i=0;i<(room->n_doorways);i++){
+		draw_doorway(&room->doorway[i]);
 	}
-	draw_model(world_map.current_room->model,(struct vector){0,0,0},
+	if(room->shop)
+		draw_shop(room);	
+	draw_model(room->model,(struct vector){0,0,0},
 				0.0, (struct vector){0,0,0});
 }
 
@@ -235,7 +250,7 @@ void draw_letter(double x, double y, char bits[24], struct vector color)
 
 void draw_models(struct game_state * gs)
 {
-	draw_room();
+	draw_room((world_map.current_room));
 	int i;
 	draw_unit(gs->game_player);
 	for(i=0;i<gs->n_npcs;i++){
@@ -295,8 +310,8 @@ void draw_inventory(struct unit u,double x, double y)
 					(struct vector) {u.inventory.item[i].active,1,1});
 		}else{
 			sprintf(str,"%i| %s [%.2f]",i+1,
-					u.inventory.item[i].cooldown,
-					get_item_name(u.inventory.item[i]));
+					get_item_name(u.inventory.item[i]),
+					u.inventory.item[i].cooldown);
 			draw_text(x,y-(i*FONT_HEIGHT),str,
 					(struct vector) {0.5,0.5,0.5});
 		}

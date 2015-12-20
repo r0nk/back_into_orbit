@@ -40,6 +40,7 @@ struct room {
 	struct game_state gs;
 	struct vector color;
 	struct model model;
+	int shop;
 };
 
 static inline void dump_room(struct room * room)
