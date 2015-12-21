@@ -13,6 +13,7 @@ struct model shopkeeper_model();
 struct model doorway_model();
 struct model scavenger();
 struct model portal_model();
+struct model pedestal_model();
 
 struct vertice { 
 	struct vector p;/*position*/

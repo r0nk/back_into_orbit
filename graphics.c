@@ -29,6 +29,7 @@ struct model shp_model;
 struct model coin_model;
 struct model door_model;
 struct model floort_model;
+struct model stand_model;
 
 void init_models()
 {
@@ -41,6 +42,7 @@ void init_models()
 	coin_model = gold_coin_model();
 	door_model = portal_model((struct vector) {0,255,255});
 	floort_model=floor_tile((struct vector){1,0,1},(struct vector){0,0,0} );
+	stand_model = pedestal_model();
 }
 
 int init_window_lib()
@@ -163,6 +165,10 @@ void draw_shop(struct room * room)
 			if(room->layout.tiles[x][z]=='K'){
 				draw_model(shp_model,(struct vector){x,0,z},
 				15.0, (struct vector){0,1,0});
+			}
+			if(room->layout.tiles[x][z]=='i'){
+				draw_model(stand_model,(struct vector){x,0,z},
+				0.0, (struct vector){0,1,0});
 			}
 		}
 	}

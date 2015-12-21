@@ -4,6 +4,7 @@ lim=$(ls layouts/*.layout -1 | wc -l)
 echo "#include \"layouts.h\""
 echo "#include \"room.h\""
 echo "/*AUTOMATICALLY GENERTED BY generate_layouts.sh */"
+echo "/*pipe me out to layouts.c */"
 
 echo "void pick_layout(struct room * room)"
 echo "{"
