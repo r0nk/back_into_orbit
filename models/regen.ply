@@ -1,0 +1,28 @@
+ply
+format ascii 1.0
+comment Created by Blender 2.76 (sub 0) - www.blender.org, source file: 'puzzle.blend'
+element vertex 8
+property float x
+property float y
+property float z
+property float nx
+property float ny
+property float nz
+property uchar red
+property uchar green
+property uchar blue
+element face 4
+property list uchar uint vertex_indices
+end_header
+-0.250000 1.250000 0.100000 0.000000 1.000000 -0.000000 255 0 0
+0.250000 1.250000 0.100000 0.000000 1.000000 -0.000000 255 0 0
+0.250000 1.250000 -0.100000 0.000000 1.000000 -0.000000 255 0 0
+-0.100000 1.250000 -0.250000 0.000000 1.000000 0.000000 255 2 2
+-0.100000 1.250000 0.250000 0.000000 1.000000 0.000000 255 0 0
+0.100000 1.250000 0.250000 0.000000 1.000000 0.000000 255 0 0
+-0.250000 1.250000 -0.100000 0.000000 1.000000 0.000000 255 0 0
+0.100000 1.250000 -0.250000 -0.000000 1.000000 0.000000 255 0 0
+3 0 1 2
+3 3 4 5
+3 6 0 2
+3 7 3 5

@@ -14,6 +14,16 @@ struct model doorway_model();
 struct model scavenger();
 struct model portal_model();
 struct model pedestal_model();
+struct model puzzle_model();
+struct model regen_model();
+struct model dice_model();
+struct model trigger_model();
+struct model vail_model();
+struct model dash_model();
+struct model vector_field_model();
+struct model shield_model();
+struct model kite_model();
+struct model capacitor_model();
 
 struct vertice { 
 	struct vector p;/*position*/

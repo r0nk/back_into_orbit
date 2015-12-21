@@ -1,0 +1,26 @@
+ply
+format ascii 1.0
+comment Created by Blender 2.76 (sub 0) - www.blender.org, source file: 'dash.blend'
+element vertex 7
+property float x
+property float y
+property float z
+property float nx
+property float ny
+property float nz
+property uchar red
+property uchar green
+property uchar blue
+element face 3
+property list uchar uint vertex_indices
+end_header
+-0.111355 1.250000 -0.444168 0.000000 1.000000 0.000000 255 255 0
+-0.692344 1.250000 0.001251 0.000000 1.000000 0.000000 255 255 0
+-0.111355 1.250000 0.446671 0.000000 1.000000 0.000000 255 255 0
+-0.154186 1.250000 -0.222710 0.000000 1.000000 0.000000 255 255 0
+-0.154186 1.250000 0.222710 0.000000 1.000000 0.000000 255 255 0
+0.445420 1.250000 0.222710 0.000000 1.000000 0.000000 197 197 0
+0.445420 1.250000 -0.222710 -0.000000 1.000000 0.000000 197 197 0
+3 0 1 2
+3 3 4 5
+3 6 3 5

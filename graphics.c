@@ -31,6 +31,17 @@ struct model door_model;
 struct model floort_model;
 struct model stand_model;
 
+struct model puz_item_model;
+struct model regen_item_model;
+struct model dice_item_model;
+struct model trigger_item_model;
+struct model vail_item_model;
+struct model dash_item_model;
+struct model vector_field_item_model;
+struct model shield_item_model;
+struct model kite_item_model;
+struct model capacitor_item_model;
+
 void init_models()
 {
 	p_model=pawn();
@@ -43,6 +54,16 @@ void init_models()
 	door_model = portal_model((struct vector) {0,255,255});
 	floort_model=floor_tile((struct vector){1,0,1},(struct vector){0,0,0} );
 	stand_model = pedestal_model();
+	puz_item_model=puzzle_model();
+	regen_item_model=regen_model();
+	dice_item_model=dice_model();
+	trigger_item_model=trigger_model();
+	vail_item_model=vail_model();
+	dash_item_model=dash_model();
+	vector_field_item_model=vector_field_model();
+	shield_item_model=shield_model();
+	kite_item_model=kite_model();
+	capacitor_item_model=capacitor_model();
 }
 
 int init_window_lib()
@@ -168,6 +189,8 @@ void draw_shop(struct room * room)
 			}
 			if(room->layout.tiles[x][z]=='i'){
 				draw_model(stand_model,(struct vector){x,0,z},
+				0.0, (struct vector){0,1,0});
+				draw_model(capacitor_item_model,(struct vector){x,0,z},
 				0.0, (struct vector){0,1,0});
 			}
 		}
