@@ -17,6 +17,17 @@ struct item {
 	int amount;
 };
 
+inline static void dump_item(struct item i)
+{
+	printf("type:%i\n",i.type);
+	printf("cooldown:%f\n",i.cooldown);
+	printf("duration:%f\n",i.duration);
+	printf("active:%i\n",i.active);
+	printf("stackable:%i\n",i.stackable);
+	printf("passive:%i\n",i.passive);
+	printf("amount:%i\n",i.amount);
+}
+
 #define ITEM_REGEN 1
 #define ITEM_PUZZLE 2
 #define ITEM_TELEDICE 3
@@ -244,7 +255,6 @@ inline static struct item pick_item()
 		case ITEM_CAPACITOR:
 			return capacitor_item();
 		case ITEM_COIN:
-			return coin_item();
 		case ITEM_DASH:
 			return dash_item();
 		default:

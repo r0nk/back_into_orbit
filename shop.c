@@ -24,6 +24,7 @@ struct shop generate_shop(struct room * room)
 			}
 			if(room->layout.tiles[x][z]=='i'){
 				shop.t[i]=generate_transaction(x,z);
+				i++;
 			}
 		}
 	}
