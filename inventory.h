@@ -263,4 +263,14 @@ inline static struct item pick_item()
 	}
 }
 
+static inline int number_of_coins(struct inventory inven)
+{
+	int i;
+	for(i=0;i<inven.n_items;i++){
+		if(inven.item[i].type==ITEM_COIN)
+			return inven.item[i].amount;
+	}
+	return 0;
+}
+
 #endif

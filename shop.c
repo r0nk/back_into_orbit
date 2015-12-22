@@ -9,6 +9,7 @@ struct transaction generate_transaction(int x, int z)
 	transaction.item=pick_item();
 	transaction.price=3+(rand()%3);
 	transaction.location = (struct vector) {x,0,z};
+	transaction.sold=0;
 	return transaction;
 }
 

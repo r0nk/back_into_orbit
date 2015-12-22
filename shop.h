@@ -9,6 +9,7 @@ struct transaction
 	struct item item;
 	int price;
 	struct vector location;
+	int sold;
 };
 
 static inline void dump_transaction(struct transaction t)

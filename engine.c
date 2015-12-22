@@ -312,7 +312,21 @@ void count_fps(double d)
 	}
 }
 
-/* all of the game engine stuff is actually server side */
+void update_shop(struct game_state * gs, double delta)
+{
+	struct shop * s = &(world_map.current_room->shop);
+	int i;
+	for(i=0;i<MAX_TRANSACTIONS;i++){
+		if(near(gs->game_player.location,s->t[i].location,1)){
+			if(!(s->t[i].sold) && 
+		  (number_of_coins(gs->game_player.inventory) > s->t[i].price)){
+				s->t[i].sold=1;
+				add_item(&gs->game_player.inventory,s->t[i].item);
+			}
+		}
+	}
+}
+
 void engine_tick(struct game_state * gs)
 {
 	double d = delta_time();
@@ -320,5 +334,8 @@ void engine_tick(struct game_state * gs)
 	update_player(gs,d);
 	update_bullets(gs,d);
 	update_npcs(gs,d);
+	if(world_map.current_room->has_shop){
+	update_shop(gs,d);
+	}
 	count_fps(d);
 }
