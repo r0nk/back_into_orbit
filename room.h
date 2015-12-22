@@ -8,6 +8,7 @@
 #include <err.h>
 
 #include "game_state.h"
+#include "shop.h"
 
 #define MAX_ROOM_WIDTH 100
 #define MAX_ROOM_HEIGHT 100
@@ -40,7 +41,8 @@ struct room {
 	struct game_state gs;
 	struct vector color;
 	struct model model;
-	int shop;
+	int has_shop;
+	struct shop shop;
 };
 
 static inline void dump_room(struct room * room)

@@ -99,11 +99,6 @@ void item_effect(struct game_state * gs, struct item * item, double delta)
 				item->cooldown = 1;
 			}
 			break;
-		case ITEM_ENTROPY_BATTERY:
-		case ITEM_REMOTE:
-		case ITEM_BEACON:
-		case ITEM_BOX:
-		case ITEM_ACCELERATOR:
 		default:
 			printf("ERR: unrecognized item effect: %i\n",item->type);
 			break;

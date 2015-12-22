@@ -40,7 +40,7 @@ void count_doorways(struct room * room)
 {
 	int n = 0;
 	int x,z;
-	room->shop=0;
+	room->has_shop=0;
 	for(z=0;z<100;z++){
 		for(x=0;x<100;x++){
 			if((room->layout.tiles[x][z]) > ('0'-1)
@@ -50,7 +50,7 @@ void count_doorways(struct room * room)
 				n++;
 			}
 			if(room->layout.tiles[x][z]=='K')
-				room->shop=1;
+				room->has_shop=1;
 		}
 	}
 	room->n_doorways=n;

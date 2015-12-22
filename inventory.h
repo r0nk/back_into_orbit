@@ -3,6 +3,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <err.h>
 
 /* units are in the game world, items are in inventories */
 
@@ -22,16 +23,13 @@ struct item {
 #define ITEM_TRIGGER 4
 #define ITEM_VAIL 5
 #define ITEM_VECTOR_FIELD 6
-#define ITEM_ENTROPY_BATTERY 7
-#define ITEM_SHEILD 8
-#define ITEM_KITE 9
-#define ITEM_REMOTE 10
-#define ITEM_CAPACITOR 11
-#define ITEM_BEACON 12
-#define ITEM_BOX 13
-#define ITEM_COIN 14
-#define ITEM_ACCELERATOR 15
-#define ITEM_DASH 16
+#define ITEM_SHEILD 7
+#define ITEM_KITE 8
+#define ITEM_CAPACITOR 9
+#define ITEM_COIN 10
+#define ITEM_DASH 11
+
+#define N_ITEMS 11
 
 #define MAX_INVENTORY_SPACE 4
 
@@ -181,24 +179,14 @@ inline static char * get_item_name(struct item item)
 			return "vail";
 		case ITEM_VECTOR_FIELD:
 			return "vector feild";
-		case ITEM_ENTROPY_BATTERY:
-			return "entropy battery";
 		case ITEM_SHEILD:
 			return "sheild";
 		case ITEM_KITE:
 			return "kite";
-		case ITEM_REMOTE:
-			return "remote";
 		case ITEM_CAPACITOR:
 			return "capacitor";
-		case ITEM_BEACON:
-			return "beacon";
-		case ITEM_BOX:
-			return "black box";
 		case ITEM_COIN:
 			return "coin";
-		case ITEM_ACCELERATOR:
-			return "accelerator";
 		case ITEM_DASH:
 			return "dash circuit";
 		default:
@@ -231,6 +219,38 @@ inline static void remove_item(struct inventory * inven,int i)
 	for(;i<inven->n_items;i++)
 		inven->item[i] = inven->item[i+1];
 	inven->n_items--;
+}
+
+inline static struct item pick_item()
+{
+	int r = 1+(rand()%N_ITEMS);
+	switch(r){
+		case ITEM_REGEN:
+			return regen_item();
+		case ITEM_PUZZLE:
+			return puzzle_item();
+		case ITEM_TELEDICE:
+			return teledice_item();
+		case ITEM_TRIGGER:
+			return trigger_item();
+		case ITEM_VAIL:
+			return vail_item();
+		case ITEM_VECTOR_FIELD:
+			return vector_field_item();;
+		case ITEM_SHEILD:
+			return sheild_item();
+		case ITEM_KITE:
+			return kite_item();
+		case ITEM_CAPACITOR:
+			return capacitor_item();
+		case ITEM_COIN:
+			return coin_item();
+		case ITEM_DASH:
+			return dash_item();
+		default:
+			err(-72,"failed to pick item, r=%i ",r);
+			break;
+	}
 }
 
 #endif

@@ -203,7 +203,7 @@ void draw_room(struct room * room)
 	for(i=0;i<(room->n_doorways);i++){
 		draw_doorway(&room->doorway[i]);
 	}
-	if(room->shop)
+	if(room->has_shop)
 		draw_shop(room);	
 	draw_model(room->model,(struct vector){0,0,0},
 				0.0, (struct vector){0,0,0});
