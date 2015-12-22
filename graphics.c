@@ -31,9 +31,9 @@ struct model door_model;
 struct model floort_model;
 struct model stand_model;
 
-struct model puz_item_model;
+struct model puzzle_item_model;
 struct model regen_item_model;
-struct model dice_item_model;
+struct model teledice_item_model;
 struct model trigger_item_model;
 struct model vail_item_model;
 struct model dash_item_model;
@@ -54,9 +54,9 @@ void init_models()
 	door_model = portal_model((struct vector) {0,255,255});
 	floort_model=floor_tile((struct vector){1,0,1},(struct vector){0,0,0} );
 	stand_model = pedestal_model();
-	puz_item_model=puzzle_model();
+	puzzle_item_model=puzzle_model();
 	regen_item_model=regen_model();
-	dice_item_model=dice_model();
+	teledice_item_model=dice_model();
 	trigger_item_model=trigger_model();
 	vail_item_model=vail_model();
 	dash_item_model=dash_model();
@@ -178,22 +178,48 @@ void draw_doorway(struct doorway * d)
 				0.0, (struct vector){0,0,0});
 }
 
-void draw_shop(struct room * room)
+struct model * item_model(int item_id)
 {
-	int x,z;
-	for(z=0;z<100;z++){
-		for(x=0;x<100;x++){
-			if(room->layout.tiles[x][z]=='K'){
-				draw_model(shp_model,(struct vector){x,0,z},
+	switch(item_id){
+		case ITEM_REGEN:
+			return &regen_item_model;
+		case ITEM_PUZZLE:
+			return &puzzle_item_model;
+		case ITEM_TELEDICE:
+			return &teledice_item_model;
+		case ITEM_TRIGGER:
+			return &trigger_item_model;
+		case ITEM_VAIL:
+			return &vail_item_model;
+		case ITEM_VECTOR_FIELD:
+			return &vector_field_item_model;
+		case ITEM_SHEILD:
+			return &shield_item_model;
+		case ITEM_KITE:
+			return &kite_item_model;
+		case ITEM_CAPACITOR:
+			return &capacitor_item_model;
+		case ITEM_DASH:
+			return &dash_item_model;
+		case ITEM_COIN:
+			printf("incorrect call for coin\n");
+		default:
+			err(-74,"couldn't find item model for [%i] ",item_id);
+			break;
+	}
+}
+
+void draw_shop(struct shop * shop)
+{
+	draw_model(shp_model,shop->keeper_location,
 				15.0, (struct vector){0,1,0});
-			}
-			if(room->layout.tiles[x][z]=='i'){
-				draw_model(stand_model,(struct vector){x,0,z},
+	int i;
+	for(i=0;i<MAX_TRANSACTIONS;i++){
+		draw_model(stand_model,shop->t[i].location,
 				0.0, (struct vector){0,1,0});
-				draw_model(capacitor_item_model,(struct vector){x,0,z},
+		draw_model(*(item_model(shop->t[i].item.type)),
+				shop->t[i].location,
 				0.0, (struct vector){0,1,0});
-			}
-		}
 	}
 }
 
@@ -204,7 +230,7 @@ void draw_room(struct room * room)
 		draw_doorway(&room->doorway[i]);
 	}
 	if(room->has_shop)
-		draw_shop(room);	
+		draw_shop(&room->shop);	
 	draw_model(room->model,(struct vector){0,0,0},
 				0.0, (struct vector){0,0,0});
 }

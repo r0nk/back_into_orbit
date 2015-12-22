@@ -4,6 +4,7 @@
 #include "model.h"
 #include "layouts.h"
 #include "room.h"
+#include "shop.h"
 
 void get_layout(struct room * room,char * pathname)
 {
@@ -84,7 +85,7 @@ struct vector pick_colors(int i)
 			return (struct vector) {207,107,76};
 			break;
 		case 8:
-			return (struct vector) {255,185,100};
+			return (struct vector) {255,215,0};
 			break;
 		case 9:
 			return (struct vector) {153,173,106};
@@ -176,7 +177,13 @@ struct model model_room(struct room * room)
 struct room generate_room(int i)
 {
 	struct room room;
-	pick_layout(&room);
+	if(i==8){/* 8 is always the shop room*/
+		printf("generating shop...\n");
+		get_layout(&room,"layouts/shop.layout");
+		room.shop=generate_shop(&room);
+	}else{
+		pick_layout(&room);
+	}
 	count_doorways(&room);
 	room.gs = init_game(&room);
 	room.color= pick_colors(i);

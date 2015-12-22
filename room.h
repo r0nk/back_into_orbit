@@ -64,4 +64,6 @@ extern struct model block;
 struct room generate_room();
 void get_layout(struct room * room,char * pathname);
 
+struct shop generate_shop(struct room * room);
+
 #endif
