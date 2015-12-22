@@ -178,10 +178,8 @@ struct room generate_room(int i)
 {
 	struct room room;
 	if(i==8){/* 8 is always the shop room*/
-		printf("generating shop...\n");
 		get_layout(&room,"layouts/shop.layout");
 		room.shop=generate_shop(&room);
-		dump_shop(room.shop);
 	}else{
 		pick_layout(&room);
 	}
