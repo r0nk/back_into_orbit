@@ -273,4 +273,17 @@ static inline int number_of_coins(struct inventory inven)
 	return 0;
 }
 
+static inline int spend(struct inventory * inven, int amount)
+{
+	int i;
+	for(i=0;i<inven->n_items;i++){
+		if(inven->item[i].type==ITEM_COIN)
+			if(amount <= inven->item[i].amount){
+				inven->item[i].amount-=amount;
+				return 1;
+			}
+	}
+	return 0;
+}
+
 #endif

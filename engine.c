@@ -319,7 +319,7 @@ void update_shop(struct game_state * gs, double delta)
 	for(i=0;i<MAX_TRANSACTIONS;i++){
 		if(near(gs->game_player.location,s->t[i].location,1)){
 			if(!(s->t[i].sold) && 
-		  (number_of_coins(gs->game_player.inventory) > s->t[i].price)){
+			     spend(&gs->game_player.inventory,s->t[i].price)){
 				s->t[i].sold=1;
 				add_item(&gs->game_player.inventory,s->t[i].item);
 			}

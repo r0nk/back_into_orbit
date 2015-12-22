@@ -217,9 +217,11 @@ void draw_shop(struct shop * shop)
 	for(i=0;i<MAX_TRANSACTIONS;i++){
 		draw_model(stand_model,shop->t[i].location,
 				0.0, (struct vector){0,1,0});
-		draw_model(*(item_model(shop->t[i].item.type)),
+		if(!shop->t[i].sold){
+			draw_model(*(item_model(shop->t[i].item.type)),
 				shop->t[i].location,
 				0.0, (struct vector){0,1,0});
+		}
 	}
 }
 
