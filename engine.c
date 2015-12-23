@@ -261,27 +261,41 @@ void update_item_npc(struct game_state * gs, double delta, int j)
 void update_boss(struct game_state * gs, double delta, int j)
 {
 	struct unit npc;
+	struct vector loc;
 
+	gs->npc[j].rotation_angle+=delta*180;
 	if(gs->npc[j].cooldown>0){
 		gs->npc[j].cooldown-=delta;
 		return;
 	}
-	gs->npc[j].cooldown=10;
-	npc = scavenger_npc(gs->npc[j].location);
+	loc = gs->npc[j].location;
+	loc.x+=(rand()%4)-2;
+	loc.z+=(rand()%4)-2;
+	gs->npc[j].cooldown=2;
+	npc = scavenger_npc(loc);
 	add_npc(gs,npc);
 }
+
+void death(struct game_state * gs, int j)
+{
+	deathplosion();
+	if(!(rand()%2)){
+		add_npc(gs,item_npc(gs->npc[j].location,ITEM_COIN));
+	}
+	remove_npc(gs,j);
+	if(gs->npc[j].type == UNIT_TYPE_BOSS){
+		printf("you've defeated the boss and won\n");
+		exit(1);
+	}
+}
+
 
 void update_npcs(struct game_state * gs, double delta)
 {
 	int j;
 	for(j=0;j<gs->n_npcs;j++){
 		if(gs->npc[j].health<0){
-			deathplosion();
-			if(!(rand()%2)){
-				add_npc(gs,item_npc(gs->npc[j].location,ITEM_COIN));
-			}
-
-			remove_npc(gs,j);
+			death(gs,j);
 		}
 		if(gs->npc[j].type == UNIT_TYPE_NEUTRAL_CREEP){
 			update_scavenger(gs,delta,j);
@@ -327,7 +341,6 @@ void update_shop(struct game_state * gs, double delta)
 void engine_tick(struct game_state * gs)
 {
 	double d = delta_time();
-	//spawner(gs,d);
 	update_player(gs,d);
 	update_bullets(gs,d);
 	update_npcs(gs,d);
