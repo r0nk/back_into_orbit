@@ -175,6 +175,8 @@ void draw_block(int x, int y, int z)
 
 void draw_doorway(struct doorway * d)
 {
+	if(!d->is_connected)
+		return;
 	door_model=portal_model(d->color);
 	draw_model(door_model,d->location,
 				0.0, (struct vector){0,0,0});

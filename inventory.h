@@ -236,6 +236,7 @@ inline static struct item pick_item()
 {
 	int r = 1+(rand()%N_ITEMS);
 	switch(r){
+		case 0:
 		case ITEM_REGEN:
 			return regen_item();
 		case ITEM_PUZZLE:

@@ -5,6 +5,8 @@
 struct doorway * get_doorway_by_index(struct map * map, int index)
 {
 	int i,j;
+	if(index==-1)
+		return NULL;
 	for(i=0;i<map->n_rooms;i++){
 		for(j=0;j<(map->room[i].n_doorways);j++){
 			if(map->room[i].doorway[j].index == index){
@@ -144,7 +146,7 @@ int other_edge(struct map * map,int index){
 			return map->edge[i].a;
 		}
 	}
-	err(-25,"other edge not found");
+	printf("other edge not found\n");
 	return -1;
 }
 

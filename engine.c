@@ -46,6 +46,8 @@ int door_at(struct vector l)
 {
 	int i;
 	for(i=0;i<world_map.current_room->n_doorways;i++){
+		if(!world_map.current_room->doorway[i].is_connected)
+			return -1;
 		if(near(world_map.current_room->doorway[i].location,l,1)){
 			return world_map.current_room->doorway[i].index;
 		}
