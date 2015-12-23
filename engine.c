@@ -46,8 +46,9 @@ int door_at(struct vector l)
 {
 	int i;
 	for(i=0;i<world_map.current_room->n_doorways;i++){
-		if(!world_map.current_room->doorway[i].is_connected)
+		if(!world_map.current_room->doorway[i].is_connected){
 			return -1;
+		}
 		if(near(world_map.current_room->doorway[i].location,l,1)){
 			return world_map.current_room->doorway[i].index;
 		}
@@ -111,15 +112,27 @@ void fire_bullet(struct game_state * gs,
 
 void move_unit(struct unit * u,struct vector d)
 {
+	struct vector vec;
+	vec.x = (d.x>0) ? 1 : -1;
+	vec.z = (d.z>0) ? 1 : -1;
 	d.x*=u->speed;
 	d.z*=u->speed;
-	if(world_map.current_room->layout.tiles[(int)(u->location.x+d.x)][(int)(u->location.z)]
-			!= LAYOUT_WALL)
+	struct layout  * l = &(world_map.current_room->layout);
+	if(
+			(l->tiles[(int)(u->location.x+d.x)][(int)(u->location.z)]!= LAYOUT_WALL) &&
+			(l->tiles[(int)(u->location.x+vec.x)][(int)(u->location.z)]!= LAYOUT_WALL)){
 		u->location.x+=d.x;
-	if(world_map.current_room->layout.tiles[(int)(u->location.x)][(int)(u->location.z+d.z)]
-			!= LAYOUT_WALL)
+	}else{
+		u->location.x-=d.x;
+	}
+	if(
+		(l->tiles[(int)(u->location.x)][(int)(u->location.z+d.z)]!= LAYOUT_WALL) &&
+		(l->tiles[(int)(u->location.x)][(int)(u->location.z+vec.z)]!= LAYOUT_WALL)){
 		u->location.z+=d.z;
-	if(!world_map.current_room->layout.tiles[(int)(u->location.x)][(int)(u->location.z)])
+	}else{
+		u->location.z-=d.z;
+	}
+	if(!l->tiles[(int)(u->location.x)][(int)(u->location.z)])
 		u->health=0;/* oops, they went out of the map */
 }
 
