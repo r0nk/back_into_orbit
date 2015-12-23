@@ -282,11 +282,11 @@ void death(struct game_state * gs, int j)
 	if(!(rand()%2)){
 		add_npc(gs,item_npc(gs->npc[j].location,ITEM_COIN));
 	}
-	remove_npc(gs,j);
 	if(gs->npc[j].type == UNIT_TYPE_BOSS){
-		printf("you've defeated the boss and won\n");
+		printf("you've defeated the boss and won the game\n");
 		exit(1);
 	}
+	remove_npc(gs,j);
 }
 
 
