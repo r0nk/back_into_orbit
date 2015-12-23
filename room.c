@@ -88,7 +88,7 @@ struct vector pick_colors(int i)
 			return (struct vector) {255,215,0};
 			break;
 		case 9:
-			return (struct vector) {153,173,106};
+			return (struct vector) {10,10,10};
 			break;
 		default:
 			return (struct vector) {rand()%255,rand()%255,rand()%255};
@@ -180,6 +180,8 @@ struct room generate_room(int i)
 	if(i==8){/* 8 is always the shop room*/
 		get_layout(&room,"layouts/shop.layout");
 		room.shop=generate_shop(&room);
+	}else if (i==9){/* 9 is always the boss room */
+		get_layout(&room,"layouts/boss.layout");
 	}else{
 		pick_layout(&room);
 	}

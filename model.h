@@ -24,6 +24,7 @@ struct model vector_field_model();
 struct model shield_model();
 struct model kite_model();
 struct model capacitor_model();
+struct model boss_model();
 
 struct vertice { 
 	struct vector p;/*position*/

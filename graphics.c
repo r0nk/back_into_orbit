@@ -20,6 +20,7 @@ int window_width,window_height;
 float ratio;
 
 struct model p_model;
+struct model b_model;
 struct model d_model;
 struct model ai_model;
 struct model bullet_model;
@@ -64,6 +65,7 @@ void init_models()
 	shield_item_model=shield_model();
 	kite_item_model=kite_model();
 	capacitor_item_model=capacitor_model();
+	b_model = boss_model();
 }
 
 int init_window_lib()
