@@ -259,6 +259,10 @@ void draw_unit(struct unit u)
 			draw_model(ai_model,u.location,
 					u.rotation_angle,u.rotation);
 			break;
+		case UNIT_TYPE_BOSS:
+			draw_model(b_model,u.location,
+					u.rotation_angle,u.rotation);
+			break;
 	}
 	glPopMatrix();
 }

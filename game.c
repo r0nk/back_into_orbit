@@ -33,6 +33,18 @@ struct unit scavenger_npc(struct vector location)
 	return npc;
 }
 
+struct unit boss_npc(struct vector location)
+{
+	struct unit npc;
+	npc.speed=0;
+	npc.health=100;
+	npc.location=location;
+	npc.type = UNIT_TYPE_BOSS;
+	npc.rotation_angle = 90;
+	npc.rotation = (struct vector) {0,1,0};
+	return npc;
+}
+
 void spawn_mobs(struct room * room)
 {
 	struct vector loc = {0,0,0};
@@ -46,6 +58,9 @@ void spawn_mobs(struct room * room)
 		}
 	}
 	loc.x=10;loc.z=10;
+	if(room->boss_room){
+		add_npc(&room->gs,boss_npc(loc));
+	}
 }
 
 struct game_state init_game(struct room * room)
@@ -66,6 +81,8 @@ struct game_state init_game(struct room * room)
 	room->gs.n_npcs=0;
 
 	spawn_mobs(room);
+
+
 
 	return room->gs;
 }

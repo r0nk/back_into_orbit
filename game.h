@@ -32,6 +32,7 @@ struct unit {
 #define UNIT_TYPE_SHOP   		2
 #define UNIT_TYPE_ITEM   		3
 #define UNIT_TYPE_NEUTRAL_CREEP   	4
+#define UNIT_TYPE_BOSS   		5
 	int team;
 #define NEUTRAL_TEAM 			0
 #define RED_TEAM 			1

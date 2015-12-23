@@ -258,6 +258,19 @@ void update_item_npc(struct game_state * gs, double delta, int j)
 	} 	
 }
 
+void update_boss(struct game_state * gs, double delta, int j)
+{
+	struct unit npc;
+
+	if(gs->npc[j].cooldown>0){
+		gs->npc[j].cooldown-=delta;
+		return;
+	}
+	gs->npc[j].cooldown=10;
+	npc = scavenger_npc(gs->npc[j].location);
+	add_npc(gs,npc);
+}
+
 void update_npcs(struct game_state * gs, double delta)
 {
 	int j;
@@ -277,29 +290,13 @@ void update_npcs(struct game_state * gs, double delta)
 		if(gs->npc[j].type == UNIT_TYPE_ITEM){
 			update_item_npc(gs,delta,j);
 		}
+
+		if(gs->npc[j].type == UNIT_TYPE_BOSS){
+			update_boss(gs,delta,j);
+		}
 	}
 }
 
-/*
-void spawner (struct game_state * gs, double delta)
-{
-	struct unit npc;
-
-	if(spawner_countdown>0){
-		spawner_countdown-=delta;
-		return;
-	}
-	spawner_countdown=SCM;
-	npc.speed=2.0;
-	npc.health=100;
-	npc.location=(struct vector) {15 + delta*10,0,3};
-	npc.destination=(struct vector) {15,0,3};
-	npc.type = UNIT_TYPE_NEUTRAL_CREEP;
-	npc.rotation_angle = 90;
-	npc.rotation = (struct vector) {0,1,0};
-	add_npc(gs,npc);
-}
-*/
 
 void count_fps(double d)
 {
@@ -335,7 +332,7 @@ void engine_tick(struct game_state * gs)
 	update_bullets(gs,d);
 	update_npcs(gs,d);
 	if(world_map.current_room->has_shop){
-	update_shop(gs,d);
+		update_shop(gs,d);
 	}
 	count_fps(d);
 }

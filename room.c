@@ -182,6 +182,7 @@ struct room generate_room(int i)
 		room.shop=generate_shop(&room);
 	}else if (i==9){/* 9 is always the boss room */
 		get_layout(&room,"layouts/boss.layout");
+		room.boss_room=1;
 	}else{
 		pick_layout(&room);
 	}
