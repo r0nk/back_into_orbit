@@ -13,11 +13,14 @@
 #include "model.h"
 #include "room.h"
 #include "fonts.h"
+#include "ui.h"
 
 GLFWwindow * window;
 int window_width,window_height;
 
 float ratio;
+
+struct button test_button;
 
 struct model p_model;
 struct model b_model;
@@ -393,6 +396,41 @@ void draw_fps(double x, double y)
 	draw_text(x,y,str,(struct vector) {0,1,1} );
 }
 
+void draw_button(struct button button)
+{
+	struct polygon a,b;
+
+	struct vector l,s;
+	l = button.location;
+	s = button.size;
+
+	a.v[0].p = (struct vector) {l.x-s.x,l.y+0.0,0.0};
+	a.v[1].p = l;
+	a.v[2].p = (struct vector) {l.x-s.x,l.y+s.y,0.0};
+
+	b.v[0].p = (struct vector) {l.x-s.x,l.y+s.y,0.0};
+	b.v[1].p = l;
+	b.v[2].p = (struct vector) {l.x+0.0,l.y+s.y,0.0};
+
+	b.v[0].c = button.color;
+	b.v[1].c = button.color;
+	b.v[2].c = button.color;
+	a.v[0].c = button.color;
+	a.v[1].c = button.color;
+	a.v[2].c = button.color;
+
+	a.v[0].n = normal(a.v[0].p);
+	a.v[1].n = normal(a.v[1].p);
+	a.v[2].n = normal(a.v[2].p);
+
+	b.v[0].n = normal(b.v[0].p);
+	b.v[1].n = normal(b.v[1].p);
+	b.v[2].n = normal(b.v[2].p);
+
+	draw_poly(a);
+	draw_poly(b);
+}
+
 void draw_hud(struct game_state * gs)
 {
 	GLfloat HUD_Color[] = {1.0f, 1.0f, 1.0f, 1.0f}; 
@@ -404,6 +442,13 @@ void draw_hud(struct game_state * gs)
 	draw_health_bar(gs->game_player,3,-7);
 	draw_inventory(gs->game_player,9,-4.8);
 	draw_fps(9,7);
+	struct button b;
+	b.location.x=1;
+	b.location.y=1;
+	b.size.x=1;
+	b.size.y=1;
+	b.color = (struct vector) {1,1,0};
+	draw_button(b);
 
 	glEnd();
 	glPopMatrix();

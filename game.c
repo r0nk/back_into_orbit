@@ -82,7 +82,5 @@ struct game_state init_game(struct room * room)
 
 	spawn_mobs(room);
 
-
-
 	return room->gs;
 }

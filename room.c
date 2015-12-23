@@ -76,7 +76,7 @@ struct vector pick_colors(int i)
 			return (struct vector) {230,0,230};
 			break;
 		case 5:
-			return (struct vector) {230,230,0};
+			return (struct vector) {115,230,0};
 			break;
 		case 6:
 			return (struct vector) {230,230,230};
