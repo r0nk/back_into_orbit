@@ -17,5 +17,7 @@ static inline double to_degrees(double r){
 static inline double to_radians(double d){
 	return d * (M_PI/180.0);
 }
+
+int paused;
  
 #endif

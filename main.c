@@ -24,12 +24,11 @@ int main()
 	world_map=generate_map();
 	main_ui = test_ui();
 	ui = &main_ui;
+	paused=0;
 //	ProfilerStart("profdata");
 	while(1){
 		engine_tick(&(world_map.current_room->gs));
 		graphics_draw(&(world_map.current_room->gs));
-		if(pi.keys[256])
-			break;
 	}
 //	ProfilerStop();
 	return 0;

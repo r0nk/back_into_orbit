@@ -453,6 +453,8 @@ void draw_hud(struct game_state * gs)
 	draw_inventory(gs->game_player,9,-4.8);
 	draw_fps(9,7);
 	draw_ui(ui);
+	if(paused)
+		draw_text(1,0,"paused",(struct vector) {0,1,1});
 
 	glEnd();
 	glPopMatrix();
