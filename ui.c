@@ -1,11 +1,6 @@
 #include "ui.h"
 #include "input.h"
 
-void simple_press_callback()
-{
-	printf("press callback\n");
-}
-
 void update_button(struct button * b,struct vector pmv)
 {
 	if((pmv.x>b->location.x) && (pmv.x< (b->location.x+b->size.x)) &&

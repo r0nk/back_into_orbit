@@ -22,7 +22,7 @@ int main()
 	init_graphics();
 	init_audio();
 	world_map=generate_map();
-	main_ui = test_ui();
+	main_ui = paused_menu();
 	ui = &main_ui;
 	paused=0;
 //	ProfilerStart("profdata");

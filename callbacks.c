@@ -36,3 +36,13 @@ void cursor_button_callback(GLFWwindow * win, int button, int action, int mods)
 	if(button==1)
 		pi.right_click=action;
 }
+
+void simple_press_callback()
+{
+	printf("simple press callback\n");
+}
+
+void exit_callback()
+{
+	exit(0);
+}

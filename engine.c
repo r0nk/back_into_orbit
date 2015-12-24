@@ -364,7 +364,8 @@ void engine_tick(struct game_state * gs)
 		if(world_map.current_room->has_shop){
 			update_shop(gs,d);
 		}
+	}else{
+		update_ui(ui);
 	}
-	update_ui(ui);
 	count_fps(d);
 }

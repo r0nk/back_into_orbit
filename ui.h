@@ -2,6 +2,7 @@
 #define UI 1
 
 #include "poly.h"
+#include "callbacks.h"
 
 struct button
 {
@@ -33,13 +34,26 @@ inline static void dump_button(struct button b){
 
 #define MAX_BUTTONS 10
 
-void simple_press_callback();
-
 struct ui
 {
 	int n_buttons;
 	struct button button[MAX_BUTTONS];
 };
+
+inline static struct ui paused_menu()
+{
+	struct ui ui;
+	ui.n_buttons=1;
+	ui.button[0].location.x=-1;
+	ui.button[0].location.y=-2;
+	ui.button[0].size.x=2;
+	ui.button[0].size.y=1;
+	ui.button[0].down=0;
+	ui.button[0].text="Exit";
+	ui.button[0].color = (struct vector) {1,0.5,1};
+	ui.button[0].callback = exit_callback;
+	return ui;
+}
 
 inline static struct ui test_ui()
 {
@@ -50,7 +64,7 @@ inline static struct ui test_ui()
 	ui.button[0].size.x=2;
 	ui.button[0].size.y=1;
 	ui.button[0].down=0;
-	ui.button[0].text="Exit";
+	ui.button[0].text="test";
 	ui.button[0].color = (struct vector) {1,0.5,1};
 	ui.button[0].callback = simple_press_callback;
 
@@ -58,5 +72,6 @@ inline static struct ui test_ui()
 }
 
 struct ui * ui;
+struct ui paused_ui;
  
 #endif
