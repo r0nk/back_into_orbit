@@ -10,6 +10,8 @@ struct button
 	char * text;
 	struct vector color;
 	struct vector text_color;
+	void (*callback)(void);
+	int down;
 };
 
 inline static void dump_button(struct button b){
@@ -27,11 +29,11 @@ inline static void dump_button(struct button b){
 	printf("button color: ");
 	dump_vector(b.color);
 	printf("\n");
-
-		
 }
 
 #define MAX_BUTTONS 10
+
+void simple_press_callback();
 
 struct ui
 {
@@ -46,8 +48,11 @@ inline static struct ui test_ui()
 	ui.button[0].location.x=0;
 	ui.button[0].location.y=0;
 	ui.button[0].size.x=1;
+	ui.button[0].down=0;
 	ui.button[0].size.y=1;
 	ui.button[0].color = (struct vector) {1,0.5,1};
+	ui.button[0].callback = simple_press_callback;
+
 	return ui;
 }
 
