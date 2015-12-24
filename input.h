@@ -14,6 +14,8 @@ struct player_input {
 	char keys[MAX_KEYS];
 };
 
+struct player_input pi;
+
 static inline void dump_player_input(struct player_input pi)
 {
 	printf("player_input:\n");
@@ -27,8 +29,6 @@ static inline void dump_player_input(struct player_input pi)
 	}
 	printf("\n");
 }
-
-struct player_input pi;
 
 static inline struct vector screen_to_world(struct game_state * gs,int x, int y)
 {
@@ -47,10 +47,26 @@ static inline struct vector screen_to_world(struct game_state * gs,int x, int y)
 	ret.y=0;
 	ret.z=virtual_Tile_Y-virtual_Tile_X;
 
-	ret.x+= gs->game_player.location.x;
-	ret.z+= gs->game_player.location.z;
+	ret.x += gs->game_player.location.x;
+	ret.z += gs->game_player.location.z;
 
 	return ret;
+}
+
+static inline struct vector pixel_to_screen(int x, int y)
+{
+	struct vector v;
+	x -= (window_width/2);
+	y -= (window_height/2);
+	v.x=x;
+	v.y=y;
+	v.x/=window_width;
+	v.y/=window_height;
+	v.x*=20;
+	v.y*=20;
+	v.x=-v.x;
+	v.y=-v.y;
+	return v;
 }
  
 #endif

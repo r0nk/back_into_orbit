@@ -12,6 +12,9 @@
 #include "audio.h"
 #include "map.h"
 #include "input.h"
+#include "ui.h"
+
+struct ui main_ui;
 
 int main()
 {
@@ -19,7 +22,8 @@ int main()
 	init_graphics();
 	init_audio();
 	world_map=generate_map();
-	world_map.current_room=&world_map.room[0];
+	main_ui = test_ui();
+	ui = &main_ui;
 //	ProfilerStart("profdata");
 	while(1){
 		engine_tick(&(world_map.current_room->gs));

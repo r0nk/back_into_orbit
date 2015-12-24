@@ -404,11 +404,11 @@ void draw_button(struct button button)
 	l = button.location;
 	s = button.size;
 
-	a.v[0].p = (struct vector) {l.x-s.x,l.y+0.0,0.0};
+	a.v[0].p = (struct vector) {l.x+s.x,l.y+0.0,0.0};
 	a.v[1].p = l;
-	a.v[2].p = (struct vector) {l.x-s.x,l.y+s.y,0.0};
+	a.v[2].p = (struct vector) {l.x+s.x,l.y+s.y,0.0};
 
-	b.v[0].p = (struct vector) {l.x-s.x,l.y+s.y,0.0};
+	b.v[0].p = (struct vector) {l.x+s.x,l.y+s.y,0.0};
 	b.v[1].p = l;
 	b.v[2].p = (struct vector) {l.x+0.0,l.y+s.y,0.0};
 
@@ -431,6 +431,14 @@ void draw_button(struct button button)
 	draw_poly(b);
 }
 
+void draw_ui(struct ui * ui)
+{
+	int i;
+	for(i=0;i<ui->n_buttons;i++){
+		draw_button(ui->button[i]);
+	}
+}
+
 void draw_hud(struct game_state * gs)
 {
 	GLfloat HUD_Color[] = {1.0f, 1.0f, 1.0f, 1.0f}; 
@@ -442,13 +450,7 @@ void draw_hud(struct game_state * gs)
 	draw_health_bar(gs->game_player,3,-7);
 	draw_inventory(gs->game_player,9,-4.8);
 	draw_fps(9,7);
-	struct button b;
-	b.location.x=1;
-	b.location.y=1;
-	b.size.x=1;
-	b.size.y=1;
-	b.color = (struct vector) {1,1,0};
-	draw_button(b);
+	draw_ui(ui);
 
 	glEnd();
 	glPopMatrix();

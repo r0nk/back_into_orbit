@@ -10,6 +10,7 @@
 #include "engine.h"
 #include "map.h"
 #include "effects.h"
+#include "ui.h"
 
 #define SCM 10
 
@@ -362,5 +363,6 @@ void engine_tick(struct game_state * gs)
 	if(world_map.current_room->has_shop){
 		update_shop(gs,d);
 	}
+	update_ui(ui);
 	count_fps(d);
 }

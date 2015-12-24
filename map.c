@@ -133,6 +133,7 @@ struct map generate_map()
 	struct map map;
 	generate_rooms(&map);
 	generate_edges(&map);
+	map.current_room=&map.room[0];
 	return map;
 }
 
