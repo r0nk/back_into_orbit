@@ -17,6 +17,7 @@
 
 GLFWwindow * window;
 int window_width,window_height;
+float frame_x,frame_y;
 
 float ratio;
 
@@ -404,13 +405,13 @@ void draw_button(struct button button)
 	l = button.location;
 	s = button.size;
 
-	a.v[0].p = (struct vector) {l.x+s.x,l.y+0.0,0.0};
+	a.v[0].p = (struct vector) {l.x+s.x,l.y+0.0,0.1};
 	a.v[1].p = l;
-	a.v[2].p = (struct vector) {l.x+s.x,l.y+s.y,0.0};
+	a.v[2].p = (struct vector) {l.x+s.x,l.y+s.y,0.1};
 
-	b.v[0].p = (struct vector) {l.x+s.x,l.y+s.y,0.0};
+	b.v[0].p = (struct vector) {l.x+s.x,l.y+s.y,0.1};
 	b.v[1].p = l;
-	b.v[2].p = (struct vector) {l.x+0.0,l.y+s.y,0.0};
+	b.v[2].p = (struct vector) {l.x+0.0,l.y+s.y,0.1};
 
 	b.v[0].c = button.color;
 	b.v[1].c = button.color;
@@ -429,6 +430,7 @@ void draw_button(struct button button)
 
 	draw_poly(a);
 	draw_poly(b);
+	draw_text(l.x+(s.x-0.7),l.y+0.7,button.text,(struct vector) {0,0,0} );
 }
 
 void draw_ui(struct ui * ui)
@@ -466,8 +468,9 @@ void graphics_draw(struct game_state * gs)
 	GLfloat ambientColor[] = {0.2f, 0.2f, 0.2f, 1.0f}; 
 	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambientColor);
 
-	float frame = 10;
-	glOrtho(-frame,frame,-frame/1.333,frame/1.333,0.0f,1000.0f);
+	frame_x=10;
+	frame_y=10/1.333333;
+	glOrtho(-frame_x,frame_x,-frame_y,frame_y,0.0f,1000.0f);
 //	glFrustum(-1.0,1.0,-1.0f,1.0f,1.0f,100.0f);
 	glMatrixMode(GL_MODELVIEW);
 

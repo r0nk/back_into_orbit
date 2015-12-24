@@ -46,10 +46,11 @@ inline static struct ui test_ui()
 	struct ui ui;
 	ui.n_buttons=1;
 	ui.button[0].location.x=0;
-	ui.button[0].location.y=0;
-	ui.button[0].size.x=1;
-	ui.button[0].down=0;
+	ui.button[0].location.y=6;
+	ui.button[0].size.x=2;
 	ui.button[0].size.y=1;
+	ui.button[0].down=0;
+	ui.button[0].text="Exit";
 	ui.button[0].color = (struct vector) {1,0.5,1};
 	ui.button[0].callback = simple_press_callback;
 

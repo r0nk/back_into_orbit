@@ -3,7 +3,9 @@
 
 #include "poly.h"
 
+
 extern int window_width,window_height;
+extern float frame_x,frame_y;
 
 int init_graphics();
 void graphics_draw();

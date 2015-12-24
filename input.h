@@ -62,8 +62,8 @@ static inline struct vector pixel_to_screen(int x, int y)
 	v.y=y;
 	v.x/=window_width;
 	v.y/=window_height;
-	v.x*=20;
-	v.y*=20;
+	v.x*=(frame_x*2);
+	v.y*=(frame_y*2);
 	v.x=-v.x;
 	v.y=-v.y;
 	return v;
