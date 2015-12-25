@@ -492,7 +492,6 @@ void draw_hud(struct game_state * gs)
 		draw_text(1,2,"paused",(struct vector) {0,1,1});
 		draw_ui(ui);
 	}
-	draw_box(world_to_screen(gs,screen_to_world(gs,pi.mouse_x,pi.mouse_y)));
 
 	glEnd();
 	glPopMatrix();
