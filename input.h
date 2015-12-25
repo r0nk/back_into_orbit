@@ -35,7 +35,17 @@ static inline struct vector world_to_screen(struct game_state * gs,
 		struct vector location)
 {
 	struct vector v = (struct vector) {0,0,0};
-	err(-56,"world_to_screen TODO\n");
+	
+	v.x = location.z - location.x;
+	v.y = -(location.x + location.z);
+	v.z = 0;
+
+	v.x += gs->game_player.location.x - gs->game_player.location.z;
+	v.y += gs->game_player.location.x + gs->game_player.location.z;
+
+	v.x/=1.3333;
+	v.y/=2.3333;
+
 	return v;
 }
 
@@ -46,11 +56,9 @@ static inline struct vector screen_to_world(struct game_state * gs,int x, int y)
 #define N_Y_TILES 18.0
 #define TILE_WIDTH (640.0/N_X_TILES)
 #define TILE_HEIGHT (480.0/N_Y_TILES)
-	x -= (window_width/2);
-	y -= (window_height/2);
 
-	double virtual_Tile_X = x / TILE_WIDTH;
-	double virtual_Tile_Y = y / TILE_HEIGHT;
+	double virtual_Tile_X = (x-(window_width/2)) / TILE_WIDTH;
+	double virtual_Tile_Y = (y-(window_height/2)) / TILE_HEIGHT;
 
 	ret.x=(virtual_Tile_X+virtual_Tile_Y) + gs->game_player.location.x;
 	ret.y=0;

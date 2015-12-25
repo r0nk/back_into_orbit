@@ -433,6 +433,42 @@ void draw_button(struct button button)
 	draw_text(l.x+(s.x-0.7),l.y+0.7,button.text,(struct vector) {0,0,0} );
 }
 
+void draw_box(struct vector location)
+{
+	struct polygon a,b;
+
+	struct vector color = (struct vector) {1,0,0};
+	struct vector l,s;
+	l = location;
+	s = (struct vector) {0.1,0.1,0};
+
+	a.v[0].p = (struct vector) {l.x+s.x,l.y+0.0,0.1};
+	a.v[1].p = l;
+	a.v[2].p = (struct vector) {l.x+s.x,l.y+s.y,0.1};
+
+	b.v[0].p = (struct vector) {l.x+s.x,l.y+s.y,0.1};
+	b.v[1].p = l;
+	b.v[2].p = (struct vector) {l.x+0.0,l.y+s.y,0.1};
+
+	b.v[0].c = color;
+	b.v[1].c = color;
+	b.v[2].c = color;
+	a.v[0].c = color;
+	a.v[1].c = color;
+	a.v[2].c = color;
+
+	a.v[0].n = normal(a.v[0].p);
+	a.v[1].n = normal(a.v[1].p);
+	a.v[2].n = normal(a.v[2].p);
+
+	b.v[0].n = normal(b.v[0].p);
+	b.v[1].n = normal(b.v[1].p);
+	b.v[2].n = normal(b.v[2].p);
+
+	draw_poly(a);
+	draw_poly(b);
+}
+
 void draw_ui(struct ui * ui)
 {
 	int i;
@@ -456,6 +492,7 @@ void draw_hud(struct game_state * gs)
 		draw_text(1,2,"paused",(struct vector) {0,1,1});
 		draw_ui(ui);
 	}
+	draw_box(world_to_screen(gs,screen_to_world(gs,pi.mouse_x,pi.mouse_y)));
 
 	glEnd();
 	glPopMatrix();
