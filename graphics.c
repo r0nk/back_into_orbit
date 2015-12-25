@@ -477,6 +477,22 @@ void draw_ui(struct ui * ui)
 	}
 }
 
+void draw_prices(struct game_state * gs, struct shop * shop)
+{
+	int i;
+	struct vector v;
+	char price[10];
+	for(i=0;i<MAX_TRANSACTIONS;i++){
+		if(!shop->t[i].sold){
+			sprintf(price,"%i",shop->t[i].price);
+		}else{
+			sprintf(price,"SOLD");
+		}
+		v=world_to_screen(gs,shop->t[i].location);
+		draw_text(v.x,v.y,price,(struct vector) {1.0,0.7,0.0});
+	}
+}
+
 void draw_hud(struct game_state * gs)
 {
 	GLfloat HUD_Color[] = {1.0f, 1.0f, 1.0f, 1.0f}; 
@@ -492,6 +508,8 @@ void draw_hud(struct game_state * gs)
 		draw_text(1,2,"paused",(struct vector) {0,1,1});
 		draw_ui(ui);
 	}
+	if(world_map.current_room->has_shop)
+		draw_prices(gs,&world_map.current_room->shop);
 
 	glEnd();
 	glPopMatrix();
