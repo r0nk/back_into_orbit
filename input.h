@@ -2,6 +2,7 @@
 #define INPUT
 
 #include <stdio.h>
+#include <err.h>
 #include "graphics.h"
 #include "poly.h"
 #include "map.h"
@@ -30,6 +31,14 @@ static inline void dump_player_input(struct player_input pi)
 	printf("\n");
 }
 
+static inline struct vector world_to_screen(struct game_state * gs,
+		struct vector location)
+{
+	struct vector v = (struct vector) {0,0,0};
+	err(-56,"world_to_screen TODO\n");
+	return v;
+}
+
 static inline struct vector screen_to_world(struct game_state * gs,int x, int y)
 {
 	struct vector ret;
@@ -43,12 +52,9 @@ static inline struct vector screen_to_world(struct game_state * gs,int x, int y)
 	double virtual_Tile_X = x / TILE_WIDTH;
 	double virtual_Tile_Y = y / TILE_HEIGHT;
 
-	ret.x=virtual_Tile_X+virtual_Tile_Y;
+	ret.x=(virtual_Tile_X+virtual_Tile_Y) + gs->game_player.location.x;
 	ret.y=0;
-	ret.z=virtual_Tile_Y-virtual_Tile_X;
-
-	ret.x += gs->game_player.location.x;
-	ret.z += gs->game_player.location.z;
+	ret.z=(virtual_Tile_Y-virtual_Tile_X) + gs->game_player.location.z;
 
 	return ret;
 }
