@@ -493,6 +493,15 @@ void draw_prices(struct game_state * gs, struct shop * shop)
 	}
 }
 
+void draw_sayings(struct game_state * gs)
+{
+	struct vector l;
+	l= gs->game_player.location;
+	l = world_to_screen(gs,l);
+	if(gs->game_player.saying!=NULL)
+		draw_text(l.x,l.y,gs->game_player.saying,(struct vector) {0,1,1});
+}
+
 void draw_hud(struct game_state * gs)
 {
 	GLfloat HUD_Color[] = {1.0f, 1.0f, 1.0f, 1.0f}; 
@@ -510,6 +519,8 @@ void draw_hud(struct game_state * gs)
 	}
 	if(world_map.current_room->has_shop)
 		draw_prices(gs,&world_map.current_room->shop);
+
+	draw_sayings(gs);
 
 	glEnd();
 	glPopMatrix();

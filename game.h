@@ -43,6 +43,7 @@ struct unit {
 #define HAS_VECTOR_FIELD		4
 	double poison_timer;
 	double dash_timer;
+	char * saying;
 };
 
 static inline void dump_bullet(struct bullet b){

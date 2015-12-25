@@ -63,20 +63,28 @@ void spawn_mobs(struct room * room)
 	}
 }
 
+struct unit init_player()
+{
+	struct unit player;
+	player.location.x=5;
+	player.location.y=0;
+	player.location.z=5;
+	player.speed=3.0;
+	player.health=100;
+	player.max_health=100;
+	player.type=UNIT_TYPE_PLAYER;
+	player.cooldown=1;
+	player.damage=10;
+	player.inventory.n_items=0;
+	player.flags=0;
+	player.resist=1;
+	player.saying="";
+	return player;
+}
+
 struct game_state init_game(struct room * room)
 {
-	room->gs.game_player.location.x=5;
-	room->gs.game_player.location.y=0;
-	room->gs.game_player.location.z=5;
-	room->gs.game_player.speed=3.0;
-	room->gs.game_player.health=100;
-	room->gs.game_player.max_health=100;
-	room->gs.game_player.type=UNIT_TYPE_PLAYER;
-	room->gs.game_player.cooldown=1;
-	room->gs.game_player.damage=10;
-	room->gs.game_player.inventory.n_items=0;
-	room->gs.game_player.flags=0;
-	room->gs.game_player.resist=1;
+	room->gs.game_player=init_player();
 	room->gs.n_bullets=0;
 	room->gs.n_npcs=0;
 
