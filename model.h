@@ -2,7 +2,7 @@
 #define MODEL
 #include "poly.h"
 
-struct model pawn();
+struct model pawn(struct vector primary, struct vector secondary);/*primary and secondary colors */
 struct model floor_tile(struct vector d,struct vector l);
 struct model bullet();
 struct model player_model();

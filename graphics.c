@@ -27,6 +27,7 @@ struct model p_model;
 struct model b_model;
 struct model d_model;
 struct model ai_model;
+struct model ranger_model;
 struct model bullet_model;
 struct model block_model;
 struct model fh_model;
@@ -49,9 +50,10 @@ struct model capacitor_item_model;
 
 void init_models()
 {
-	p_model=pawn();
+	p_model=pawn((struct vector){1,1,1},(struct vector){0,1,1});
 	d_model=player_model();
 	ai_model=scavenger();
+	ranger_model=pawn((struct vector){0.1,0.1,0.1},(struct vector){1,0,0});
 	bullet_model=bullet();
 	fh_model = flag_holder_model();
 	shp_model = shopkeeper_model();

@@ -33,6 +33,19 @@ struct unit scavenger_npc(struct vector location)
 	return npc;
 }
 
+struct unit ranger_npc(struct vector location)
+{
+	struct unit npc;
+	npc.speed=2.5;
+	npc.health=10;
+	npc.damage=10;
+	npc.location=location;
+	npc.type = UNIT_TYPE_RANGER;
+	npc.rotation_angle = 90;
+	npc.rotation = (struct vector) {0,1,0};
+	return npc;
+}
+
 struct unit boss_npc(struct vector location)
 {
 	struct unit npc;
