@@ -30,6 +30,7 @@ struct unit scavenger_npc(struct vector location)
 	npc.type = UNIT_TYPE_NEUTRAL_CREEP;
 	npc.rotation_angle = 90;
 	npc.rotation = (struct vector) {0,1,0};
+	npc.poison_timer = 0.0;
 	return npc;
 }
 
@@ -44,6 +45,7 @@ struct unit ranger_npc(struct vector location)
 	npc.type = UNIT_TYPE_RANGER;
 	npc.rotation_angle = 90;
 	npc.rotation = (struct vector) {0,1,0};
+	npc.poison_timer = 0.0;
 	return npc;
 }
 
