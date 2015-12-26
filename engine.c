@@ -29,11 +29,7 @@ void face(struct unit * u, point p)
 
 int near(struct vector a, struct vector b,double r)
 {
-	if(( a.x > (b.x - r)  && a.x < b.x + r) &&
-			(a.z > (b.z-r) && a.z < (b.z+r))){
-		return 1;
-	}
-	return 0;
+	return (distance(a,b)<r);
 }
 
 double delta_time()
