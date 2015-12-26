@@ -5,7 +5,7 @@
 
 #include "game.h"
 
-#define MAX_NPCS 30
+#define MAX_NPCS 100
 #define MAX_BULLETS 100
 
 struct game_state {

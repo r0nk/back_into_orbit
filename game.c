@@ -37,6 +37,7 @@ struct unit ranger_npc(struct vector location)
 {
 	struct unit npc;
 	npc.speed=2.5;
+	npc.cooldown=1;
 	npc.health=10;
 	npc.damage=10;
 	npc.location=location;
@@ -66,7 +67,10 @@ void spawn_mobs(struct room * room)
 		for(j=0;j<100;j++){
 			if(room->layout.tiles[i][j] == 's'){
 				loc.x=i;loc.z=j;
-				add_npc(&room->gs,scavenger_npc(loc));
+				if(rand()%2)
+					add_npc(&room->gs,ranger_npc(loc));
+				else
+					add_npc(&room->gs,scavenger_npc(loc));
 			}
 		}
 	}
