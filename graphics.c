@@ -379,8 +379,6 @@ void draw_models(struct game_state * gs)
 	}
 	struct vector w = gs->game_player.location;
 	w.y=1;
-	draw_line((struct vector) {5,1,5},gs->game_player.location,
-			(struct vector) {1,0,0});
 }
 
 void draw_health_bar(struct unit u, int x, int y)

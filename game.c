@@ -17,6 +17,7 @@ struct unit item_npc(struct vector location,int item_id)
 	npc.type = UNIT_TYPE_ITEM;
 	npc.rotation_angle = 90;
 	npc.rotation = (struct vector) {0,1,0};
+	npc.hit_radius = 0;
 	return npc;
 }
 
@@ -31,6 +32,7 @@ struct unit scavenger_npc(struct vector location)
 	npc.rotation_angle = 90;
 	npc.rotation = (struct vector) {0,1,0};
 	npc.poison_timer = 0.0;
+	npc.hit_radius = 1.0;
 	return npc;
 }
 
@@ -46,6 +48,7 @@ struct unit ranger_npc(struct vector location)
 	npc.rotation_angle = 90;
 	npc.rotation = (struct vector) {0,1,0};
 	npc.poison_timer = 0.0;
+	npc.hit_radius = 1.0;
 	return npc;
 }
 
@@ -58,6 +61,7 @@ struct unit boss_npc(struct vector location)
 	npc.type = UNIT_TYPE_BOSS;
 	npc.rotation_angle = 90;
 	npc.rotation = (struct vector) {0,1,0};
+	npc.hit_radius = 2.0;
 	return npc;
 }
 
@@ -98,6 +102,7 @@ struct unit init_player()
 	player.flags=0;
 	player.resist=1;
 	player.saying="";
+	player.hit_radius = 2.0;
 	return player;
 }
 

@@ -83,7 +83,8 @@ void update_bullets(struct game_state * gs, double delta)
 		}
 		for(j=0;j<gs->n_npcs;j++){
 			if(near(gs->bullet[i].location,
-						gs->npc[j].location,1.0)){
+						gs->npc[j].location,
+						gs->npc[j].hit_radius)){
 				gs->npc[j].health-=gs->bullet[i].damage;
 				tzztzzz();
 				if(gs->bullet[i].flags&HAS_VAIL)

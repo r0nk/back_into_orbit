@@ -45,6 +45,7 @@ struct unit {
 	double poison_timer;
 	double dash_timer;
 	char * saying;
+	double hit_radius;
 };
 
 static inline void dump_bullet(struct bullet b){
