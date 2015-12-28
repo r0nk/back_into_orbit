@@ -22,6 +22,7 @@ int main()
 	world_map=generate_map();
 	init_ui();
 	paused=0;
+	is_game_over=0;
 //	ProfilerStart("profdata");
 	while(1){
 		engine_tick(&(world_map.current_room->gs));

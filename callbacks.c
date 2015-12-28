@@ -17,8 +17,10 @@ void key_callback(GLFWwindow * win, int key, int scanc, int action, int mods)
 {
 	if(key>256 && key!=342)
 		err(-23,"key>255, key=%i",key);
-	if(key==256 && action ==0)
-		paused=!paused;
+	if(key==256 && action ==0){
+		if(!is_game_over)
+			paused=!paused;
+	}
 	pi.keys[key]=(char)action; /*action is a binary (press||depress)*/
 }
 

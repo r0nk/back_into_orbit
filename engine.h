@@ -5,7 +5,10 @@
 double fps;
 long double frames;
 long double seconds;
+
 int in_main_menu; /*boolean, true if main menu is open*/
+int is_game_over;
+int paused;
 
 extern struct game_state gs;
 
@@ -24,6 +27,5 @@ static inline double distance(struct vector a, struct vector b)
 	return sqrt(((b.x-a.x)*(b.x-a.x))+((b.z-a.z)*(b.z-a.z)));
 }
 
-int paused;
  
 #endif

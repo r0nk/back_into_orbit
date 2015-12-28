@@ -203,12 +203,15 @@ void player_attack(struct game_state * gs, double delta)
 	}
 }
 
-void game_over()
+void game_over(struct game_state * gs)
 {
 	printf("MISSON FAILED; B0T DESTORYED\n");
 	deathplosion();
 	sleep(1);/* give them time to look at their failures >:( */
-	exit(0);
+	gameover_ui = gameover_menu(gs->game_player.score);
+	ui=&gameover_ui;
+	paused=1;
+	is_game_over=1;
 }
 
 void player_items(struct game_state * gs, double delta)
@@ -237,7 +240,7 @@ void door_check(struct game_state * gs)
 void update_player(struct game_state * gs,double delta)
 {
 	if(gs->game_player.health<=0)
-		game_over();
+		game_over(gs);
 	player_movement(gs,delta);
 	player_attack(gs,delta);
 	player_items(gs,delta);
@@ -403,7 +406,10 @@ void engine_tick(struct game_state * gs)
 			update_shop(gs,d);
 		}
 	}else{
-		update_ui(ui);
+		if(in_main_menu)
+			update_ui(&main_menu_ui);
+		else
+			update_ui(ui);
 	}
 	count_fps(d);
 }

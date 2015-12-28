@@ -11,13 +11,13 @@ struct text_field
 	struct vector color;
 };
 
-inline static void dump_text_field(struct button t){
-	printf("button location: ");
-	dump_vector(b.location);
+inline static void dump_text_field(struct text_field t){
+	printf("text_field location: ");
+	dump_vector(t.location);
 	printf("\n");
 	if(t.text!=NULL)
 		printf("text: %s\n",t.text);
-	printf("text.color: ");
+	printf("color: ");
 	dump_vector(t.color);
 	printf("\n");
 }
@@ -57,15 +57,16 @@ struct ui
 {
 	int n_buttons;
 	struct button button[MAX_BUTTONS];
-	int n_text;
+	int n_text_fields;
 	struct text_field text_field[MAX_TEXT];
 };
 
 inline static struct ui main_menu()
 {
-	struct vector color = (struct vector) {1,1,1};
+	struct vector color = (struct vector) {1,1,0};
 	struct ui ui;
 	ui.n_buttons=3;
+	ui.n_text_fields=0;
 	ui.button[0].location.x=-1;
 	ui.button[0].location.y=-2.5;
 	ui.button[0].size.x=3.5;
@@ -98,6 +99,13 @@ inline static struct ui paused_menu()
 {
 	struct ui ui;
 	ui.n_buttons=1;
+	ui.n_text_fields=1;
+
+	ui.text_field[0].location.x=0;
+	ui.text_field[0].location.y=0;
+	ui.text_field[0].text="paused";
+	ui.text_field[0].color = (struct vector) {0.0,1.0,1};
+
 	ui.button[0].location.x=-1;
 	ui.button[0].location.y=-2;
 	ui.button[0].size.x=2;
@@ -113,6 +121,7 @@ inline static struct ui test_ui()
 {
 	struct ui ui;
 	ui.n_buttons=1;
+	ui.n_text_fields=0;
 	ui.button[0].location.x=0;
 	ui.button[0].location.y=6;
 	ui.button[0].size.x=2;
@@ -129,6 +138,18 @@ inline static struct ui gameover_menu(int score)
 	struct vector color = (struct vector) {1,1,1};
 	struct ui ui;
 	ui.n_buttons=3;
+	ui.n_text_fields=2;
+
+	ui.text_field[0].location.x =0;
+	ui.text_field[0].location.y =0;
+	ui.text_field[0].text="GAME OVER";
+	ui.text_field[0].color= (struct vector) {1,0,0};
+
+	ui.text_field[1].location.x =0;
+	ui.text_field[1].location.y =1;
+	ui.text_field[1].text="score: TODO";
+	ui.text_field[1].color= (struct vector) {0,1,1};
+
 	ui.button[0].location.x=-1;
 	ui.button[0].location.y=-2.5;
 	ui.button[0].size.x=3.5;

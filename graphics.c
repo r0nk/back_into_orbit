@@ -448,6 +448,12 @@ void draw_fps(double x, double y)
 	draw_text(x,y,str,(struct vector) {0,1,1} );
 }
 
+void draw_text_field(struct text_field t)
+{
+	struct vector l = t.location;
+	draw_text(l.x,l.y,t.text,t.color);
+}
+
 void draw_button(struct button button)
 {
 	struct polygon a,b;
@@ -526,6 +532,9 @@ void draw_ui(struct ui * ui)
 	for(i=0;i<ui->n_buttons;i++){
 		draw_button(ui->button[i]);
 	}
+	for(i=0;i<ui->n_text_fields;i++){
+		draw_text_field(ui->text_field[i]);
+	}
 }
 
 void draw_prices(struct game_state * gs, struct shop * shop)
@@ -565,7 +574,6 @@ void draw_hud(struct game_state * gs)
 	draw_inventory(gs->game_player,9,-4.8);
 	draw_fps(9,7);
 	if(paused){
-		draw_text(1,2.5,"paused",(struct vector) {0,1,1});
 		draw_ui(ui);
 	}
 	if(world_map.current_room->has_shop)
