@@ -599,11 +599,11 @@ void draw_main_menu()
 	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, HUD_Color);
 	glPushMatrix();
 	gluLookAt(0,0,0, 0,0,1, 0,1,0);
+
 	glBegin(GL_TRIANGLES);
-
 	draw_ui(&main_menu_ui);
-
 	glEnd();
+
 	glPopMatrix();
 }
 
