@@ -377,8 +377,6 @@ void draw_models(struct game_state * gs)
 		draw_model(bullet_model,gs->bullet[i].location,
 				0.0, (struct vector){0,0,0});
 	}
-	struct vector w = gs->game_player.location;
-	w.y=1;
 }
 
 void draw_health_bar(struct unit u, int x, int y)
@@ -576,23 +574,8 @@ void draw_hud(struct game_state * gs)
 	glPopMatrix();
 }
 
-
-void graphics_draw(struct game_state * gs)
+void draw_game(struct game_state * gs)
 {
-	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
-
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-
-	GLfloat ambientColor[] = {0.2f, 0.2f, 0.2f, 1.0f}; 
-	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambientColor);
-
-	frame_x=10;
-	frame_y=10/1.333333;
-	glOrtho(-frame_x,frame_x,-frame_y,frame_y,0.0f,1000.0f);
-//	glFrustum(-1.0,1.0,-1.0f,1.0f,1.0f,100.0f);
-	glMatrixMode(GL_MODELVIEW);
-
 	glPushMatrix();
 	int zoom = 10;
 	gluLookAt(gs->game_player.location.x+zoom,
@@ -606,6 +589,45 @@ void graphics_draw(struct game_state * gs)
 	glPopMatrix();
 
 	draw_hud(gs);
+
+}
+
+void draw_main_menu()
+{
+
+	GLfloat HUD_Color[] = {1.0f, 1.0f, 1.0f, 1.0f}; 
+	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, HUD_Color);
+	glPushMatrix();
+	gluLookAt(0,0,0, 0,0,1, 0,1,0);
+	glBegin(GL_TRIANGLES);
+
+	draw_ui(&main_menu_ui);
+
+	glEnd();
+	glPopMatrix();
+}
+
+void graphics_draw(struct game_state * gs)
+{
+	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+
+	GLfloat ambientColor[] = {0.2f, 0.2f, 0.2f, 1.0f}; 
+
+	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambientColor);
+
+	frame_x=10;
+	frame_y=10/1.333333;
+	glOrtho(-frame_x,frame_x,-frame_y,frame_y,0.0f,1000.0f);
+//	glFrustum(-1.0,1.0,-1.0f,1.0f,1.0f,100.0f);
+	glMatrixMode(GL_MODELVIEW);
+
+	if(!in_main_menu)
+		draw_game(gs);
+	else
+		draw_main_menu();
 
 	glfwSwapBuffers(window);
 	glfwPollEvents();

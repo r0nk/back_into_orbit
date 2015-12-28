@@ -1,5 +1,6 @@
 #include "ui.h"
 #include "input.h"
+#include "engine.h"
 
 void update_button(struct button * b,struct vector pmv)
 {
@@ -31,4 +32,12 @@ void update_ui(struct ui * ui)
 	for(i=0;i<ui->n_buttons;i++){
 		update_button(&(ui->button[i]),pmv);
 	}
+}
+
+void init_ui()
+{
+	paused_ui = paused_menu();
+	main_menu_ui = main_menu();
+	ui = &main_menu_ui;
+	in_main_menu=1;
 }

@@ -14,16 +14,13 @@
 #include "input.h"
 #include "ui.h"
 
-struct ui main_ui;
-
 int main()
 {
 	srand(time(NULL));
 	init_graphics();
 	init_audio();
 	world_map=generate_map();
-	main_ui = paused_menu();
-	ui = &main_ui;
+	init_ui();
 	paused=0;
 //	ProfilerStart("profdata");
 	while(1){

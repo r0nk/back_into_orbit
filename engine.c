@@ -393,7 +393,7 @@ void update_shop(struct game_state * gs, double delta)
 void engine_tick(struct game_state * gs)
 {
 	double d = delta_time();
-	if(!paused){
+	if(!paused && !in_main_menu){
 		update_player(gs,d);
 		update_bullets(gs,d);
 		update_npcs(gs,d);

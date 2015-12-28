@@ -42,6 +42,12 @@ void simple_press_callback()
 	printf("simple press callback\n");
 }
 
+void play_callback()
+{
+	in_main_menu=0;
+	paused=0;
+}
+
 void exit_callback()
 {
 	exit(0);
