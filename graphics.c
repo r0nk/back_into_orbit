@@ -115,6 +115,7 @@ int init_graphics()
 	return 0;
 }
 
+
 void deinit_graphics()
 {
 	glfwTerminate();
@@ -155,6 +156,47 @@ struct vector normal(struct vector v)
 	n.x = v.y * v.z;
 	n.y = v.z * v.x;
 	return n;
+}
+
+void draw_line(struct vector start, struct vector end, struct vector color)
+{
+	struct polygon a,b;
+	float x,z;
+	x=0.5;
+	z=0.5;
+
+	a.v[0].p = start;
+	a.v[1].p = start;
+	a.v[1].p.z+=z;
+	a.v[1].p.x+=x;
+	a.v[2].p = end;
+	a.v[2].p.z+=z;
+	a.v[2].p.x+=x;
+
+	b.v[0].p = end;
+	b.v[1].p = end;
+	b.v[1].p.z+=z;
+	b.v[1].p.x+=x;
+	b.v[2].p = start;
+
+	a.v[0].c = color;
+	a.v[1].c = color;
+	a.v[2].c = color;
+	b.v[0].c = color;
+	b.v[1].c = color;
+	b.v[2].c = color;
+
+	a.v[0].n = normal(a.v[0].p);
+	a.v[1].n = normal(a.v[1].p);
+	a.v[2].n = normal(a.v[2].p);
+	b.v[0].n = normal(b.v[0].p);
+	b.v[1].n = normal(b.v[1].p);
+	b.v[2].n = normal(b.v[2].p);
+
+	glBegin(GL_TRIANGLES);
+	draw_poly(a);
+	draw_poly(b);
+	glEnd();
 }
 
 void draw_floor(int x, int y, int z){
@@ -335,6 +377,10 @@ void draw_models(struct game_state * gs)
 		draw_model(bullet_model,gs->bullet[i].location,
 				0.0, (struct vector){0,0,0});
 	}
+	struct vector w = gs->game_player.location;
+	w.y=1;
+	draw_line((struct vector) {5,1,5},gs->game_player.location,
+			(struct vector) {1,0,0});
 }
 
 void draw_health_bar(struct unit u, int x, int y)
@@ -531,6 +577,7 @@ void draw_hud(struct game_state * gs)
 	glEnd();
 	glPopMatrix();
 }
+
 
 void graphics_draw(struct game_state * gs)
 {
