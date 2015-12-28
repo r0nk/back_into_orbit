@@ -48,6 +48,8 @@ struct model shield_item_model;
 struct model kite_item_model;
 struct model capacitor_item_model;
 
+struct model mm_planet_model;
+
 void init_models()
 {
 	p_model=pawn((struct vector){1,1,1},(struct vector){0,1,1});
@@ -72,6 +74,7 @@ void init_models()
 	kite_item_model=kite_model();
 	capacitor_item_model=capacitor_model();
 	b_model = boss_model();
+	mm_planet_model=main_menu_planet_model();
 }
 
 int init_window_lib()
@@ -592,15 +595,20 @@ void draw_game(struct game_state * gs)
 
 }
 
+double planet_rotation;
 void draw_main_menu()
 {
-
 	GLfloat HUD_Color[] = {1.0f, 1.0f, 1.0f, 1.0f}; 
 	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, HUD_Color);
 	glPushMatrix();
 	gluLookAt(0,0,0, 0,0,1, 0,1,0);
 
+	planet_rotation+=0.10;
+	draw_model(mm_planet_model,(struct vector){0,-10,0},
+				planet_rotation, (struct vector){1.0,0,0.5});
+
 	glBegin(GL_TRIANGLES);
+	draw_text(3.0,5,"BACK INTO ORBIT",(struct vector) {0,1,1});
 	draw_ui(&main_menu_ui);
 	glEnd();
 
