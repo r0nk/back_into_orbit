@@ -46,6 +46,7 @@ struct unit {
 	double dash_timer;
 	char * saying;
 	double hit_radius;
+	int score;
 };
 
 static inline void dump_bullet(struct bullet b){

@@ -4,6 +4,24 @@
 #include "poly.h"
 #include "callbacks.h"
 
+struct text_field
+{
+	struct vector location;
+	char * text;
+	struct vector color;
+};
+
+inline static void dump_text_field(struct button t){
+	printf("button location: ");
+	dump_vector(b.location);
+	printf("\n");
+	if(t.text!=NULL)
+		printf("text: %s\n",t.text);
+	printf("text.color: ");
+	dump_vector(t.color);
+	printf("\n");
+}
+
 struct button
 {
 	struct vector location;
@@ -33,16 +51,18 @@ inline static void dump_button(struct button b){
 }
 
 #define MAX_BUTTONS 10
+#define MAX_TEXT 5
 
 struct ui
 {
 	int n_buttons;
 	struct button button[MAX_BUTTONS];
+	int n_text;
+	struct text_field text_field[MAX_TEXT];
 };
 
 inline static struct ui main_menu()
 {
-
 	struct vector color = (struct vector) {1,1,1};
 	struct ui ui;
 	ui.n_buttons=3;
@@ -104,8 +124,43 @@ inline static struct ui test_ui()
 	return ui;
 }
 
+inline static struct ui gameover_menu(int score)
+{
+	struct vector color = (struct vector) {1,1,1};
+	struct ui ui;
+	ui.n_buttons=3;
+	ui.button[0].location.x=-1;
+	ui.button[0].location.y=-2.5;
+	ui.button[0].size.x=3.5;
+	ui.button[0].size.y=1;
+	ui.button[0].down=0;
+	ui.button[0].text="Exit";
+	ui.button[0].color = color;
+	ui.button[0].callback = exit_callback;
+
+	ui.button[1].location.x=-1;
+	ui.button[1].location.y=-1;
+	ui.button[1].size.x=3.5;
+	ui.button[1].size.y=1;
+	ui.button[1].down=0;
+	ui.button[1].text="Options";
+	ui.button[1].color = color;
+	ui.button[1].callback = exit_callback;
+
+	ui.button[2].location.x=-1;
+	ui.button[2].location.y=0.5;
+	ui.button[2].size.x=3.5;
+	ui.button[2].size.y=1;
+	ui.button[2].down=0;
+	ui.button[2].text="Restart";
+	ui.button[2].color = color;
+	ui.button[2].callback = play_callback;
+	return ui;
+}
+
 struct ui * ui;
 struct ui paused_ui;
+struct ui gameover_ui;
 struct ui main_menu_ui;
 
 void update_ui(struct ui * ui);

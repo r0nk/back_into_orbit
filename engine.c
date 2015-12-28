@@ -271,6 +271,7 @@ void update_item_npc(struct game_state * gs, double delta, int j)
 {
 	gs->npc[j].rotation_angle += 45*delta;
 	if(near(gs->game_player.location, gs->npc[j].location,1.5)){
+		gs->game_player.score+=gs->npc[j].score;
 		remove_npc(gs,j);
 		add_item(&(gs->game_player.inventory),coin_item());
 	} 	
@@ -304,6 +305,7 @@ void death(struct game_state * gs, int j)
 		printf("you've defeated the boss and won the game\n");
 		exit(1);
 	}
+	gs->game_player.score+=gs->npc[j].score;
 	remove_npc(gs,j);
 }
 
