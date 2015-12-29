@@ -25,6 +25,7 @@ struct button test_button;
 
 struct model p_model;
 struct model b_model;
+struct model mole_boss_model;
 struct model d_model;
 struct model ai_model;
 struct model ranger_model;
@@ -75,6 +76,7 @@ void init_models()
 	capacitor_item_model=capacitor_model();
 	b_model = boss_model();
 	mm_planet_model=main_menu_planet_model();
+	mole_boss_model = mole_model();
 }
 
 int init_window_lib()
@@ -319,6 +321,10 @@ void draw_unit(struct unit u)
 		case UNIT_TYPE_RANGER:
 			draw_model(ranger_model,u.location,
 					u.rotation_angle,u.rotation);
+			break;
+		case UNIT_TYPE_MOLE:
+			draw_model(mole_boss_model,u.location,
+					u.rotation_angle+90.0,u.rotation);
 			break;
 	}
 	glPopMatrix();

@@ -55,6 +55,22 @@ struct unit ranger_npc(struct vector location)
 	return npc;
 }
 
+struct unit mole_npc(struct vector location)
+{
+	struct unit npc;
+	npc.speed=0;
+	npc.damage=10;
+	npc.health=200;
+	npc.location=location;
+	npc.type = UNIT_TYPE_MOLE;
+	npc.rotation_angle = 90;
+	npc.rotation = (struct vector) {0,1,0};
+	npc.hit_radius = 1.0;
+	npc.poison_timer = 0.0;
+	npc.score=100;
+	return npc;
+}
+
 struct unit boss_npc(struct vector location)
 {
 	struct unit npc;
@@ -87,7 +103,7 @@ void spawn_mobs(struct room * room)
 	}
 	loc.x=10;loc.z=10;
 	if(room->boss_room){
-		add_npc(&room->gs,boss_npc(loc));
+		add_npc(&room->gs,mole_npc(loc));
 	}
 }
 

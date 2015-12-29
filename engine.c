@@ -305,7 +305,6 @@ void death(struct game_state * gs, int j)
 		add_npc(gs,item_npc(gs->npc[j].location,ITEM_COIN));
 	}
 	if(gs->npc[j].type == UNIT_TYPE_BOSS){
-
 		gameover_ui = gameover_menu(gs->game_player.score,1);
 		game_over(gs);
 	}
@@ -342,6 +341,63 @@ void update_ranger(struct game_state * gs, double delta, int j)
 	}
 }
 
+void teleport_mole(struct unit * mole)
+{
+	switch(rand()%4)
+	{
+		case 0:
+			mole->location = (struct vector) {5,0,5};
+			break;
+		case 1:
+			mole->location = (struct vector) {5,0,10};
+			break;
+		case 2:
+			mole->location = (struct vector) {10,0,5};
+			break;
+		case 3:
+			mole->location = (struct vector) {10,0,10};
+			break;
+	}
+	mole->cooldown2 = 2;
+}
+
+void update_mole(struct game_state * gs, double delta,int j)
+{
+	struct vector d;
+	d.x=sin(to_radians(gs->npc[j].rotation_angle));
+	d.y=0.0;
+	d.z=cos(to_radians(gs->npc[j].rotation_angle));
+
+	if(gs->npc[j].cooldown2 > 0){
+		gs->npc[j].cooldown2-=delta;
+	}else{
+		teleport_mole(&gs->npc[j]);
+	}
+
+	if(near(gs->game_player.location,gs->npc[j].location,7.5)){
+		face(&gs->npc[j],gs->game_player.location);
+		if(gs->npc[j].cooldown>0){
+			gs->npc[j].cooldown-=delta;
+		}else{
+			fire_bullet(gs,gs->npc[j],d);
+			gs->npc[j].cooldown=0.4;
+		}
+	} else if(near(gs->game_player.location,gs->npc[j].location,10)){
+		face(&gs->npc[j],gs->game_player.location);
+		struct vector v;
+
+		v.x=sin(to_radians(gs->npc[j].rotation_angle))*delta;
+		v.z=cos(to_radians(gs->npc[j].rotation_angle))*delta;
+
+		move_unit(&gs->npc[j],v);
+	}
+
+	if(gs->npc[j].poison_timer>0.0){
+		gs->npc[j].health-=delta*3;
+		gs->npc[j].poison_timer-=delta;
+	}
+}
+
 void update_npcs(struct game_state * gs, double delta)
 {
 	int j;
@@ -352,6 +408,10 @@ void update_npcs(struct game_state * gs, double delta)
 
 		if(gs->npc[j].type == UNIT_TYPE_NEUTRAL_CREEP){
 			update_scavenger(gs,delta,j);
+		}
+
+		if(gs->npc[j].type == UNIT_TYPE_MOLE){
+			update_mole(gs,delta,j);
 		}
 
 		if(gs->npc[j].type == UNIT_TYPE_RANGER){
