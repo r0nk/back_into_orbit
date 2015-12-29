@@ -205,7 +205,6 @@ void player_attack(struct game_state * gs, double delta)
 
 void game_over(struct game_state * gs)
 {
-	printf("MISSON FAILED; B0T DESTORYED\n");
 	deathplosion();
 	sleep(1);/* give them time to look at their failures >:( */
 	gameover_ui = gameover_menu(gs->game_player.score);

@@ -137,21 +137,22 @@ inline static struct ui gameover_menu(int score)
 {
 	struct vector color = (struct vector) {1,1,1};
 	struct ui ui;
-	ui.n_buttons=3;
+	ui.n_buttons=1;
 	ui.n_text_fields=2;
 
-	ui.text_field[0].location.x =0;
-	ui.text_field[0].location.y =0;
+	ui.text_field[0].location.x = 3;
+	ui.text_field[0].location.y = 1;
 	ui.text_field[0].text="GAME OVER";
 	ui.text_field[0].color= (struct vector) {1,0,0};
 
-	ui.text_field[1].location.x =0;
-	ui.text_field[1].location.y =1;
-	ui.text_field[1].text="score: TODO";
+	ui.text_field[1].location.x = 3;
+	ui.text_field[1].location.y = 0;
+	ui.text_field[1].text=calloc(50,1);
+	sprintf(ui.text_field[1].text,"score: %i",score);
 	ui.text_field[1].color= (struct vector) {0,1,1};
 
-	ui.button[0].location.x=-1;
-	ui.button[0].location.y=-2.5;
+	ui.button[0].location.x=0;
+	ui.button[0].location.y=-2.0;
 	ui.button[0].size.x=3.5;
 	ui.button[0].size.y=1;
 	ui.button[0].down=0;
@@ -159,23 +160,6 @@ inline static struct ui gameover_menu(int score)
 	ui.button[0].color = color;
 	ui.button[0].callback = exit_callback;
 
-	ui.button[1].location.x=-1;
-	ui.button[1].location.y=-1;
-	ui.button[1].size.x=3.5;
-	ui.button[1].size.y=1;
-	ui.button[1].down=0;
-	ui.button[1].text="Options";
-	ui.button[1].color = color;
-	ui.button[1].callback = exit_callback;
-
-	ui.button[2].location.x=-1;
-	ui.button[2].location.y=0.5;
-	ui.button[2].size.x=3.5;
-	ui.button[2].size.y=1;
-	ui.button[2].down=0;
-	ui.button[2].text="Restart";
-	ui.button[2].color = color;
-	ui.button[2].callback = play_callback;
 	return ui;
 }
 
