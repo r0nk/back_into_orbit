@@ -133,7 +133,7 @@ inline static struct ui test_ui()
 	return ui;
 }
 
-inline static struct ui gameover_menu(int score)
+inline static struct ui gameover_menu(int score,int win)
 {
 	struct vector color = (struct vector) {1,1,1};
 	struct ui ui;
@@ -142,8 +142,13 @@ inline static struct ui gameover_menu(int score)
 
 	ui.text_field[0].location.x = 3;
 	ui.text_field[0].location.y = 1;
-	ui.text_field[0].text="GAME OVER";
-	ui.text_field[0].color= (struct vector) {1,0,0};
+	if(win){
+		ui.text_field[0].text="YOU WIN";
+		ui.text_field[0].color= (struct vector) {1,1,1};
+	}else{
+		ui.text_field[0].text="GAME OVER";
+		ui.text_field[0].color= (struct vector) {1,0,0};
+	}
 
 	ui.text_field[1].location.x = 3;
 	ui.text_field[1].location.y = 0;

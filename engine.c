@@ -207,7 +207,6 @@ void game_over(struct game_state * gs)
 {
 	deathplosion();
 	sleep(1);/* give them time to look at their failures >:( */
-	gameover_ui = gameover_menu(gs->game_player.score);
 	ui=&gameover_ui;
 	paused=1;
 	is_game_over=1;
@@ -215,7 +214,6 @@ void game_over(struct game_state * gs)
 
 void player_items(struct game_state * gs, double delta)
 {
-
 	gs->game_player.inventory.item[0].active=pi.keys['1'];
 	gs->game_player.inventory.item[1].active=pi.keys['2'];
 	gs->game_player.inventory.item[2].active=pi.keys['3'];
@@ -238,8 +236,10 @@ void door_check(struct game_state * gs)
 
 void update_player(struct game_state * gs,double delta)
 {
-	if(gs->game_player.health<=0)
+	if(gs->game_player.health<=0){
+		gameover_ui = gameover_menu(gs->game_player.score,0);
 		game_over(gs);
+	}
 	player_movement(gs,delta);
 	player_attack(gs,delta);
 	player_items(gs,delta);
@@ -300,14 +300,15 @@ void update_boss(struct game_state * gs, double delta, int j)
 void death(struct game_state * gs, int j)
 {
 	deathplosion();
+	gs->game_player.score+=gs->npc[j].score;
 	if(!(rand()%2)){
 		add_npc(gs,item_npc(gs->npc[j].location,ITEM_COIN));
 	}
 	if(gs->npc[j].type == UNIT_TYPE_BOSS){
-		printf("you've defeated the boss and won the game\n");
-		exit(1);
+
+		gameover_ui = gameover_menu(gs->game_player.score,1);
+		game_over(gs);
 	}
-	gs->game_player.score+=gs->npc[j].score;
 	remove_npc(gs,j);
 }
 

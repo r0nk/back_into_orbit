@@ -38,7 +38,7 @@ void init_ui()
 {
 	paused_ui = paused_menu();
 	main_menu_ui = main_menu();
-	gameover_ui = gameover_menu(0);
+	gameover_ui = gameover_menu(0,0);
 	ui = &paused_ui;
 	in_main_menu=1;
 }
