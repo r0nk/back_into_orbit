@@ -15,7 +15,7 @@ void err_callback(int err, const char* description)
 
 void key_callback(GLFWwindow * win, int key, int scanc, int action, int mods)
 {
-	if(key>256 && key!=342)
+	if(key>400 && key!=342)
 		err(-23,"key>255, key=%i",key);
 	if(key==256 && action ==0){
 		if(!is_game_over)
