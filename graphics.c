@@ -609,6 +609,55 @@ void draw_game(struct game_state * gs)
 
 }
 
+#define MAX_STARS 100
+
+struct vector menu_star[MAX_STARS];
+int stars_generated=0;
+
+void generate_stars()
+{
+	int i;
+	for(i=0;i<MAX_STARS;i++){
+		menu_star[i] = (struct vector)
+			{((rand()%1000)/50.0)-10,((rand()%1000)/50.0)-10,10};
+	}
+	stars_generated=1;
+}
+
+void draw_stars()
+{
+	float x=0.05;
+	float y=0.05;
+	if(!stars_generated)
+		generate_stars();
+
+	struct vector color = (struct vector) {1,1,1};
+	int i;
+	glBegin(GL_TRIANGLES);
+	for(i=0;i<MAX_STARS;i++){
+		struct polygon a;
+
+		a.v[0].p = menu_star[i];
+		a.v[1].p = menu_star[i];
+		a.v[1].p.x+=x;
+		a.v[2].p = menu_star[i];
+		a.v[2].p.y+=y;
+		a.v[2].p.x+=x;
+
+		a.v[0].c = color;
+		a.v[1].c = color;
+		a.v[2].c = color;
+
+		a.v[0].n = normal(a.v[0].p);
+		a.v[1].n = normal(a.v[1].p);
+		a.v[2].n = normal(a.v[2].p);
+
+		draw_poly(a);
+
+	}
+	glEnd();
+}
+
 double planet_rotation;
 void draw_main_menu()
 {
@@ -617,9 +666,11 @@ void draw_main_menu()
 	glPushMatrix();
 	gluLookAt(0,0,0, 0,0,1, 0,1,0);
 
+	draw_stars();
+
 	planet_rotation+=0.10;
 	draw_model(mm_planet_model,(struct vector){0,-10,0},
-				planet_rotation, (struct vector){1.0,0,0.5});
+			planet_rotation, (struct vector){1.0,0,0.5});
 
 	glBegin(GL_TRIANGLES);
 	draw_text(3.0,5,"BACK INTO ORBIT",(struct vector) {0,1,1});
@@ -643,7 +694,7 @@ void graphics_draw(struct game_state * gs)
 	frame_x=10;
 	frame_y=10/1.333333;
 	glOrtho(-frame_x,frame_x,-frame_y,frame_y,0.0f,1000.0f);
-//	glFrustum(-1.0,1.0,-1.0f,1.0f,1.0f,100.0f);
+	//	glFrustum(-1.0,1.0,-1.0f,1.0f,1.0f,100.0f);
 	glMatrixMode(GL_MODELVIEW);
 
 	if(!in_main_menu)
