@@ -63,7 +63,7 @@ struct ui
 
 inline static struct ui main_menu()
 {
-	struct vector color = (struct vector) {1,1,0};
+	struct vector color = (struct vector) {1,1,1};
 	struct ui ui;
 	ui.n_buttons=3;
 	ui.n_text_fields=0;
@@ -95,6 +95,7 @@ inline static struct ui main_menu()
 	ui.button[2].callback = play_callback;
 	return ui;
 }
+
 inline static struct ui paused_menu()
 {
 	struct ui ui;
