@@ -36,16 +36,16 @@ int near(struct vector a, struct vector b,double r)
 int line_intersects_line(struct vector a, struct vector b,
 		struct vector c, struct vector d)
 {
-	float denominator=((b.x - a.x)*(d.y - c.y))-((b.y - a.y)*(d.x - c.x));
-	float numerator1=((a.y - c.y)*(d.x - c.x))-((a.x - c.x)*(d.y - c.y));
-	float numerator2=((a.y - c.y)*(b.x - a.x))-((a.x - c.x)*(b.y - a.y));
+	double denominator=((b.x - a.x)*(d.z - c.z))-((b.z - a.z)*(d.x - c.x));
+	double numerator1=((a.z - c.z)*(d.x - c.x))-((a.x - c.x)*(d.z - c.z));
+	double numerator2=((a.z - c.z)*(b.x - a.x))-((a.x - c.x)*(b.z - a.z));
 
 	// Detect coincident lines (has a problem, read below)
 	if (denominator == 0) 
 		return (numerator1 == 0 && numerator2 == 0);
 
-	float r = numerator1 / denominator;
-	float s = numerator2 / denominator;
+	double r = numerator1 / denominator;
+	double s = numerator2 / denominator;
 
 	return ((r >= 0 && r <= 1) && (s >= 0 && s <= 1));
 }
@@ -456,27 +456,10 @@ void update_yo(struct game_state * gs, double delta, int j)
 	d.y=0.0;
 	d.z=cos(to_radians(gs->npc[j].rotation_angle));
 
-	if(near(gs->game_player.location,gs->npc[j].location,7.5)){
-		face(&gs->npc[j],gs->game_player.location);
-		if(gs->npc[j].cooldown>0){
-			gs->npc[j].cooldown-=delta;
-		}else{
-			fire_bullet(gs,gs->npc[j],d);
-			gs->npc[j].cooldown=1;
-		}
-	} else if(near(gs->game_player.location,gs->npc[j].location,10)){
-		face(&gs->npc[j],gs->game_player.location);
-		struct vector v;
-
-		v.x=sin(to_radians(gs->npc[j].rotation_angle))*delta;
-		v.z=cos(to_radians(gs->npc[j].rotation_angle))*delta;
-
-		move_unit(&gs->npc[j],v);
-	}
-	if(gs->npc[j].poison_timer>0.0){
-		gs->npc[j].health-=delta*3;
-		gs->npc[j].poison_timer-=delta;
-	}
+	struct vector a = gs->npc[j].location;
+	struct vector b = gs->npc[gs->npc[j].connected_to].location;
+	if(unit_intersects_line(gs->game_player,a,b))
+		printf("unit intersects line :%f\n",delta);
 }
 
 void update_npcs(struct game_state * gs, double delta)
