@@ -27,6 +27,7 @@ struct model capacitor_model();
 struct model boss_model();
 struct model main_menu_planet_model();
 struct model mole_model();
+struct model yo_model();
 
 struct vertice { 
 	struct vector p;/*position*/

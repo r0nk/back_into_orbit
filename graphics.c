@@ -26,6 +26,7 @@ struct button test_button;
 struct model p_model;
 struct model b_model;
 struct model mole_boss_model;
+struct model yo_boss_model;
 struct model d_model;
 struct model ai_model;
 struct model ranger_model;
@@ -77,6 +78,7 @@ void init_models()
 	b_model = boss_model();
 	mm_planet_model=main_menu_planet_model();
 	mole_boss_model = mole_model();
+	yo_boss_model = yo_model();
 }
 
 int init_window_lib()
@@ -299,7 +301,7 @@ void draw_unit(struct unit u)
 	glPushMatrix();
 	switch(u.type){
 		case UNIT_TYPE_PLAYER:
-			draw_model(p_model,u.location,
+			draw_model(yo_boss_model,u.location,
 					u.rotation_angle,u.rotation);
 			break;
 		case UNIT_TYPE_SHOP:
