@@ -32,6 +32,57 @@ int near(struct vector a, struct vector b,double r)
 	return (distance(a,b)<r);
 }
 
+/*copy-pasted from the webs*/
+int line_intersects_line(struct vector a, struct vector b,
+		struct vector c, struct vector d)
+{
+	float denominator=((b.x - a.x)*(d.y - c.y))-((b.y - a.y)*(d.x - c.x));
+	float numerator1=((a.y - c.y)*(d.x - c.x))-((a.x - c.x)*(d.y - c.y));
+	float numerator2=((a.y - c.y)*(b.x - a.x))-((a.x - c.x)*(b.y - a.y));
+
+	// Detect coincident lines (has a problem, read below)
+	if (denominator == 0) 
+		return (numerator1 == 0 && numerator2 == 0);
+
+	float r = numerator1 / denominator;
+	float s = numerator2 / denominator;
+
+	return ((r >= 0 && r <= 1) && (s >= 0 && s <= 1));
+}
+
+
+int unit_intersects_line(struct unit u, struct vector a, struct vector b)
+{
+	/*
+	   h     j
+	   +-----+
+	   |  .  |
+	   +-----+
+	   k     l
+	 */
+	struct vector h=u.location,j=u.location,k=u.location,l=u.location;
+	h.x-=u.hit_radius;
+	j.x+=u.hit_radius;
+	k.x-=u.hit_radius;
+	l.x+=u.hit_radius;
+
+	h.y+=u.hit_radius;
+	j.y+=u.hit_radius;
+	k.y-=u.hit_radius;
+	l.y-=u.hit_radius;
+
+	if(line_intersects_line(a,b,h,j))
+		return 1;
+	if(line_intersects_line(a,b,h,k))
+		return 1;
+	if(line_intersects_line(a,b,k,l))
+		return 1;
+	if(line_intersects_line(a,b,j,l))
+		return 1;
+
+	return 0;
+}
+
 double delta_time()
 {
 	double s = glfwGetTime();
