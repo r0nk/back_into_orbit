@@ -167,42 +167,11 @@ struct vector normal(struct vector v)
 
 void draw_line(struct vector start, struct vector end, struct vector color)
 {
-	struct polygon a,b;
-	float x,z;
-	x=0.5;
-	z=0.5;
-
-	a.v[0].p = start;
-	a.v[1].p = start;
-	a.v[1].p.z+=z;
-	a.v[1].p.x+=x;
-	a.v[2].p = end;
-	a.v[2].p.z+=z;
-	a.v[2].p.x+=x;
-
-	b.v[0].p = end;
-	b.v[1].p = end;
-	b.v[1].p.z+=z;
-	b.v[1].p.x+=x;
-	b.v[2].p = start;
-
-	a.v[0].c = color;
-	a.v[1].c = color;
-	a.v[2].c = color;
-	b.v[0].c = color;
-	b.v[1].c = color;
-	b.v[2].c = color;
-
-	a.v[0].n = normal(a.v[0].p);
-	a.v[1].n = normal(a.v[1].p);
-	a.v[2].n = normal(a.v[2].p);
-	b.v[0].n = normal(b.v[0].p);
-	b.v[1].n = normal(b.v[1].p);
-	b.v[2].n = normal(b.v[2].p);
-
-	glBegin(GL_TRIANGLES);
-	draw_poly(a);
-	draw_poly(b);
+	glLineWidth(5.0);
+	glColor3f(color.x, color.y, color.z);
+	glBegin(GL_LINES);
+	glVertex3d(start.x,start.y,start.z);
+	glVertex3d(end.x,end.y,end.z);
 	glEnd();
 }
 
@@ -301,7 +270,7 @@ void draw_unit(struct unit u)
 	glPushMatrix();
 	switch(u.type){
 		case UNIT_TYPE_PLAYER:
-			draw_model(yo_boss_model,u.location,
+			draw_model(p_model,u.location,
 					u.rotation_angle,u.rotation);
 			break;
 		case UNIT_TYPE_SHOP:
@@ -605,6 +574,7 @@ void draw_game(struct game_state * gs)
 		  gs->game_player.location.z,
 		0,1,0);
 	draw_models(gs);
+	draw_line(gs->game_player.location,(struct vector) {0,2,0},(struct vector) {1,0,0});
 	glPopMatrix();
 
 	draw_hud(gs);
