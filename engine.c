@@ -398,12 +398,46 @@ void update_mole(struct game_state * gs, double delta,int j)
 	}
 }
 
+void update_yo(struct game_state * gs, double delta, int j)
+{
+	struct vector d;
+	d.x=sin(to_radians(gs->npc[j].rotation_angle));
+	d.y=0.0;
+	d.z=cos(to_radians(gs->npc[j].rotation_angle));
+
+	if(near(gs->game_player.location,gs->npc[j].location,7.5)){
+		face(&gs->npc[j],gs->game_player.location);
+		if(gs->npc[j].cooldown>0){
+			gs->npc[j].cooldown-=delta;
+		}else{
+			fire_bullet(gs,gs->npc[j],d);
+			gs->npc[j].cooldown=1;
+		}
+	} else if(near(gs->game_player.location,gs->npc[j].location,10)){
+		face(&gs->npc[j],gs->game_player.location);
+		struct vector v;
+
+		v.x=sin(to_radians(gs->npc[j].rotation_angle))*delta;
+		v.z=cos(to_radians(gs->npc[j].rotation_angle))*delta;
+
+		move_unit(&gs->npc[j],v);
+	}
+	if(gs->npc[j].poison_timer>0.0){
+		gs->npc[j].health-=delta*3;
+		gs->npc[j].poison_timer-=delta;
+	}
+}
+
 void update_npcs(struct game_state * gs, double delta)
 {
 	int j;
 	for(j=0;j<gs->n_npcs;j++){
 		if(gs->npc[j].health<0){
 			death(gs,j);
+		}
+
+		if(gs->npc[j].type == UNIT_TYPE_YO){
+			update_yo(gs,delta,j);
 		}
 
 		if(gs->npc[j].type == UNIT_TYPE_NEUTRAL_CREEP){

@@ -8,6 +8,21 @@
 
 struct map world_map;
 
+struct unit yo_npc(struct vector location)
+{
+	struct unit npc;
+	npc.speed=5.0;
+	npc.health=100;
+	npc.location=location;
+	npc.type = UNIT_TYPE_YO;
+	npc.rotation_angle = 90;
+	npc.rotation = (struct vector) {0,1,0};
+	npc.hit_radius = 1;
+	npc.poison_timer = 0.0;
+	npc.score=300;
+	return npc;
+}
+
 struct unit item_npc(struct vector location,int item_id)
 {
 	struct unit npc;
@@ -18,6 +33,7 @@ struct unit item_npc(struct vector location,int item_id)
 	npc.rotation_angle = 90;
 	npc.rotation = (struct vector) {0,1,0};
 	npc.hit_radius = 0;
+	npc.poison_timer=0.0;
 	npc.score=1;
 	return npc;
 }
@@ -86,6 +102,21 @@ struct unit boss_npc(struct vector location)
 	return npc;
 }
 
+/* adds both the yoyo units */
+void add_yoyo(struct game_state * gs)
+{
+	struct unit y,z;
+	y = yo_npc((struct vector) {5,0,5});
+	z = yo_npc((struct vector) {5,0,10});
+
+	/*this (hacky thing) connects the yo's together*/
+	y.connected_to=gs->n_npcs+1;
+	z.connected_to=gs->n_npcs;
+
+	add_npc(gs,y);
+	add_npc(gs,z);
+}
+
 void spawn_mobs(struct room * room)
 {
 	struct vector loc = {0,0,0};
@@ -103,7 +134,7 @@ void spawn_mobs(struct room * room)
 	}
 	loc.x=10;loc.z=10;
 	if(room->boss_room){
-		add_npc(&room->gs,mole_npc(loc));
+		add_yoyo(&room->gs);
 	}
 }
 

@@ -25,6 +25,7 @@ struct unit {
 	double max_health;
 	double cooldown;
 	double cooldown2;/* moles teleportation cooldown */
+	int connected_to; /* index of other yo */
 	double resist;
 	double damage;
 	struct inventory inventory;
@@ -36,6 +37,7 @@ struct unit {
 #define UNIT_TYPE_RANGER	   	5
 #define UNIT_TYPE_BOSS   		6
 #define UNIT_TYPE_MOLE   		7
+#define UNIT_TYPE_YO   			8
 	int team;
 #define NEUTRAL_TEAM 			0
 #define RED_TEAM 			1

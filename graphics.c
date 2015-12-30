@@ -265,6 +265,17 @@ void draw_room(struct room * room)
 				0.0, (struct vector){0,0,0});
 }
 
+void draw_yoyo(struct unit u){
+	struct vector a,b;
+	struct game_state * gs = &(world_map.current_room->gs);
+	a = u.location;
+	b = gs->npc[u.connected_to].location;
+	a.y+=1;
+	b.y+=1;
+	draw_line(a,b,(struct vector) {1,0,0});
+	draw_model(yo_boss_model,u.location,u.rotation_angle+90.0,u.rotation);
+}
+
 void draw_unit(struct unit u)
 {
 	glPushMatrix();
@@ -296,6 +307,12 @@ void draw_unit(struct unit u)
 		case UNIT_TYPE_MOLE:
 			draw_model(mole_boss_model,u.location,
 					u.rotation_angle+90.0,u.rotation);
+			break;
+		case UNIT_TYPE_YO:
+			draw_yoyo(u);
+			break;
+		default:
+			printf("unrecognized model type, not drawing\n");
 			break;
 	}
 	glPopMatrix();
@@ -574,7 +591,6 @@ void draw_game(struct game_state * gs)
 		  gs->game_player.location.z,
 		0,1,0);
 	draw_models(gs);
-	draw_line(gs->game_player.location,(struct vector) {0,2,0},(struct vector) {1,0,0});
 	glPopMatrix();
 
 	draw_hud(gs);

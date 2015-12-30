@@ -2,7 +2,6 @@
 #include "room.h"
 #include "inventory.h"
 
-
 struct transaction generate_transaction(int x, int z)
 {
 	struct transaction transaction;
@@ -31,4 +30,3 @@ struct shop generate_shop(struct room * room)
 	}
 	return shop;
 }
-
