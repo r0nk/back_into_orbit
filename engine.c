@@ -458,8 +458,11 @@ void update_yo(struct game_state * gs, double delta, int j)
 
 	struct vector a = gs->npc[j].location;
 	struct vector b = gs->npc[gs->npc[j].connected_to].location;
-	if(unit_intersects_line(gs->game_player,a,b))
-		printf("unit intersects line :%f\n",delta);
+	if(unit_intersects_line(gs->game_player,a,b)){
+		gs->game_player.health-=
+			delta*gs->npc[j].damage*gs->game_player.resist;
+		tzztzzz();
+	}
 }
 
 void update_npcs(struct game_state * gs, double delta)

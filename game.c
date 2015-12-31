@@ -12,6 +12,7 @@ struct unit yo_npc(struct vector location)
 {
 	struct unit npc;
 	npc.speed=5.0;
+	npc.damage=40;
 	npc.health=100;
 	npc.location=location;
 	npc.type = UNIT_TYPE_YO;
