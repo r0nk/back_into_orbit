@@ -305,7 +305,7 @@ void update_scavenger(struct game_state * gs, double delta, int j)
 		gs->game_player.health-=
 			delta*gs->npc[j].damage*gs->game_player.resist;
 		tzztzzz();
-	} else if(near(gs->game_player.location,gs->npc[j].location,10)){
+	} else if(near(gs->game_player.location,gs->npc[j].location,15)){
 		face(&gs->npc[j],gs->game_player.location);
 		struct vector v = (struct vector) {0,0,0};
 
@@ -383,7 +383,7 @@ void update_ranger(struct game_state * gs, double delta, int j)
 			fire_bullet(gs,gs->npc[j],d);
 			gs->npc[j].cooldown=1;
 		}
-	} else if(near(gs->game_player.location,gs->npc[j].location,10)){
+	} else if(near(gs->game_player.location,gs->npc[j].location,15)){
 		face(&gs->npc[j],gs->game_player.location);
 		struct vector v;
 
@@ -467,6 +467,8 @@ void update_yo(struct game_state * gs, double delta, int j)
 			delta*gs->npc[j].damage*gs->game_player.resist;
 		tzztzzz();
 	}
+
+	gs->npc[j].speed = 5+((100-(gs->npc[j].health))/4);
 
 	/*
 	   i---o
