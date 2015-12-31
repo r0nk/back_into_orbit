@@ -359,6 +359,12 @@ void death(struct game_state * gs, int j)
 		gameover_ui = gameover_menu(gs->game_player.score,1);
 		game_over(gs);
 	}
+	if(gs->npc[j].type == UNIT_TYPE_YO){
+		remove_npc(gs,j);
+		remove_npc(gs,gs->npc[j].connected_to);
+		gameover_ui = gameover_menu(gs->game_player.score,1);
+		game_over(gs);
+	}
 	remove_npc(gs,j);
 }
 
@@ -451,10 +457,8 @@ void update_mole(struct game_state * gs, double delta,int j)
 
 void update_yo(struct game_state * gs, double delta, int j)
 {
-	struct vector d;
-	d.x=sin(to_radians(gs->npc[j].rotation_angle));
-	d.y=0.0;
-	d.z=cos(to_radians(gs->npc[j].rotation_angle));
+	/* wheter or not we're the (top_left|bottom_right) one */
+	int w = (j < (gs->npc[j].connected_to))? 1 : 0;
 
 	struct vector a = gs->npc[j].location;
 	struct vector b = gs->npc[gs->npc[j].connected_to].location;
@@ -462,6 +466,54 @@ void update_yo(struct game_state * gs, double delta, int j)
 		gs->game_player.health-=
 			delta*gs->npc[j].damage*gs->game_player.resist;
 		tzztzzz();
+	}
+
+	/*
+	   i---o
+	   |   |
+	   |   |
+	   k---l
+	 */
+	int i = (b.x==1 && b.z==1);
+	int o = (b.x==11 && b.z==1);
+	int k = (b.x==1 && b.z==11);
+	int l = (b.x==11 && b.z==11);
+
+	double d = gs->npc[j].speed * delta;
+
+	if(w){
+		if(o){
+			if(near(gs->npc[j].location,(struct vector) {11,0,11},1)){
+				gs->npc[j].location=(struct vector) {11,0,11};
+				return;
+			}
+
+			gs->npc[j].location.x+=d;
+			gs->npc[j].location.z+=d;
+		}else if (k){
+			if(near(gs->npc[j].location,(struct vector) {1,0,1},1)){
+				gs->npc[j].location=(struct vector) {1,0,1};
+				return;
+			}
+			gs->npc[j].location.x-=d;
+			gs->npc[j].location.z-=d;
+		}
+	}else{
+		if(i){
+			if(near(gs->npc[j].location,(struct vector) {11,0,1},1)){
+				gs->npc[j].location=(struct vector) {11,0,1};
+				return;
+			}
+			gs->npc[j].location.x+=d;
+			gs->npc[j].location.z-=d;
+		}else if (l){
+			if(near(gs->npc[j].location,(struct vector) {1,0,11},1)){
+				gs->npc[j].location=(struct vector) {1,0,11};
+				return;
+			}
+			gs->npc[j].location.x-=d;
+			gs->npc[j].location.z+=d;
+		}
 	}
 }
 

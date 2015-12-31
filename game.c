@@ -107,8 +107,8 @@ struct unit boss_npc(struct vector location)
 void add_yoyo(struct game_state * gs)
 {
 	struct unit y,z;
-	y = yo_npc((struct vector) {3,0,5});
-	z = yo_npc((struct vector) {5,0,10});
+	y = yo_npc((struct vector) {1,0,1});
+	z = yo_npc((struct vector) {11,0,1});
 
 	/*this (hacky thing) connects the yo's together*/
 	y.connected_to=gs->n_npcs+1;
