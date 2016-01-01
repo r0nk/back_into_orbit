@@ -3,7 +3,7 @@
 
 #include "poly.h"
 
-#define MAX_INTERPOINTS 90
+#define MAX_INTERPOINTS 100
 struct path
 {
 	int n_interpoints;

@@ -97,12 +97,7 @@ struct path generate_path(struct vector starting, struct vector goal)
 	struct vector n = goal;
 	path_push(&p,n);
 	while(!(n.x == starting.x && n.z == starting.z)){
-		printf("parent of :");
-		dump_vector(n);
-		printf(" is ");
 		n = parent[(int)n.x][(int)n.z];
-		dump_vector(n);
-		printf("\n");
 
 		if(n.x == 0 && n.z==0)
 			break;
@@ -116,12 +111,6 @@ struct path pathfind(struct vector starting, struct vector goal)
 {
 	struct layout visited,distance;
 	struct path path;
-
-	printf("pathfinding; starting:");
-	dump_vector(starting);
-	printf(" goal:");
-	dump_vector(goal);
-	printf("\n");
 
 	init_layouts(&visited,&distance,starting);
 
