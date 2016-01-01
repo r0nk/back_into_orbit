@@ -7,10 +7,9 @@
 struct path
 {
 	struct vector destination;/* final desination */
-					/*YEEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA*/
 	struct vector interpoints[MAX_INTERPOINTS];
 };
 
-struct path pathfind(struct vector starting);
+struct path pathfind(struct vector starting,struct vector goal);
  
 #endif
