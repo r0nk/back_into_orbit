@@ -2,6 +2,7 @@
 #include <math.h>
 #include <stdio.h>
 
+#include "pathfinding.h"
 #include "game_state.h"
 #include "room.h"
 #include "callbacks.h"
@@ -222,6 +223,7 @@ void player_movement(struct game_state * gs, double delta)
 	}
 
 	move_unit(&gs->game_player,dvec);
+	dump_path(pathfind(gs->game_player.location,(struct vector) {10,0,10}));
 }
 
 int player_fired;

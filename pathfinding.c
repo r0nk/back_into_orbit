@@ -3,6 +3,8 @@
 #include "map.h"
 #include "pathfinding.h"
 
+#define WALKABLE ((world_map.current_room->layout.tiles[i][j])&&(world_map.current_room->layout.tiles[i][j]!='#'))
+
 struct vector parent[MAX_ROOM_WIDTH][MAX_ROOM_HEIGHT];
 
 void init_layouts(struct layout * visited,struct layout * distance, 
@@ -28,7 +30,8 @@ struct vector min_distance(struct layout *distance, struct layout *visited)
 	for(i=0;i<MAX_ROOM_WIDTH;i++){
 		for(j=0;j<MAX_ROOM_HEIGHT;j++){
 			if(!visited->tiles[i][j] && 
-					distance->tiles[i][j] <= min){
+					distance->tiles[i][j] <= min &&
+					WALKABLE){
 				min=distance->tiles[i][j];
 				node = (struct vector) {i,0,j};
 			}
@@ -49,12 +52,14 @@ void visit_next(struct layout * distance,struct layout * visited)
 	int i,j;
 	for(i=0;i<MAX_ROOM_WIDTH;i++){
 		for(j=0;j<MAX_ROOM_HEIGHT;j++){
-			if(visited->tiles[i][j])
+			if(visited->tiles[i][j] && !WALKABLE){
 				continue;
+			}
 			int d = distance->tiles[(int)current.x][(int)current.z]+
 				length(current,(struct vector) {i,0,j});
 			/*TODO add wallcheck to c*/
-			int c = (distance->tiles[(int)current.x][(int)current.z] != 120)&&(d < distance->tiles[i][j]);
+			int c = (distance->tiles[(int)current.x][(int)current.z] != 120)
+				&&(d < distance->tiles[i][j]);
 			if(c){
 				distance->tiles[i][j] = d;
 				parent[i][j] = current;
@@ -63,11 +68,36 @@ void visit_next(struct layout * distance,struct layout * visited)
 	}
 }
 
+void path_push(struct path * p, struct vector v)
+{
+	p->interpoint[p->n_interpoints]=v;
+	if(p->n_interpoints >= MAX_INTERPOINTS)
+		err(-60,"tried to add over N_INTERPOINTS");
+	p->n_interpoints++;
+}
+
+struct vector path_pop(struct path * p)
+{
+	if(p->n_interpoints>0){
+		p->n_interpoints--;
+		return p->interpoint[p->n_interpoints+1];
+	}else{
+		return p->destination;
+	}
+}
+
 /*read the path from the parent data*/
 struct path generate_path(struct vector starting, struct vector goal)
 {
-	/*TODO*/
 	struct path p; 
+	p.n_interpoints=0;
+	p.destination=goal;
+	struct vector n = goal;
+	path_push(&p,n);
+	while(n.x != starting.x && n.z != goal.z){
+		n = parent[(int)n.x][(int)n.z];
+		path_push(&p,n);
+	}
 	return p;
 }
 
