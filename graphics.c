@@ -2,6 +2,7 @@
 #include <GLFW/glfw3.h>
 
 #include "input.h"
+#include "pathfinding.h"
 #include "map.h"
 #include "game_state.h"
 #include "graphics.h"
@@ -362,11 +363,26 @@ void draw_letter(double x, double y, char bits[24], struct vector color)
 	}
 }
 
+void draw_path(struct path path)
+{
+	int i;
+	for(i=0;i<path.n_interpoints;i++){
+		if(path.interpoint[i].x == 0 && path.interpoint[i].z==0)
+			break;
+		if(path.interpoint[i+1].x == 0 && path.interpoint[i+1].z==0)
+			break;
+		path.interpoint[i].y=0.1;
+		path.interpoint[i+1].y=0.1;
+		draw_line(path.interpoint[i],path.interpoint[i+1],(struct vector) {1,1,1});
+	}
+}
+
 void draw_models(struct game_state * gs)
 {
 	draw_room((world_map.current_room));
 	int i;
 	draw_unit(gs->game_player);
+	draw_path(gs->game_player.path);
 	for(i=0;i<gs->n_npcs;i++){
 		draw_unit(gs->npc[i]);
 	}

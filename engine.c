@@ -222,8 +222,9 @@ void player_movement(struct game_state * gs, double delta)
 		dvec.z-=delta;
 	}
 
+	gs->game_player.path=pathfind(gs->game_player.location,
+			screen_to_world(gs,pi.mouse_x,pi.mouse_y));
 	move_unit(&gs->game_player,dvec);
-	dump_path(pathfind(gs->game_player.location,(struct vector) {10,0,10}));
 }
 
 int player_fired;

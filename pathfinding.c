@@ -91,7 +91,7 @@ struct vector path_pop(struct path * p)
 /*read the path from the parent data*/
 struct path generate_path(struct vector starting, struct vector goal)
 {
-	struct path p; 
+	struct path p = {0}; 
 	p.n_interpoints=0;
 	p.destination=goal;
 	struct vector n = goal;
@@ -112,9 +112,14 @@ struct path pathfind(struct vector starting, struct vector goal)
 	struct layout visited,distance;
 	struct path path;
 
+	int i,j;
+	i=((int)goal.x);j=((int)goal.z);
+
+	if(!WALKABLE || (i<0 || j<0))
+		return path;
+
 	init_layouts(&visited,&distance,starting);
 
-	int i;
 	for(i=0;i<MAX_ROOM_WIDTH*MAX_ROOM_HEIGHT;i++){
 		visit_next(&distance,&visited);
 		if(visited.tiles[(int)goal.x][(int)goal.z])

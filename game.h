@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include "poly.h"
+#include "pathfinding.h"
 #include "model.h"
 #include "inventory.h"
 
@@ -20,7 +21,7 @@ struct unit {
 	struct vector rotation;
 	double rotation_angle;
 	point location;
-	point destination;
+	struct path path;
 	double health;
 	double max_health;
 	double cooldown;
@@ -65,8 +66,6 @@ static inline void dump_unit(struct unit p){
 	printf("speed:%f\n",p.speed);
 	printf("location:");
 	dump_vector(p.location);
-	printf("\ndestination:");
-	dump_vector(p.destination);
 	printf("\nhealth:%f\n",p.health);
 }
 
