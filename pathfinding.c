@@ -1,6 +1,7 @@
 #include <math.h>
 
 #include "map.h"
+#include "room.h"
 #include "pathfinding.h"
 
 #define WALKABLE ((world_map.current_room->layout.tiles[i][j])&&(world_map.current_room->layout.tiles[i][j]!='#'))
@@ -19,7 +20,6 @@ void init_layouts(struct layout * visited,struct layout * distance,
 		}
 	}
 	distance->tiles[(int)starting.x][(int)starting.z]=0;
-	visited->tiles[(int)starting.x][(int)starting.z]=1;
 }
 
 struct vector min_distance(struct layout *distance, struct layout *visited)
@@ -52,12 +52,11 @@ void visit_next(struct layout * distance,struct layout * visited)
 	int i,j;
 	for(i=0;i<MAX_ROOM_WIDTH;i++){
 		for(j=0;j<MAX_ROOM_HEIGHT;j++){
-			if(visited->tiles[i][j] && !WALKABLE){
+			if(visited->tiles[i][j] || !WALKABLE){
 				continue;
 			}
 			int d = distance->tiles[(int)current.x][(int)current.z]+
 				length(current,(struct vector) {i,0,j});
-			/*TODO add wallcheck to c*/
 			int c = (distance->tiles[(int)current.x][(int)current.z] != 120)
 				&&(d < distance->tiles[i][j]);
 			if(c){
@@ -106,10 +105,19 @@ struct path pathfind(struct vector starting, struct vector goal)
 	struct layout visited,distance;
 	struct path path;
 
+	printf("pathfinding; starting:");
+	dump_vector(starting);
+	printf(" goal:");
+	dump_vector(goal);
+	printf("\n");
+
 	init_layouts(&visited,&distance,starting);
 
-	while(!(visited.tiles[(int)goal.x][(int)goal.z])){
+	int i;
+	for(i=0;i<MAX_ROOM_WIDTH*MAX_ROOM_HEIGHT;i++){
 		visit_next(&distance,&visited);
+		if(visited.tiles[(int)goal.x][(int)goal.z])
+			break;
 	}
 	path = generate_path(starting,goal);
 	return path;
