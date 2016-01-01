@@ -48,6 +48,7 @@ int length(struct vector a , struct vector b)
 void visit_next(struct layout * distance,struct layout * visited)
 {
 	struct vector current = min_distance(distance,visited);
+
 	visited->tiles[(int)current.x][(int)current.z]=1;
 	int i,j;
 	for(i=0;i<MAX_ROOM_WIDTH;i++){
@@ -55,6 +56,8 @@ void visit_next(struct layout * distance,struct layout * visited)
 			if(visited->tiles[i][j] || !WALKABLE){
 				continue;
 			}
+			if(2<=length(current,(struct vector){i,0,j}))
+				continue;
 			int d = distance->tiles[(int)current.x][(int)current.z]+
 				length(current,(struct vector) {i,0,j});
 			int c = (distance->tiles[(int)current.x][(int)current.z] != 120)
@@ -93,8 +96,17 @@ struct path generate_path(struct vector starting, struct vector goal)
 	p.destination=goal;
 	struct vector n = goal;
 	path_push(&p,n);
-	while(n.x != starting.x && n.z != goal.z){
+	while(!(n.x == starting.x && n.z == starting.z)){
+		printf("parent of :");
+		dump_vector(n);
+		printf(" is ");
 		n = parent[(int)n.x][(int)n.z];
+		dump_vector(n);
+		printf("\n");
+
+		if(n.x == 0 && n.z==0)
+			break;
+
 		path_push(&p,n);
 	}
 	return p;
