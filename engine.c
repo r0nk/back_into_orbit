@@ -315,6 +315,7 @@ void update_scavenger(struct game_state * gs, double delta, int j)
 		v.x=sin(to_radians(gs->npc[j].rotation_angle))*delta;
 		v.z=cos(to_radians(gs->npc[j].rotation_angle))*delta;
 
+		gs->npc[j].path = pathfind(gs->npc[j].location,gs->game_player.location);
 		move_unit(&gs->npc[j],v);
 	}
 	if(gs->npc[j].poison_timer>0.0){
@@ -393,6 +394,7 @@ void update_ranger(struct game_state * gs, double delta, int j)
 		v.x=sin(to_radians(gs->npc[j].rotation_angle))*delta;
 		v.z=cos(to_radians(gs->npc[j].rotation_angle))*delta;
 
+		gs->npc[j].path = pathfind(gs->npc[j].location,gs->game_player.location);
 		move_unit(&gs->npc[j],v);
 	}
 	if(gs->npc[j].poison_timer>0.0){

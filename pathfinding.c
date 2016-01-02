@@ -38,12 +38,12 @@ struct vector min_distance(struct layout *distance, struct layout *visited,
 			if(!visited->tiles[i][j] && 
 					distance->tiles[i][j] <= min &&
 					WALKABLE){
-			int d = distance->tiles[i][j]+
-				length(goal,(struct vector) {i,0,j});
-			if(d<=min){
-				min=d;
-				node = (struct vector) {i,0,j};
-			}
+				int d = distance->tiles[i][j]+
+					length(goal,(struct vector) {i,0,j});
+				if(d<=min){
+					min=d;
+					node = (struct vector) {i,0,j};
+				}
 			}
 		}
 	}
