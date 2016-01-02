@@ -50,7 +50,7 @@ struct vector min_distance(struct layout *distance, struct layout *visited,
 	return node;
 }
 
-void visit_tile(int i, int j, struct vector current,
+void check_node(int i, int j, struct vector current,
 		struct layout * distance, struct layout * visited)
 {
 	if(visited->tiles[i][j] || !WALKABLE){
@@ -74,12 +74,18 @@ void visit_next(struct layout * distance,struct layout * visited,
 	struct vector current = min_distance(distance,visited,goal);
 
 	visited->tiles[(int)current.x][(int)current.z]=1;
-	int i,j;
-	for(i=0;i<MAX_ROOM_WIDTH;i++){
-		for(j=0;j<MAX_ROOM_HEIGHT;j++){
-			visit_tile(i,j,current,distance,visited);
-		}
-	}
+	int i = (int)current.x;
+	int j = (int)current.z;
+
+	check_node(i,j+1,current,distance,visited);
+	check_node(i+1,j,current,distance,visited);
+	check_node(i+1,j+1,current,distance,visited);
+	check_node(i+1,j-1,current,distance,visited);
+
+	check_node(i,j-1,current,distance,visited);
+	check_node(i-1,j,current,distance,visited);
+	check_node(i-1,j-1,current,distance,visited);
+	check_node(i-1,j+1,current,distance,visited);
 }
 
 void path_push(struct path * p, struct vector v)
@@ -122,7 +128,7 @@ struct path generate_path(struct vector starting, struct vector goal)
 struct path pathfind(struct vector starting, struct vector goal)
 {
 	struct layout visited,distance;
-	struct path path;
+	struct path path = {0};
 
 	int i,j;
 	i=((int)goal.x);j=((int)goal.z);
@@ -132,11 +138,16 @@ struct path pathfind(struct vector starting, struct vector goal)
 
 	init_layouts(&visited,&distance,starting);
 
+	int found=0;//wether or not we found a path
 	for(i=0;i<MAX_ROOM_WIDTH*MAX_ROOM_HEIGHT;i++){
 		visit_next(&distance,&visited,goal);
-		if(visited.tiles[(int)goal.x][(int)goal.z])
+		if(visited.tiles[(int)goal.x][(int)goal.z]){
+			found=1;
 			break;
+		}
 	}
+	if(!found)
+		return path;
 	path = generate_path(starting,goal);
 	return path;
 }
