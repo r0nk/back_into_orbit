@@ -60,9 +60,8 @@ void check_node(int i, int j, struct vector current,
 		return;
 	int d = distance->tiles[(int)current.x][(int)current.z]+
 		length(current,(struct vector) {i,0,j});
-	int c = (distance->tiles[(int)current.x][(int)current.z] != 120)
-		&&(d < distance->tiles[i][j]);
-	if(c){
+ 
+	if(((distance->tiles[(int)current.x][(int)current.z] != 120) &&(d < distance->tiles[i][j]))){
 		distance->tiles[i][j] = d;
 		parent[i][j] = current;
 	}
