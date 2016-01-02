@@ -56,8 +56,6 @@ void check_node(int i, int j, struct vector current,
 	if(visited->tiles[i][j] || !WALKABLE){
 		return;
 	}
-	if(2<=length(current,(struct vector){i,0,j}))
-		return;
 	int d = distance->tiles[(int)current.x][(int)current.z]+
 		length(current,(struct vector) {i,0,j});
  
