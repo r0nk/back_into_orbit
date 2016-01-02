@@ -22,7 +22,13 @@ void init_layouts(struct layout * visited,struct layout * distance,
 	distance->tiles[(int)starting.x][(int)starting.z]=0;
 }
 
-struct vector min_distance(struct layout *distance, struct layout *visited)
+int length(struct vector a , struct vector b)
+{
+	return (int)sqrt(pow((b.x-a.x),2)+pow((b.z-a.z),2));
+}
+
+struct vector min_distance(struct layout *distance, struct layout *visited,
+		struct vector goal)
 {
 	int i,j;
 	int min = 120;
@@ -32,22 +38,23 @@ struct vector min_distance(struct layout *distance, struct layout *visited)
 			if(!visited->tiles[i][j] && 
 					distance->tiles[i][j] <= min &&
 					WALKABLE){
-				min=distance->tiles[i][j];
+			int d = distance->tiles[i][j]+
+				length(goal,(struct vector) {i,0,j});
+			if(d<=min){
+				min=d;
 				node = (struct vector) {i,0,j};
+			}
 			}
 		}
 	}
 	return node;
 }
 
-int length(struct vector a , struct vector b)
-{
-	return (int)sqrt(pow((b.x-a.x),2)+pow((b.z-a.z),2));
-}
 
-void visit_next(struct layout * distance,struct layout * visited)
+void visit_next(struct layout * distance,struct layout * visited,
+		struct vector goal)
 {
-	struct vector current = min_distance(distance,visited);
+	struct vector current = min_distance(distance,visited,goal);
 
 	visited->tiles[(int)current.x][(int)current.z]=1;
 	int i,j;
@@ -121,7 +128,7 @@ struct path pathfind(struct vector starting, struct vector goal)
 	init_layouts(&visited,&distance,starting);
 
 	for(i=0;i<MAX_ROOM_WIDTH*MAX_ROOM_HEIGHT;i++){
-		visit_next(&distance,&visited);
+		visit_next(&distance,&visited,goal);
 		if(visited.tiles[(int)goal.x][(int)goal.z])
 			break;
 	}
