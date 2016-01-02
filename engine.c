@@ -67,10 +67,10 @@ int unit_intersects_line(struct unit u, struct vector a, struct vector b)
 	k.x-=u.hit_radius;
 	l.x+=u.hit_radius;
 
-	h.y+=u.hit_radius;
-	j.y+=u.hit_radius;
-	k.y-=u.hit_radius;
-	l.y-=u.hit_radius;
+	h.z+=u.hit_radius;
+	j.z+=u.hit_radius;
+	k.z-=u.hit_radius;
+	l.z-=u.hit_radius;
 
 	if(line_intersects_line(a,b,h,j))
 		return 1;
@@ -81,6 +81,49 @@ int unit_intersects_line(struct unit u, struct vector a, struct vector b)
 	if(line_intersects_line(a,b,j,l))
 		return 1;
 
+	return 0;
+}
+
+int line_intersects_box(struct vector boxloc,struct vector a, struct vector b)
+{
+	/*
+	   h     j
+	   +-----+
+	   |  .  |
+	   +-----+
+	   k     l
+	 */
+	struct vector h=boxloc,j=boxloc,k=boxloc,l=boxloc;
+	j.x+=1.0;
+	l.x+=1.0;
+
+	k.z+=1.0;
+	l.z+=1.0;
+
+	if(line_intersects_line(a,b,h,j))
+		return 1;
+	if(line_intersects_line(a,b,h,k))
+		return 1;
+	if(line_intersects_line(a,b,k,l))
+		return 1;
+	if(line_intersects_line(a,b,j,l))
+		return 1;
+
+	return 0;
+}
+
+int wall_intersects_line(struct vector a, struct vector b)
+{
+	struct layout l = world_map.current_room->layout;
+	int i,j;
+	for(i=0;i<MAX_ROOM_WIDTH;i++){
+		for(j=0;j<MAX_ROOM_HEIGHT;j++){
+			if(l.tiles[i][j]!='#')
+				continue;
+			if(line_intersects_box((struct vector) {i,0,j},a,b))
+				return 1;
+		}
+	}
 	return 0;
 }
 
@@ -316,15 +359,12 @@ void update_scavenger(struct game_state * gs, double delta, int j)
 			delta*gs->npc[j].damage*gs->game_player.resist;
 		tzztzzz();
 	} else if(near(gs->game_player.location,gs->npc[j].location,15)){
-		gs->npc[j].path = pathfind(gs->npc[j].location,gs->game_player.location);
-		if(gs->npc[j].path.n_interpoints>0){
-			dump_path(gs->npc[j].path);
+		if(wall_intersects_line(gs->game_player.location,
+					gs->npc[j].location)){
+			gs->npc[j].path = pathfind(gs->npc[j].location, 
+					gs->game_player.location);
 			struct vector d = path_pop(&gs->npc[j].path);
 			d=path_pop(&gs->npc[j].path);
-
-			printf("d:");
-			dump_vector(d);
-			printf("\n");
 
 			face(&gs->npc[j],d);
 		}else{
@@ -337,7 +377,6 @@ void update_scavenger(struct game_state * gs, double delta, int j)
 		v.z=cos(to_radians(gs->npc[j].rotation_angle))*delta;
 
 		move_unit(&gs->npc[j],v);
-		face(&gs->npc[j],gs->game_player.location);
 	}
 	if(gs->npc[j].poison_timer>0.0){
 		gs->npc[j].health-=delta*3;

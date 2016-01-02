@@ -4,9 +4,32 @@
 #include "room.h"
 #include "pathfinding.h"
 
-#define WALKABLE ((world_map.current_room->layout.tiles[i][j])&&(world_map.current_room->layout.tiles[i][j]!='#'))
 
 struct vector parent[MAX_ROOM_WIDTH][MAX_ROOM_HEIGHT];
+
+int walkable(int i, int j)
+{
+	struct layout * l = &world_map.current_room->layout;
+	if(!l->tiles[i][j])
+		return 0;
+	if(l->tiles[i][j]=='#') return 0;
+	return 1;
+}
+
+int wall_near(int i, int j)
+{
+	if(!walkable(i,j)) return 1;
+	if(!walkable(i,j+1)) return 1;
+	if(!walkable(i+1,j+1)) return 1;
+	if(!walkable(i+1,j)) return 1;
+
+	if(!walkable(i,j-1)) return 1;
+	if(!walkable(i+1,j-1)) return 1;
+	if(!walkable(i-1,j-1)) return 1;
+	if(!walkable(i-1,j+1)) return 1;
+	
+	return 0;
+}
 
 void init_layouts(struct layout * visited,struct layout * distance, 
 		struct vector starting)
@@ -27,6 +50,14 @@ int length(struct vector a , struct vector b)
 	return (int)sqrt(pow((b.x-a.x),2)+pow((b.z-a.z),2));
 }
 
+int f(struct layout * distance, struct vector goal, int i, int j)
+{
+	int d = distance->tiles[i][j]+length(goal,(struct vector) {i,0,j});
+	if(wall_near(i,j))
+		d+=20;
+	return d;
+}
+
 struct vector min_distance(struct layout *distance, struct layout *visited,
 		struct vector goal)
 {
@@ -37,9 +68,8 @@ struct vector min_distance(struct layout *distance, struct layout *visited,
 		for(j=0;j<MAX_ROOM_HEIGHT;j++){
 			if(!visited->tiles[i][j] && 
 					distance->tiles[i][j] <= min &&
-					WALKABLE){
-				int d = distance->tiles[i][j]+
-					length(goal,(struct vector) {i,0,j});
+					walkable(i,j)){
+				int d = f(distance,goal,i,j);
 				if(d<=min){
 					min=d;
 					node = (struct vector) {i,0,j};
@@ -53,7 +83,7 @@ struct vector min_distance(struct layout *distance, struct layout *visited,
 void check_node(int i, int j, struct vector current,
 		struct layout * distance, struct layout * visited)
 {
-	if(visited->tiles[i][j] || !WALKABLE){
+	if(visited->tiles[i][j] || !walkable(i,j)){
 		return;
 	}
 	int d = distance->tiles[(int)current.x][(int)current.z]+
@@ -132,7 +162,7 @@ struct path pathfind(struct vector starting, struct vector goal)
 	int i,j;
 	i=((int)goal.x);j=((int)goal.z);
 
-	if(!WALKABLE || (i<0 || j<0))
+	if(!walkable(i,j) || (i<0 || j<0))
 		return path;
 
 	init_layouts(&visited,&distance,starting);
