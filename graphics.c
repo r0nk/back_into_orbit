@@ -385,6 +385,7 @@ void draw_models(struct game_state * gs)
 	draw_path(gs->game_player.path);
 	for(i=0;i<gs->n_npcs;i++){
 		draw_unit(gs->npc[i]);
+		draw_path(gs->npc[i].path);
 	}
 	for(i=0;i<gs->n_bullets;i++){
 		draw_model(bullet_model,gs->bullet[i].location,

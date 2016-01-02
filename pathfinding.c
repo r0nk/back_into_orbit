@@ -97,7 +97,7 @@ struct vector path_pop(struct path * p)
 {
 	if(p->n_interpoints>0){
 		p->n_interpoints--;
-		return p->interpoint[p->n_interpoints+1];
+		return p->interpoint[p->n_interpoints];
 	}else{
 		return p->destination;
 	}
@@ -115,6 +115,8 @@ struct path generate_path(struct vector starting, struct vector goal)
 		n = parent[(int)n.x][(int)n.z];
 
 		if(n.x == 0 && n.z==0)
+			break;
+		if(n.x == starting.x && n.z == starting.z)
 			break;
 
 		path_push(&p,n);

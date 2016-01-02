@@ -168,25 +168,32 @@ void fire_bullet(struct game_state * gs,
 void move_unit(struct unit * u,struct vector d)
 {
 	struct vector vec;
+	if(isnan(d.x) || isnan(d.z)){
+		printf("NAN d passed to move_unit()\n");
+		return;
+	}
+
 	vec.x = (d.x>0) ? 1 : -1;
 	vec.z = (d.z>0) ? 1 : -1;
 	d.x*=u->speed;
 	d.z*=u->speed;
 	struct layout  * l = &(world_map.current_room->layout);
-	if(
-			(l->tiles[(int)(u->location.x+d.x)][(int)(u->location.z)]!= LAYOUT_WALL) &&
-			(l->tiles[(int)(u->location.x+vec.x)][(int)(u->location.z)]!= LAYOUT_WALL)){
+	if((u->location.x+d.x)>MAX_ROOM_WIDTH)
+		return;
+	if((u->location.z+d.z)>MAX_ROOM_HEIGHT)
+		return;
+	if((u->location.x+d.x)<0)
+		return;
+	if((u->location.z+d.z)<0)
+		return;
+	if((l->tiles[(int)(u->location.x+d.x)][(int)(u->location.z)]!= LAYOUT_WALL)){
 		u->location.x+=d.x;
-	}else{
-		u->location.x-=d.x;
 	}
-	if(
-		(l->tiles[(int)(u->location.x)][(int)(u->location.z+d.z)]!= LAYOUT_WALL) &&
-		(l->tiles[(int)(u->location.x)][(int)(u->location.z+vec.z)]!= LAYOUT_WALL)){
+
+	if((l->tiles[(int)(u->location.x)][(int)(u->location.z+d.z)]!= LAYOUT_WALL)){
 		u->location.z+=d.z;
-	}else{
-		u->location.z-=d.z;
 	}
+
 	if(!l->tiles[(int)(u->location.x)][(int)(u->location.z)])
 		u->health=0;/* oops, they went out of the map */
 }
@@ -309,14 +316,28 @@ void update_scavenger(struct game_state * gs, double delta, int j)
 			delta*gs->npc[j].damage*gs->game_player.resist;
 		tzztzzz();
 	} else if(near(gs->game_player.location,gs->npc[j].location,15)){
-		face(&gs->npc[j],gs->game_player.location);
+		gs->npc[j].path = pathfind(gs->npc[j].location,gs->game_player.location);
+		if(gs->npc[j].path.n_interpoints>0){
+			dump_path(gs->npc[j].path);
+			struct vector d = path_pop(&gs->npc[j].path);
+			d=path_pop(&gs->npc[j].path);
+
+			printf("d:");
+			dump_vector(d);
+			printf("\n");
+
+			face(&gs->npc[j],d);
+		}else{
+			face(&gs->npc[j],gs->game_player.location);
+		}
 		struct vector v = (struct vector) {0,0,0};
 
 		v.x=sin(to_radians(gs->npc[j].rotation_angle))*delta;
+		v.y=0;
 		v.z=cos(to_radians(gs->npc[j].rotation_angle))*delta;
 
-		gs->npc[j].path = pathfind(gs->npc[j].location,gs->game_player.location);
 		move_unit(&gs->npc[j],v);
+		face(&gs->npc[j],gs->game_player.location);
 	}
 	if(gs->npc[j].poison_timer>0.0){
 		gs->npc[j].health-=delta*3;

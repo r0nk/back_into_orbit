@@ -26,5 +26,6 @@ static inline void dump_path(struct path p)
 }
 
 struct path pathfind(struct vector starting,struct vector goal);
+struct vector path_pop(struct path * p);
  
 #endif
