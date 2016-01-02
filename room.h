@@ -10,8 +10,8 @@
 #include "game_state.h"
 #include "shop.h"
 
-#define MAX_ROOM_WIDTH 100
-#define MAX_ROOM_HEIGHT 100
+#define MAX_ROOM_WIDTH 50
+#define MAX_ROOM_HEIGHT 50
 
 #define MAX_DOORWAYS 6
 

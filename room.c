@@ -42,8 +42,8 @@ void count_doorways(struct room * room)
 	int n = 0;
 	int x,z;
 	room->has_shop=0;
-	for(z=0;z<100;z++){
-		for(x=0;x<100;x++){
+	for(z=0;z<MAX_ROOM_HEIGHT;z++){
+		for(x=0;x<MAX_ROOM_WIDTH;x++){
 			if((room->layout.tiles[x][z]) > ('0'-1)
 					&& room->layout.tiles[x][z]<'9'){
 				room->doorway[n].location =(struct vector){x,0,z};

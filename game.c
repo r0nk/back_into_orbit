@@ -122,8 +122,8 @@ void spawn_mobs(struct room * room)
 {
 	struct vector loc = {0,0,0};
 	int i,j;
-	for(i=0;i<100;i++){
-		for(j=0;j<100;j++){
+	for(i=0;i<MAX_ROOM_WIDTH;i++){
+		for(j=0;j<MAX_ROOM_HEIGHT;j++){
 			if(room->layout.tiles[i][j] == 's'){
 				loc.x=i;loc.z=j;
 				if(rand()%2)
