@@ -50,6 +50,23 @@ struct vector min_distance(struct layout *distance, struct layout *visited,
 	return node;
 }
 
+void visit_tile(int i, int j, struct vector current,
+		struct layout * distance, struct layout * visited)
+{
+	if(visited->tiles[i][j] || !WALKABLE){
+		return;
+	}
+	if(2<=length(current,(struct vector){i,0,j}))
+		return;
+	int d = distance->tiles[(int)current.x][(int)current.z]+
+		length(current,(struct vector) {i,0,j});
+	int c = (distance->tiles[(int)current.x][(int)current.z] != 120)
+		&&(d < distance->tiles[i][j]);
+	if(c){
+		distance->tiles[i][j] = d;
+		parent[i][j] = current;
+	}
+}
 
 void visit_next(struct layout * distance,struct layout * visited,
 		struct vector goal)
@@ -60,19 +77,7 @@ void visit_next(struct layout * distance,struct layout * visited,
 	int i,j;
 	for(i=0;i<MAX_ROOM_WIDTH;i++){
 		for(j=0;j<MAX_ROOM_HEIGHT;j++){
-			if(visited->tiles[i][j] || !WALKABLE){
-				continue;
-			}
-			if(2<=length(current,(struct vector){i,0,j}))
-				continue;
-			int d = distance->tiles[(int)current.x][(int)current.z]+
-				length(current,(struct vector) {i,0,j});
-			int c = (distance->tiles[(int)current.x][(int)current.z] != 120)
-				&&(d < distance->tiles[i][j]);
-			if(c){
-				distance->tiles[i][j] = d;
-				parent[i][j] = current;
-			}
+			visit_tile(i,j,current,distance,visited);
 		}
 	}
 }
