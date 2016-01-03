@@ -379,9 +379,11 @@ void update_scavenger(struct game_state * gs, double delta, int j)
 			struct vector d = path_pop(&gs->npc[j].path);
 			d=path_pop(&gs->npc[j].path);
 			gs->npc[j].path_timer=1;
+			gs->npc[j].speed=2.0;
 
 			face(&gs->npc[j],d);
 		}else{
+			gs->npc[j].speed=3.0;
 			face(&gs->npc[j],gs->game_player.location);
 		}
 		move_towards_facing(&gs->npc[j],delta);
@@ -476,9 +478,11 @@ void update_ranger(struct game_state * gs, double delta, int j)
 			struct vector d = path_pop(&gs->npc[j].path);
 			d=path_pop(&gs->npc[j].path);
 			gs->npc[j].path_timer=1;
+			gs->npc[j].speed=1.5;
 
 			face(&gs->npc[j],d);
 		}else{
+			gs->npc[j].speed=2.5;
 			face(&gs->npc[j],gs->game_player.location);
 		}
 		move_towards_facing(&gs->npc[j],delta);
