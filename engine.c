@@ -229,11 +229,17 @@ void move_unit(struct unit * u,struct vector d)
 		return;
 	if((u->location.z+d.z)<0)
 		return;
-	if((l->tiles[(int)(u->location.x+d.x)][(int)(u->location.z)]!= LAYOUT_WALL)){
+	if(
+	(l->tiles[(int)(u->location.x+d.x)][(int)(u->location.z)]!= LAYOUT_WALL)&&
+	(l->tiles[(int)(u->location.x+vec.x)][(int)(u->location.z)]!= LAYOUT_WALL)
+	){
 		u->location.x+=d.x;
 	}
 
-	if((l->tiles[(int)(u->location.x)][(int)(u->location.z+d.z)]!= LAYOUT_WALL)){
+	if(
+	(l->tiles[(int)(u->location.x)][(int)(u->location.z+d.z)]!= LAYOUT_WALL)&&
+	(l->tiles[(int)(u->location.x)][(int)(u->location.z+vec.z)]!= LAYOUT_WALL)
+	){
 		u->location.z+=d.z;
 	}
 
@@ -383,7 +389,7 @@ void update_scavenger(struct game_state * gs, double delta, int j)
 					gs->game_player.location);
 			struct vector d = path_pop(&gs->npc[j].path);
 			d=path_pop(&gs->npc[j].path);
-			gs->npc[j].path_timer=1;
+			gs->npc[j].path_timer=0.5;
 
 			face(&gs->npc[j],d);
 		}else{
@@ -477,7 +483,7 @@ void update_ranger(struct game_state * gs, double delta, int j)
 					gs->game_player.location);
 			struct vector d = path_pop(&gs->npc[j].path);
 			d=path_pop(&gs->npc[j].path);
-			gs->npc[j].path_timer=1;
+			gs->npc[j].path_timer=0.5;
 
 			face(&gs->npc[j],d);
 		}else{
