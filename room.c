@@ -177,14 +177,23 @@ struct model model_room(struct room * room)
 struct room generate_room(int i)
 {
 	struct room room;
-	if(i==8){/* 8 is always the shop room*/
-		get_layout(&room,"layouts/shop.layout");
-		room.shop=generate_shop(&room);
-	}else if (i==9){/* 9 is always the boss room */
-		get_layout(&room,"layouts/boss.layout");
-		room.boss_room=1;
-	}else{
-		pick_layout(&room);
+	switch(i)
+	{
+		case 0:
+			get_layout(&room,"layouts/starting.layout");
+			break;
+		case 8:
+			get_layout(&room,"layouts/shop.layout");
+			room.shop=generate_shop(&room);
+			break;
+		case 9:
+			get_layout(&room,"layouts/boss.layout");
+			room.boss_room=1;
+			break;
+		default:
+			pick_layout(&room);
+			break;
+
 	}
 	count_doorways(&room);
 	room.gs = init_game(&room);
