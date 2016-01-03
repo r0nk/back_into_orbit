@@ -363,9 +363,14 @@ void move_towards_facing(struct unit * u,double delta)
 
 void update_scavenger(struct game_state * gs, double delta, int j)
 {
+	if(gs->npc[j].poison_timer>0.0){
+		gs->npc[j].health-=delta*3;
+		gs->npc[j].poison_timer-=delta;
+	}
 	if(gs->npc[j].path_timer>0){
 		move_towards_facing(&gs->npc[j],delta);
 		gs->npc[j].path_timer-=delta;
+		return;
 	}
 	if(near(gs->game_player.location,gs->npc[j].location,1.5)){
 		gs->game_player.health-=
@@ -379,20 +384,14 @@ void update_scavenger(struct game_state * gs, double delta, int j)
 			struct vector d = path_pop(&gs->npc[j].path);
 			d=path_pop(&gs->npc[j].path);
 			gs->npc[j].path_timer=1;
-			gs->npc[j].speed=2.0;
 
 			face(&gs->npc[j],d);
 		}else{
-			gs->npc[j].speed=3.0;
 			face(&gs->npc[j],gs->game_player.location);
 		}
 		move_towards_facing(&gs->npc[j],delta);
 	}
 
-	if(gs->npc[j].poison_timer>0.0){
-		gs->npc[j].health-=delta*3;
-		gs->npc[j].poison_timer-=delta;
-	}
 }
 
 void update_item_npc(struct game_state * gs, double delta, int j)
@@ -458,6 +457,7 @@ void update_ranger(struct game_state * gs, double delta, int j)
 	if(gs->npc[j].path_timer>0){
 		move_towards_facing(&gs->npc[j],delta);
 		gs->npc[j].path_timer-=delta;
+		return;
 	}
 
 	if(near(gs->game_player.location,gs->npc[j].location,7.5) 
@@ -478,11 +478,9 @@ void update_ranger(struct game_state * gs, double delta, int j)
 			struct vector d = path_pop(&gs->npc[j].path);
 			d=path_pop(&gs->npc[j].path);
 			gs->npc[j].path_timer=1;
-			gs->npc[j].speed=1.5;
 
 			face(&gs->npc[j],d);
 		}else{
-			gs->npc[j].speed=2.5;
 			face(&gs->npc[j],gs->game_player.location);
 		}
 		move_towards_facing(&gs->npc[j],delta);
