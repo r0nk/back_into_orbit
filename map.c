@@ -169,7 +169,6 @@ void move_through_doorway(struct map * map,int t)
 	dest_door = connected_doorway(map,t);
 	dest_room = get_room_by_doorway_index(map,dest_door->index);
 
-
 	if(dest_room!=map->current_room)
 		transfer_rooms(map,dest_room);
 
@@ -177,4 +176,14 @@ void move_through_doorway(struct map * map,int t)
 
 	map->current_room->gs.game_player.location = dest_door->location;
 	map->current_room->gs.game_player.location.x += 2;
+}
+
+struct unit buffer_player;
+
+void transfer_map(int level)
+{
+	buffer_player=world_map.current_room->gs.game_player;
+	world_map=generate_map();
+	world_map.current_room->gs.game_player = buffer_player;
+	world_map.current_room->gs.game_player.location=(struct vector){5,0,5};
 }

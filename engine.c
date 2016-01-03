@@ -436,6 +436,7 @@ void death(struct game_state * gs, int j)
 		add_npc(gs,item_npc(gs->npc[j].location,ITEM_COIN));
 	}
 	if(gs->npc[j].type == UNIT_TYPE_BOSS){
+		transfer_map(2);
 		gameover_ui = gameover_menu(gs->game_player.score,1);
 		game_over(gs);
 	}

@@ -135,7 +135,7 @@ void spawn_mobs(struct room * room)
 	}
 	loc.x=10;loc.z=10;
 	if(room->boss_room){
-		add_yoyo(&room->gs);
+		add_npc(&room->gs,boss_npc(loc));
 	}
 }
 

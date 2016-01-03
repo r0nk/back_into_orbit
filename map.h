@@ -24,6 +24,7 @@ struct map {
 	struct room room[MAX_ROOMS];
 	int n_edges;
 	struct edge edge[MAX_EDGES];
+	int level;/* current floor level */
 };
 
 static inline void dump_map(struct map * map)
@@ -45,6 +46,7 @@ static inline void dump_map(struct map * map)
 
 struct map generate_map();
 void generate_edges(struct map * map);
+void transfer_map(int level);
 
 void move_through_doorway(struct map * map,int t);
 
