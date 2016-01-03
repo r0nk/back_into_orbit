@@ -22,6 +22,7 @@ struct unit {
 	double rotation_angle;
 	point location;
 	struct path path;
+	double path_timer;
 	double health;
 	double max_health;
 	double cooldown;

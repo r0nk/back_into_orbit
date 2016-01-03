@@ -42,7 +42,7 @@ struct unit item_npc(struct vector location,int item_id)
 struct unit scavenger_npc(struct vector location)
 {
 	struct unit npc;
-	npc.speed=3.1;
+	npc.speed=2.5;
 	npc.health=20;
 	npc.damage=20;
 	npc.location=location;
@@ -58,7 +58,7 @@ struct unit scavenger_npc(struct vector location)
 struct unit ranger_npc(struct vector location)
 {
 	struct unit npc;
-	npc.speed=2.5;
+	npc.speed=1.5;
 	npc.cooldown=1;
 	npc.health=10;
 	npc.damage=10;
