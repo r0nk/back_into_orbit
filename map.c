@@ -128,13 +128,11 @@ void generate_rooms(struct map * map)
 	index_doorways(map);
 }
 
-struct map generate_map()
+void  generate_map( struct map * map)
 {
-	struct map map;
-	generate_rooms(&map);
-	generate_edges(&map);
-	map.current_room=&map.room[0];
-	return map;
+	generate_rooms(map);
+	generate_edges(map);
+	map->current_room=&map->room[0];
 }
 
 int other_edge(struct map * map,int index){
@@ -183,7 +181,7 @@ struct unit buffer_player;
 void transfer_map(int level)
 {
 	buffer_player=world_map.current_room->gs.game_player;
-	world_map=generate_map();
+	generate_map(&world_map);
 	world_map.current_room->gs.game_player = buffer_player;
 	world_map.current_room->gs.game_player.location=(struct vector){5,0,5};
 }

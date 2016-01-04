@@ -19,7 +19,7 @@ int main()
 	srand(time(NULL));
 	init_graphics();
 	init_audio();
-	world_map=generate_map();
+	generate_map(&world_map);
 	init_ui();
 	paused=0;
 	is_game_over=0;

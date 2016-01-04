@@ -437,8 +437,6 @@ void death(struct game_state * gs, int j)
 	}
 	if(gs->npc[j].type == UNIT_TYPE_BOSS){
 		transfer_map(2);
-		gameover_ui = gameover_menu(gs->game_player.score,1);
-		game_over(gs);
 	}
 	if(gs->npc[j].type == UNIT_TYPE_YO){
 		remove_npc(gs,j);

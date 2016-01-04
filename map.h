@@ -44,7 +44,7 @@ static inline void dump_map(struct map * map)
 	}
 }
 
-struct map generate_map();
+void generate_map(struct map * map);
 void generate_edges(struct map * map);
 void transfer_map(int level);
 
