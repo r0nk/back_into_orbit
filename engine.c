@@ -437,6 +437,11 @@ void death(struct game_state * gs, int j)
 	}
 	if(gs->npc[j].type == UNIT_TYPE_BOSS){
 		transfer_map(2);
+		return;
+	}
+	if(gs->npc[j].type == UNIT_TYPE_MOLE){
+		transfer_map(3);
+		return;
 	}
 	if(gs->npc[j].type == UNIT_TYPE_YO){
 		remove_npc(gs,j);

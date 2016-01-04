@@ -76,7 +76,7 @@ struct vector pick_colors(int i)
 			return (struct vector) {230,0,230};
 			break;
 		case 5:
-			return (struct vector) {115,230,0};
+			return (struct vector) {204,203,127};
 			break;
 		case 6:
 			return (struct vector) {230,230,230};
@@ -88,7 +88,7 @@ struct vector pick_colors(int i)
 			return (struct vector) {255,215,0};
 			break;
 		case 9:
-			return (struct vector) {10,10,10};
+			return (struct vector) {16,16,16};
 			break;
 		default:
 			return (struct vector) {rand()%255,rand()%255,rand()%255};
@@ -174,7 +174,7 @@ struct model model_room(struct room * room)
 	return m;
 }
 
-struct room generate_room(int i)
+struct room generate_room(int i,int level)
 {
 	struct room room;
 	switch(i)
@@ -187,8 +187,14 @@ struct room generate_room(int i)
 			room.shop=generate_shop(&room);
 			break;
 		case 9:
-			get_layout(&room,"layouts/boss.layout");
-			room.boss_room=1;
+			room.boss_room=level;
+			if(level==1){
+				get_layout(&room,"layouts/boss.layout");
+			} else if(level==2){
+				get_layout(&room,"layouts/mole.layout");
+			} else if(level==3){
+				get_layout(&room,"layouts/yoyo.layout");
+			}
 			break;
 		default:
 			pick_layout(&room);

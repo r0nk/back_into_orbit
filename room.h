@@ -62,7 +62,7 @@ extern struct model block;
 
 #define LAYOUT_WALL '#'
 
-struct room generate_room();
+struct room generate_room(int i, int level);
 void get_layout(struct room * room,char * pathname);
 
 struct shop generate_shop(struct room * room);

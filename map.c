@@ -122,14 +122,15 @@ void generate_rooms(struct map * map)
 {
 	int i;
 	for(i=0;i<MAX_ROOMS;i++){
-		map->room[i]=generate_room(i);
+		map->room[i]=generate_room(i,map->level);
 	}
 	map->n_rooms=MAX_ROOMS;
 	index_doorways(map);
 }
 
-void  generate_map( struct map * map)
+void  generate_map( struct map * map,int level)
 {
+	map->level=level;
 	generate_rooms(map);
 	generate_edges(map);
 	map->current_room=&map->room[0];
@@ -180,8 +181,8 @@ struct unit buffer_player;
 
 void transfer_map(int level)
 {
-	buffer_player=world_map.current_room->gs.game_player;
-	generate_map(&world_map);
+	buffer_player = world_map.current_room->gs.game_player;
+	generate_map(&world_map,level);
 	world_map.current_room->gs.game_player = buffer_player;
 	world_map.current_room->gs.game_player.location=(struct vector){5,0,5};
 }
