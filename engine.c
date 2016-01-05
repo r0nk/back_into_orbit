@@ -402,7 +402,7 @@ void update_scavenger(struct game_state * gs, double delta, int j)
 
 void update_item_npc(struct game_state * gs, double delta, int j)
 {
-	gs->npc[j].rotation_angle += 45*delta;
+	gs->npc[j].rotation_angle += 90*delta;
 	if(near(gs->game_player.location, gs->npc[j].location,1.5)){
 		gs->game_player.score+=gs->npc[j].score;
 		remove_npc(gs,j);
