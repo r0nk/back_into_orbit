@@ -109,7 +109,8 @@ struct model model_floors(struct room * room)
 		for(z=0;z<MAX_ROOM_HEIGHT;z++){
 			if(room->layout.tiles[x][z] && !wm[x][z]){
 				for(d.x=0;d.x<MAX_ROOM_WIDTH;d.x++){
-					if(room->layout.tiles[(int)d.x+x][z] && !wm[(int)d.x+x][z]){
+					if(room->layout.tiles[(int)d.x+x][z] 
+							&& !wm[(int)d.x+x][z]){
 						wm[(int)d.x+x][z]=1;
 					}else{
 						break;

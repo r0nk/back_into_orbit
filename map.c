@@ -64,21 +64,18 @@ struct doorway * get_nonconnected_door(struct map * map)
 	return NULL;
 }
 
-void generate_edge(struct map * map)
+void connect_edges(struct map * map,struct doorway * d1, struct doorway * d2)
 {
-	struct doorway * d1, * d2;
-	struct room *room;
 	if(map->n_edges >= MAX_EDGES)
 	{
 		printf("WARNING: tried to generate over max edges\n");
 		return;
 	}
+	struct room *room;
 
-	d1 = get_nonconnected_door(map);
 	d1->is_connected=1;
 	map->edge[map->n_edges].a=d1->index;
 
-	d2 = get_nonconnected_door(map);
 	d2->is_connected=1;
 	map->edge[map->n_edges].b=d2->index;
 
@@ -90,17 +87,38 @@ void generate_edge(struct map * map)
 	map->n_edges++;
 }
 
+void generate_edge(struct map * map)
+{
+	struct doorway * d1, * d2;
+	struct room *room;
+
+	d1 = get_nonconnected_door(map);
+	d2 = get_nonconnected_door(map);
+
+	connect_edges(map,d1,d2);
+}
+
+/*make sure the player starting room, the shop, and the boss are all connected 
+ * first */
+void generate_edges_for_specials(struct map * map)
+{
+	connect_edges(map,&map->room[0].doorway[0],get_nonconnected_door(map));
+	connect_edges(map,&map->room[8].doorway[0],get_nonconnected_door(map));
+	connect_edges(map,&map->room[9].doorway[0],get_nonconnected_door(map));
+}
+
 void generate_edges(struct map * map)
 {
 	int i;
 	struct doorway * d;
 	map->n_edges=0;
 	/* we reset all the connections first */
-	for(i=0;i<map->n_doorways;i++){
+	for(i=0;i<(map->n_doorways);i++){
 		d = get_doorway_by_index(map,i);
 		d->is_connected=0;
 	}
-	for(i=0;i<(map->n_doorways/2);i++){
+	generate_edges_for_specials(map);
+	for(i=0;i<((map->n_doorways/2)-6);i++){
 		generate_edge(map);
 	}
 }
