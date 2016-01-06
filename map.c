@@ -74,9 +74,8 @@ void connect_edges(struct map * map,struct doorway * d1, struct doorway * d2)
 	struct room *room;
 
 	d1->is_connected=1;
-	map->edge[map->n_edges].a=d1->index;
-
 	d2->is_connected=1;
+	map->edge[map->n_edges].a=d1->index;
 	map->edge[map->n_edges].b=d2->index;
 
 	room = get_room_by_doorway_index(map,d2->index);

@@ -47,7 +47,6 @@ void count_doorways(struct room * room)
 			if((room->layout.tiles[x][z]) > ('0'-1)
 					&& room->layout.tiles[x][z]<'9'){
 				room->doorway[n].location =(struct vector){x,0,z};
-				room->doorway[n].is_connected=0;
 				n++;
 			}
 			if(room->layout.tiles[x][z]=='K')
