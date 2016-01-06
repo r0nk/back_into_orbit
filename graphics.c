@@ -129,7 +129,7 @@ void deinit_graphics()
 	glfwTerminate();
 }
 
-void draw_vertice(struct vertice v)
+static inline void draw_vertice(struct vertice v)
 {
 	glNormal3f(v.n.x, v.n.y, v.n.z);
 	glColor3f( v.c.x, v.c.y, v.c.z);
@@ -678,13 +678,23 @@ void draw_stars()
 	glEnd();
 }
 
+struct vector get_selection_v(struct vector starting){
+	struct vector v = starting;
+	v.z++;
+	struct vector pmv = pixel_to_screen(pi.mouse_x,pi.mouse_y);
+
+	if(pmv.y<3 && pmv.y > -2)
+		v.y=pmv.y;
+	else
+		v.y=2;
+	return v;
+}
+
 void draw_selection_plane(struct vector starting, struct vector path_color)
 {
 	struct vector c = {0,0,0};
-	struct vector v = starting;
+	struct vector v = get_selection_v(starting);
 	double ship_scale = 0.3;
-	v.y--;
-	v.z++;
 	draw_line(starting,v,path_color);
 
 	struct polygon a,b;
@@ -783,7 +793,7 @@ void draw_main_menu()
 	draw_stars();
 
 	planet_rotation+=0.10;
-	draw_model(mm_planet_model,(struct vector){0,-10,0},
+	draw_model(mm_planet_model,(struct vector){0,-12,0},
 			planet_rotation, (struct vector){1.0,0,0.5});
 
 	draw_orbit_path();
