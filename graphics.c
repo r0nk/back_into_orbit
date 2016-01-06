@@ -176,6 +176,23 @@ void draw_line(struct vector start, struct vector end, struct vector color)
 	glEnd();
 }
 
+void draw_stippled_line(struct vector start, struct vector end, 
+		struct vector color)
+{
+	glPushAttrib(GL_ENABLE_BIT);
+
+	glLineStipple(1,0xF000);
+	glEnable(GL_LINE_STIPPLE);
+	glLineWidth(3.0);
+	glColor3f(color.x, color.y, color.z);
+	glBegin(GL_LINES);
+	glVertex3d(start.x,start.y,start.z);
+	glVertex3d(end.x,end.y,end.z);
+	glEnd();
+	
+	glPopAttrib();
+}
+
 void draw_floor(int x, int y, int z){
 	glPushMatrix();
 	glTranslatef((double)x,(double)y,(double)z);
@@ -661,6 +678,100 @@ void draw_stars()
 	glEnd();
 }
 
+void draw_selection_plane(struct vector starting, struct vector path_color)
+{
+	struct vector c = {0,0,0};
+	struct vector v = starting;
+	double ship_scale = 0.3;
+	v.y--;
+	v.z++;
+	draw_line(starting,v,path_color);
+
+	struct polygon a,b;
+
+	a.v[0].p = v;
+	a.v[1].p = v;
+	a.v[2].p = v;
+
+	a.v[0].p.y+=1*ship_scale;
+	a.v[1].p.x-=1.4141*ship_scale;
+	a.v[2].p.y-=1*ship_scale;
+
+	a.v[0].p.x+=0.2;
+	a.v[1].p.x+=0.2;
+	a.v[2].p.x+=0.2;
+
+	a.v[0].p.z=0;
+	a.v[1].p.z=0;
+	a.v[2].p.z=0;
+
+	a.v[0].c = c;
+	a.v[1].c = c;
+	a.v[2].c = c;
+
+	a.v[0].n = normal(a.v[0].p);
+	a.v[1].n = normal(a.v[1].p);
+	a.v[2].n = normal(a.v[2].p);
+
+	b.v[0].p = v;
+	b.v[1].p = v;
+	b.v[2].p = v;
+
+	b.v[0].p.z=1;
+	b.v[1].p.z=1;
+	b.v[2].p.z=1;
+
+	b.v[0].p.y+=1.3*ship_scale;
+	b.v[1].p.x-=1.8141*ship_scale;
+	b.v[2].p.y-=1.3*ship_scale;
+
+	b.v[0].p.x+=0.25;
+	b.v[1].p.x+=0.20;
+	b.v[2].p.x+=0.25;
+
+	c = (struct vector) {1,0.6,0};
+	b.v[0].c = c;
+	b.v[1].c = c;
+	b.v[2].c = c;
+
+	b.v[0].n = normal(a.v[0].p);
+	b.v[1].n = normal(a.v[1].p);
+	b.v[2].n = normal(a.v[2].p);
+
+	glBegin(GL_TRIANGLES);
+	draw_poly(b);
+	draw_poly(a);
+	glEnd();
+}
+
+void draw_orbit_path()
+{
+	struct vector c = {0,1,1};
+
+	struct vector a,b;
+	a = (struct vector) {-10,-3,1};
+	b = (struct vector) {-7,0,1};
+	draw_line(a,b,c);
+
+	a = b;
+	b = (struct vector){-2,3,1};
+	draw_line(a,b,c);
+
+	a = b;
+	b = (struct vector){3,3,1};
+	draw_line(a,b,c);
+
+	draw_selection_plane(b,c);
+
+	a = b;
+	b = (struct vector){7,0,1};
+	draw_stippled_line(a,b,c);
+
+	a = b;
+	b = (struct vector){10,-3,1};
+	draw_stippled_line(a,b,c);
+}
+
 double planet_rotation;
 void draw_main_menu()
 {
@@ -674,6 +785,8 @@ void draw_main_menu()
 	planet_rotation+=0.10;
 	draw_model(mm_planet_model,(struct vector){0,-10,0},
 			planet_rotation, (struct vector){1.0,0,0.5});
+
+	draw_orbit_path();
 
 	glBegin(GL_TRIANGLES);
 	draw_text(3.0,5,"BACK INTO ORBIT",(struct vector) {0,1,1});
