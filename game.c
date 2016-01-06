@@ -24,7 +24,7 @@ struct unit yo_npc(struct vector location)
 	return npc;
 }
 
-struct unit item_npc(struct vector location,int item_id)
+struct unit item_npc(struct vector location, int item_id)
 {
 	struct unit npc;
 	npc.speed=0.0;
@@ -118,6 +118,30 @@ void add_yoyo(struct game_state * gs)
 	add_npc(gs,z);
 }
 
+void spawn_boss(struct room * room)
+{
+	struct vector loc = {10,0,10};
+	switch(room->boss_room)
+	{
+		case 1:
+			add_npc(&room->gs,boss_npc(loc));
+			break;
+		case 2:
+			add_npc(&room->gs,mole_npc(loc));
+			if(room->gs.n_npcs==0)
+				err(-44,"couldn't add mole_npc");
+			break;
+		case 3:
+			add_yoyo(&room->gs);
+			if(room->gs.n_npcs==0)
+				err(-43,"couldn't add yoyo_npc");
+			break;
+		default:
+			printf("ERR:unrecognized boss type");
+			break;
+	}
+}
+
 void spawn_mobs(struct room * room)
 {
 	struct vector loc = {0,0,0};
@@ -133,15 +157,8 @@ void spawn_mobs(struct room * room)
 			}
 		}
 	}
-	loc = (struct vector) {5,0,5};
-	if(room->boss_room){
-		if(room->boss_room==1)
-			add_npc(&room->gs,boss_npc(loc));
-		if(room->boss_room==2)
-			add_npc(&room->gs,mole_npc(loc));
-		if(room->boss_room==3)
-			add_yoyo(&room->gs);
-	}
+	if(room->boss_room)
+		spawn_boss(room);
 }
 
 struct unit init_player()

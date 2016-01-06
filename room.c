@@ -180,20 +180,20 @@ struct room generate_room(int i,int level)
 	switch(i)
 	{
 		case 0:
-			get_layout(&room,"layouts/starting.layout");
+			get_layout(&room,"layouts/starting.special");
 			break;
 		case 8:
-			get_layout(&room,"layouts/shop.layout");
+			get_layout(&room,"layouts/shop.special");
 			room.shop=generate_shop(&room);
 			break;
 		case 9:
 			room.boss_room=level;
 			if(level==1){
-				get_layout(&room,"layouts/boss.layout");
+				get_layout(&room,"layouts/boss.special");
 			} else if(level==2){
-				get_layout(&room,"layouts/mole.layout");
+				get_layout(&room,"layouts/mole.special");
 			} else if(level==3){
-				get_layout(&room,"layouts/yoyo.layout");
+				get_layout(&room,"layouts/yoyo.special");
 			}
 			break;
 		default:

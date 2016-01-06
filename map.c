@@ -153,7 +153,7 @@ void generate_rooms(struct map * map)
 	index_doorways(map);
 }
 
-void  generate_map( struct map * map,int level)
+void generate_map(struct map * map,int level)
 {
 	map->level=level;
 	generate_rooms(map);

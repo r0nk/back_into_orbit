@@ -436,13 +436,13 @@ void death(struct game_state * gs, int j)
 		add_npc(gs,item_npc(gs->npc[j].location,ITEM_COIN));
 	}
 	if(gs->npc[j].type == UNIT_TYPE_BOSS){
-		transfer_map(2);
 		remove_npc(gs,j);
+		transfer_map(2);
 		return;
 	}
 	if(gs->npc[j].type == UNIT_TYPE_MOLE){
-		transfer_map(3);
 		remove_npc(gs,j);
+		transfer_map(3);
 		return;
 	}
 	if(gs->npc[j].type == UNIT_TYPE_YO){
@@ -532,15 +532,13 @@ void update_mole(struct game_state * gs, double delta,int j)
 		teleport_mole(&gs->npc[j]);
 	}
 
-	if(near(gs->game_player.location,gs->npc[j].location,7.5)){
-		face(&gs->npc[j],gs->game_player.location);
-		if(gs->npc[j].cooldown>0){
-			gs->npc[j].cooldown-=delta;
-		}else{
-			fire_bullet(gs,gs->npc[j],d);
-			gs->npc[j].cooldown=0.4;
-		}
-	} 
+	face(&gs->npc[j],gs->game_player.location);
+	if(gs->npc[j].cooldown>0){
+		gs->npc[j].cooldown-=delta;
+	}else{
+		fire_bullet(gs,gs->npc[j],d);
+		gs->npc[j].cooldown=0.4;
+	}
 	if(gs->npc[j].poison_timer>0.0){
 		gs->npc[j].health-=delta*3;
 		gs->npc[j].poison_timer-=delta;
