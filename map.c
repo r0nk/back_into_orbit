@@ -94,6 +94,14 @@ void generate_edge(struct map * map)
 	d1 = get_nonconnected_door(map);
 	d2 = get_nonconnected_door(map);
 
+	if(d1==d2) //prevent self-doors
+		d1 = get_nonconnected_door(map);
+
+	room = get_room_by_doorway_index(map,d1->index);
+	if(room==get_room_by_doorway_index(map,d2->index))
+		d2 = get_nonconnected_door(map);
+
+
 	connect_edges(map,d1,d2);
 }
 
@@ -117,7 +125,7 @@ void generate_edges(struct map * map)
 		d->is_connected=0;
 	}
 	generate_edges_for_specials(map);
-	for(i=0;i<((map->n_doorways/2)-6);i++){
+	for(i=0;i<((map->n_doorways/2)-3);i++){
 		generate_edge(map);
 	}
 }

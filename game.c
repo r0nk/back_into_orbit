@@ -133,7 +133,7 @@ void spawn_mobs(struct room * room)
 			}
 		}
 	}
-	loc.x=10;loc.z=10;
+	loc = (struct vector) {5,0,5};
 	if(room->boss_room){
 		if(room->boss_room==1)
 			add_npc(&room->gs,boss_npc(loc));
