@@ -68,10 +68,10 @@ inline static struct ui main_menu()
 	struct vector color = (struct vector) {1,1,1};
 	struct vector loc = (struct vector) {0,1,0};
 	struct ui ui;
-	ui.n_buttons=3;
+	ui.n_buttons=2;
 	ui.n_text_fields=0;
 	ui.button[0].location.x=loc.x-1;
-	ui.button[0].location.y=loc.y-2.5;
+	ui.button[0].location.y=loc.y-1.0;
 	ui.button[0].size.x=3.5;
 	ui.button[0].size.y=1;
 	ui.button[0].down=0;
@@ -80,22 +80,13 @@ inline static struct ui main_menu()
 	ui.button[0].callback = exit_callback;
 
 	ui.button[1].location.x=loc.x-1;
-	ui.button[1].location.y=loc.y-1;
+	ui.button[1].location.y=loc.y+0.5;
 	ui.button[1].size.x=3.5;
 	ui.button[1].size.y=1;
 	ui.button[1].down=0;
-	ui.button[1].text="Options";
+	ui.button[1].text="Play";
 	ui.button[1].color = color;
-	ui.button[1].callback = exit_callback;
-
-	ui.button[2].location.x=loc.x-1;
-	ui.button[2].location.y=loc.y+0.5;
-	ui.button[2].size.x=3.5;
-	ui.button[2].size.y=1;
-	ui.button[2].down=0;
-	ui.button[2].text="Play";
-	ui.button[2].color = color;
-	ui.button[2].callback = play_callback;
+	ui.button[1].callback = play_callback;
 	return ui;
 }
 
