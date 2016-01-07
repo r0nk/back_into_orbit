@@ -683,7 +683,7 @@ struct vector get_selection_v(struct vector starting){
 	v.z++;
 	struct vector pmv = pixel_to_screen(pi.mouse_x,pi.mouse_y);
 
-	if(pmv.y<3 && pmv.y > -2)
+	if(pmv.y<2.5 && pmv.y > -1.5)
 		v.y=pmv.y;
 	else
 		v.y=2;

@@ -617,28 +617,25 @@ void update_npcs(struct game_state * gs, double delta)
 			death(gs,j);
 		}
 
-		if(gs->npc[j].type == UNIT_TYPE_YO){
-			update_yo(gs,delta,j);
-		}
-
-		if(gs->npc[j].type == UNIT_TYPE_NEUTRAL_CREEP){
-			update_scavenger(gs,delta,j);
-		}
-
-		if(gs->npc[j].type == UNIT_TYPE_MOLE){
-			update_mole(gs,delta,j);
-		}
-
-		if(gs->npc[j].type == UNIT_TYPE_RANGER){
-			update_ranger(gs,delta,j);
-		}
-
-		if(gs->npc[j].type == UNIT_TYPE_ITEM){
-			update_item_npc(gs,delta,j);
-		}
-
-		if(gs->npc[j].type == UNIT_TYPE_BOSS){
-			update_boss(gs,delta,j);
+		switch(gs->npc[j].type){
+			case UNIT_TYPE_YO:
+				update_yo(gs,delta,j);
+				break;
+			case UNIT_TYPE_NEUTRAL_CREEP:
+				update_scavenger(gs,delta,j);
+				break;
+			case UNIT_TYPE_MOLE:
+				update_mole(gs,delta,j);
+				break;
+			case UNIT_TYPE_RANGER:
+				update_ranger(gs,delta,j);
+				break;
+			case UNIT_TYPE_ITEM:
+				update_item_npc(gs,delta,j);
+				break;
+			case UNIT_TYPE_BOSS:
+				update_boss(gs,delta,j);
+				break;
 		}
 	}
 }
