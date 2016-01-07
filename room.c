@@ -170,13 +170,13 @@ struct model model_room(struct room * room)
 	struct model m = model_walls(room);
 	struct model f = model_floors(room);
 	add_submodel(&m,&f);
-//	printf("modeled room, cardinality: %i\n",m.cardinality);
 	return m;
 }
 
 struct room generate_room(int i,int level)
 {
 	struct room room;
+	room.boss_room=0;
 	switch(i)
 	{
 		case 0:

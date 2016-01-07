@@ -200,6 +200,7 @@ void move_through_doorway(struct map * map,int t)
 
 	map->current_room->gs.game_player.location = dest_door->location;
 	map->current_room->gs.game_player.location.x += 2;
+
 }
 
 struct unit buffer_player;

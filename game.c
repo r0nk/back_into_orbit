@@ -77,7 +77,7 @@ struct unit mole_npc(struct vector location)
 	struct unit npc;
 	npc.speed=0;
 	npc.damage=10;
-	npc.health=200;
+	npc.health=150;
 	npc.location=location;
 	npc.type = UNIT_TYPE_MOLE;
 	npc.rotation_angle = 90;
