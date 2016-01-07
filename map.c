@@ -96,6 +96,10 @@ void generate_edge(struct map * map)
 
 	if(d1==d2) //prevent self-doors
 		d1 = get_nonconnected_door(map);
+	if(d1==d2) //prevent self-doors
+		d1 = get_nonconnected_door(map);
+	if(d1==d2) //prevent self-doors
+		d1 = get_nonconnected_door(map);
 
 	room = get_room_by_doorway_index(map,d1->index);
 	if(room==get_room_by_doorway_index(map,d2->index))

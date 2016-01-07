@@ -6,7 +6,7 @@
 
 void regen_effect(struct game_state * gs, double delta){
 	if((gs->game_player.health) < (gs->game_player.max_health)){
-		gs->game_player.health+=delta;
+		gs->game_player.health+=delta*5;
 	}
 }
 
