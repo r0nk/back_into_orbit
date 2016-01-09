@@ -266,19 +266,19 @@ void player_movement(struct game_state * gs, double delta)
 		return;
 	}
 
-	if(pi.keys['W']){
+	if(pi.keys['W'] || pi.keys['w']){
 		dvec.x-=delta;
 		dvec.z-=delta;
 	}
-	if(pi.keys['A']){
+	if(pi.keys['A'] || pi.keys['a']){
 		dvec.x-=delta;
 		dvec.z+=delta;
 	}
-	if(pi.keys['S']){
+	if(pi.keys['S'] || pi.keys['s']){
 		dvec.x+=delta;
 		dvec.z+=delta;
 	}
-	if(pi.keys['D']){
+	if(pi.keys['D'] || pi.keys['d']){
 		dvec.x+=delta;
 		dvec.z-=delta;
 	}

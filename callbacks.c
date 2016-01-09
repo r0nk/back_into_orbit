@@ -19,9 +19,11 @@ void key_callback(SDL_Event event)
 {
 	int key = event.key.keysym.sym;
 	int action = event.key.state == SDL_PRESSED;
-	printf("key pressed: %i\n",key);
-	if(key>400 && key!=342)
-		err(-23,"key>255, key=%i",key);
+	if(key>400 && key!=342){
+		printf("key>400: %c",key);
+		return;
+	}
+
 	if(key==256 && action ==0){
 		if(!is_game_over)
 			paused=!paused;
@@ -69,7 +71,15 @@ void process_events()
 	/* Grab all the events off the queue. */
 	while( SDL_PollEvent( &event ) ) {
 		switch( event.type ) {
+			case SDL_MOUSEBUTTONDOWN:
+			case SDL_MOUSEBUTTONUP:
+				cursor_button_callback(event);
+				break;
+			case SDL_MOUSEMOTION:
+				cursor_callback(event);
+				break;
 			case SDL_KEYDOWN:
+			case SDL_KEYUP:
 				key_callback(event );
 				break;
 			case SDL_QUIT:

@@ -92,9 +92,9 @@ int init_window_lib()
 		return 1;
 	}
 
-	SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 5);
-	SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 5);
-	SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 5);
+	SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 8);
+	SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 8);
+	SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 8);
 	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 16);
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 
@@ -108,7 +108,7 @@ int init_window_lib()
 	if(!glcontext)
 		printf("!glcontext\n");
 
-
+	SDL_GL_GetDrawableSize(window,&window_width,&window_height);
 
 	return 0;
 }
@@ -138,7 +138,7 @@ void init_gl()
 {
 	glViewport(0,0,window_width,window_height);
 	ratio = window_width / (float) window_height;
-	glClearColor(0.0,0.0,1.0,1.0);
+	glClearColor(0.0,0.0,0.0,1.0);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);
