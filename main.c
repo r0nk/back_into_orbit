@@ -3,7 +3,6 @@
 #include <unistd.h>
 #include <stdio.h>
 
-#include <gperftools/profiler.h>
 
 #include "game_state.h"
 #include "graphics.h"
@@ -23,11 +22,9 @@ int main()
 	init_ui();
 	paused=0;
 	is_game_over=0;
-//	ProfilerStart("profdata");
 	while(1){
 		engine_tick(&(world_map.current_room->gs));
 		graphics_draw(&(world_map.current_room->gs));
 	}
-//	ProfilerStop();
 	return 0;
 }
