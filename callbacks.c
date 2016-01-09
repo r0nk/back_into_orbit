@@ -20,11 +20,11 @@ void key_callback(SDL_Event event)
 	int key = event.key.keysym.sym;
 	int action = event.key.state == SDL_PRESSED;
 	if(key>400 && key!=342){
-		printf("key>400: %c",key);
+		printf("key>400: %c\n",key);
 		return;
 	}
 
-	if(key==256 && action ==0){
+	if(key==27 && action ==0){
 		if(!is_game_over)
 			paused=!paused;
 	}

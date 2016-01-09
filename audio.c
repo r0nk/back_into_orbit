@@ -13,6 +13,7 @@ static long audio_len;
 static char * audio_pos;
 
 int audio_initalized;
+int audio_enabled;
 
 void fill_audio(void *udata, Uint8 *stream, int len)
 {
@@ -35,6 +36,7 @@ void tzztzzz(){
 	audio_pos = (char *)audio_chunk;
 	audio_len = 100;
 
+	if(audio_enabled)
 	SDL_PauseAudio(0);
 }
 
@@ -48,6 +50,7 @@ void pew(){
 	audio_pos = (char *)audio_chunk;
 	audio_len = AUDIO_BUFF_SIZE;
 
+	if(audio_enabled)
 	SDL_PauseAudio(0);
 }
 
@@ -61,6 +64,7 @@ void teledice_sound(int a, int b)
 	}
 	audio_pos = (char *)audio_chunk;
 	audio_len = length;
+	if(audio_enabled)
 	SDL_PauseAudio(0);
 }
 void bzewerwwww(int to, int from)
@@ -78,6 +82,7 @@ void bzewerwwww(int to, int from)
 	audio_pos = (char *)audio_chunk;
 	audio_len = length;
 
+	if(audio_enabled)
 	SDL_PauseAudio(0);
 }
 
@@ -91,6 +96,7 @@ void deathplosion()
 	audio_pos = (char *)audio_chunk;
 	audio_len = AUDIO_BUFF_SIZE- 3000;
 
+	if(audio_enabled)
 	SDL_PauseAudio(0);
 }
 
@@ -107,7 +113,8 @@ void sin_sound(double f)
 	audio_pos = (char *)audio_chunk;
 	audio_len = length;
 
-	SDL_PauseAudio(0);
+	if(audio_enabled)
+		SDL_PauseAudio(0);
 }
 
 void init_audio()
@@ -126,4 +133,5 @@ void init_audio()
 	if(error<0)
 		err(-53,"Couldn't initalize audio: %s",SDL_GetError());
 	audio_initalized=1;
+	audio_enabled=0;
 }
