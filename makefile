@@ -1,5 +1,5 @@
 CFLAGS=-fbuiltin -Wall -Wextra -g
-LIBS= -lgcc -lGL -lGLU -lglfw3 -lX11 -lXxf86vm -lXrandr -lpthread -lXi -lm -lXinerama -lXft -lXcursor -I../common -I"/usr/include/SDL2" -lSDL -lprofiler
+LIBS= -lgcc -lGL -lGLU -lglfw3 -lX11 -lXrandr -lpthread -lXi -lm -lXinerama -lXcursor -I../common -I"/usr/include/SDL2" -lSDL2
 CC=gcc
 
 SRCFILES:= $(shell find -type f -name "*.c")
