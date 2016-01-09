@@ -1,6 +1,7 @@
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <SDL.h>
 
 #include "input.h"
 #include "callbacks.h"
@@ -8,13 +9,17 @@
 #include "game.h"
 #include "graphics.h"
 
+
 void err_callback(int err, const char* description)
 {
 	printf("ERR CALLBACK[%i]:%s\n",err,description);
 }
 
-void key_callback(GLFWwindow * win, int key, int scanc, int action, int mods)
+void key_callback(SDL_Event event)
 {
+	int key = event.key.keysym.sym;
+	int action = event.key.state == SDL_PRESSED;
+	printf("key pressed: %i\n",key);
 	if(key>400 && key!=342)
 		err(-23,"key>255, key=%i",key);
 	if(key==256 && action ==0){
@@ -24,18 +29,19 @@ void key_callback(GLFWwindow * win, int key, int scanc, int action, int mods)
 	pi.keys[key]=(char)action; /*action is a binary (press||depress)*/
 }
 
-void cursor_callback(GLFWwindow * win, double xpos, double ypos)
+void cursor_callback(SDL_Event event)
 {
-	pi.mouse_x=xpos;
-	pi.mouse_y=ypos;
+	pi.mouse_x=event.motion.x;
+	pi.mouse_y=event.motion.y;
 }
 
-void cursor_button_callback(GLFWwindow * win, int button, int action, int mods)
+void cursor_button_callback(SDL_Event event)
 {
-	//for button, 0 = left, 1 = right, 2 = middle
-	if(button==0)
+	int button = event.button.button;
+	int action = (event.button.type == SDL_MOUSEBUTTONDOWN);
+	if(button==SDL_BUTTON_LEFT)
 		pi.left_click=action;
-	if(button==1)
+	if(button==SDL_BUTTON_RIGHT)
 		pi.right_click=action;
 }
 
@@ -53,4 +59,22 @@ void play_callback()
 void exit_callback()
 {
 	exit(0);
+}
+
+void process_events()
+{
+	/* Our SDL event placeholder. */
+	SDL_Event event;
+
+	/* Grab all the events off the queue. */
+	while( SDL_PollEvent( &event ) ) {
+		switch( event.type ) {
+			case SDL_KEYDOWN:
+				key_callback(event );
+				break;
+			case SDL_QUIT:
+				exit(0);
+				break;
+		}
+	}
 }

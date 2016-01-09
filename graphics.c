@@ -1,3 +1,4 @@
+#include <GL/glu.h>
 #include <SDL.h>
 
 #include "input.h"
@@ -15,7 +16,8 @@
 #include "fonts.h"
 #include "ui.h"
 
-GLFWwindow * window;
+SDL_Window * window;
+SDL_GLContext glcontext;
 int window_width,window_height;
 float frame_x,frame_y;
 
@@ -89,6 +91,25 @@ int init_window_lib()
 		       );
 		return 1;
 	}
+
+	SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 5);
+	SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 5);
+	SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 5);
+	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 16);
+	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+
+	window = SDL_CreateWindow("Back Into Orbit",
+			SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
+			640, 480,
+			SDL_WINDOW_OPENGL );
+	if(!window)
+		printf("!window\n");
+	SDL_GLContext glcontext = SDL_GL_CreateContext(window);
+	if(!glcontext)
+		printf("!glcontext\n");
+
+
+
 	return 0;
 }
 
@@ -117,7 +138,7 @@ void init_gl()
 {
 	glViewport(0,0,window_width,window_height);
 	ratio = window_width / (float) window_height;
-	glClearColor(0.0,0.0,0.0,1.0);
+	glClearColor(0.0,0.0,1.0,1.0);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);
@@ -840,6 +861,6 @@ void graphics_draw(struct game_state * gs)
 	else
 		draw_main_menu();
 
-	glfwSwapBuffers(window);
-	glfwPollEvents();
+	SDL_GL_SwapWindow(window);
+	process_events();
 }
