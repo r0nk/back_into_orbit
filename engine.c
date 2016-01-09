@@ -1,4 +1,4 @@
-#include <GLFW/glfw3.h>
+#include <SDL.h>
 #include <math.h>
 #include <stdio.h>
 
@@ -127,11 +127,16 @@ int wall_intersects_line(struct vector a, struct vector b)
 	return 0;
 }
 
-double delta_time()
+unsigned int last_time;
+double delta_time()/* the change in terms of seconds */
 {
-	double s = glfwGetTime();
-	glfwSetTime(0.0);
-	return s;
+	int s;
+	float ret;
+	s = SDL_GetTicks();
+	ret = (double)s-last_time;
+	last_time=s;
+	ret/=1000;//convert to milliseconds*/
+	return ret;
 }
 
 int door_at(struct vector l)

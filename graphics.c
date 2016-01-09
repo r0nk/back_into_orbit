@@ -1,5 +1,4 @@
-#define GLFW_INCLUDE_GLU
-#include <GLFW/glfw3.h>
+#include <SDL.h>
 
 #include "input.h"
 #include "pathfinding.h"
@@ -84,6 +83,18 @@ void init_models()
 
 int init_window_lib()
 {
+	if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
+		fprintf(stderr,"\nUnable to initialize SDL:  %s\n",
+				SDL_GetError()
+		       );
+		return 1;
+	}
+	return 0;
+}
+
+/* old glfw version
+int init_window_lib()
+{
 	glfwSetErrorCallback(err_callback);
 	if(!glfwInit())
 		return -1;
@@ -100,6 +111,7 @@ int init_window_lib()
 	glfwGetFramebufferSize(window, &window_width, &window_height);
 	return 0;
 }
+*/
 
 void init_gl()
 {
@@ -126,7 +138,7 @@ int init_graphics()
 
 void deinit_graphics()
 {
-	glfwTerminate();
+	SDL_Quit();
 }
 
 static inline void draw_vertice(struct vertice v)
