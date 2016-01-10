@@ -1,4 +1,3 @@
-#include <err.h>
 #include <stdlib.h>
 
 #include "model.h"
@@ -11,8 +10,10 @@ void add_submodel(struct model * to, struct model * from)
 	size_t s = sizeof(struct polygon)*(to->cardinality+from->cardinality);
 	to->poly = realloc(to->poly,s);
 
-	if(to->poly==NULL)
-		err(-73,"add_submodel realloc failed");
+	if(to->poly==NULL){
+		printf("add submodel failed\n");
+		exit(-25);
+	}
 
 	for(i=0;i<from->cardinality;i++){
 		to->poly[o+i]=from->poly[i];

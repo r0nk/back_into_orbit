@@ -1,4 +1,3 @@
-#include <err.h>
 #include <stdlib.h>
 #include "map.h"
 
@@ -60,7 +59,7 @@ struct doorway * get_nonconnected_door(struct map * map)
 	}
 
 	fprintf(stderr,"ERR: next_nonconnected_door: no nonconnected door\n");
-	err(-203,"no nonconnected door");
+	exit(10);
 	return NULL;
 }
 

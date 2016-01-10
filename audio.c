@@ -1,5 +1,4 @@
 #include <SDL.h>
-#include <err.h>
 #include <math.h>
 
 #include "audio.h"
@@ -130,8 +129,10 @@ void init_audio()
 	wanted.userdata = NULL;
 
 	error = SDL_OpenAudio(&wanted,NULL);
-	if(error<0)
-		err(-53,"Couldn't initalize audio: %s",SDL_GetError());
+	if(error<0){
+		printf("Couldn't initalize audio: %s",SDL_GetError());
+		exit(-82);
+	}
 	audio_initalized=1;
 	audio_enabled=0;
 }

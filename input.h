@@ -2,7 +2,6 @@
 #define INPUT
 
 #include <stdio.h>
-#include <err.h>
 #include "graphics.h"
 #include "poly.h"
 #include "map.h"

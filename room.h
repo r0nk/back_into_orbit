@@ -5,7 +5,6 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <stdlib.h>
-#include <err.h>
 
 #include "game_state.h"
 #include "shop.h"

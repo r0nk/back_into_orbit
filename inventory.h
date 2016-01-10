@@ -3,7 +3,6 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include <err.h>
 
 /* units are in the game world, items are in inventories */
 
@@ -259,7 +258,8 @@ inline static struct item pick_item()
 		case ITEM_DASH:
 			return dash_item();
 		default:
-			err(-72,"failed to pick item, r=%i ",r);
+			printf("failed to pick item, r=%i\n",r);
+			exit(2);
 			break;
 	}
 }
