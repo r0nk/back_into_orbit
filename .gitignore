@@ -1,4 +1,7 @@
 back_into_orbit
+back_into_orbit.exe
 *.o
 layouts.c
 profdata
+SDL2.dll
+

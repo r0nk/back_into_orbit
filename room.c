@@ -9,8 +9,10 @@
 void get_layout(struct room * room,char * pathname)
 {
 	int fd = open(pathname,O_RDONLY);
-	if(fd==-1)
-		err(-29,"get_layout() couldn't open");
+	if(fd==-1){
+		printf("Get_layout() couldn't open");
+		exit(29);
+	}
 
 	char c[2];
 	int x=0,y=0;

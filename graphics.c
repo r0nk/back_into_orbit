@@ -283,7 +283,8 @@ struct model * item_model(int item_id)
 		case ITEM_COIN:
 			printf("incorrect call for coin\n");
 		default:
-			err(-74,"couldn't find item model for [%i] ",item_id);
+			printf("couldn't find item model for [%i]\n",item_id);
+			exit(-74);
 			break;
 	}
 }

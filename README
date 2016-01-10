@@ -1,2 +1,10 @@
 back into orbit is a simple roguelike, currently running on linux, soon
 to be ported to windows.
+
+BUILDING:
+---------------
+ you have to run 
+ 
+ $ ./generate_layouts.sh > layouts.c
+
+ and, if building for windows, you also have to have SDL2.dll in the directory in order to build

@@ -128,13 +128,17 @@ void spawn_boss(struct room * room)
 			break;
 		case 2:
 			add_npc(&room->gs,mole_npc(loc));
-			if(room->gs.n_npcs==0)
-				err(-44,"couldn't add mole_npc");
+			if(room->gs.n_npcs==0){
+				printf("coulnd't add mole_npc");
+				exit(-44);
+			}
 			break;
 		case 3:
 			add_yoyo(&room->gs);
-			if(room->gs.n_npcs==0)
-				err(-43,"couldn't add yoyo_npc");
+			if(room->gs.n_npcs==0){
+				printf("coulnd't add yoyo");
+				exit(-44);
+			}
 			break;
 		default:
 			printf("ERR:unrecognized boss type");

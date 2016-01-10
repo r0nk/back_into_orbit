@@ -118,8 +118,10 @@ void visit_next(struct layout * distance,struct layout * visited,
 void path_push(struct path * p, struct vector v)
 {
 	p->interpoint[p->n_interpoints]=v;
-	if(p->n_interpoints >= MAX_INTERPOINTS)
-		err(-60,"tried to add over N_INTERPOINTS");
+	if(p->n_interpoints >= MAX_INTERPOINTS){
+		printf("tried to add over N_INTERPOINTS\n");
+		exit(-60);
+	}
 	p->n_interpoints++;
 }
 
