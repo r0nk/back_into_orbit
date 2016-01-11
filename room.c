@@ -62,7 +62,7 @@ struct vector pick_colors(int i)
 {
 	switch(i){
 		case 0:
-			return (struct vector) {0,0,230};
+			return (struct vector) {230,230,230};
 			break;
 		case 1:
 			return (struct vector) {0,230,0};
@@ -80,7 +80,7 @@ struct vector pick_colors(int i)
 			return (struct vector) {204,203,127};
 			break;
 		case 6:
-			return (struct vector) {230,230,230};
+			return (struct vector) {0,0,230};
 			break;
 		case 7:
 			return (struct vector) {207,107,76};
