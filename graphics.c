@@ -328,7 +328,19 @@ void draw_yoyo(struct unit u){
 	draw_model(yo_boss_model,u.location,u.rotation_angle+90.0,u.rotation);
 }
 
-void draw_unit(struct unit u)
+void draw_unit_saying(struct game_state * gs, struct unit * u)
+{
+	struct vector l;
+	l = world_to_screen(gs,u->location);
+	if(u->saying!=NULL){
+		if(u->type==UNIT_TYPE_SIGN)
+			draw_text(l.x+1,l.y+1,u->saying,(struct vector) {0,1,1});
+		else
+			draw_text(l.x,l.y,u->saying,(struct vector) {0,1,1});
+	}
+}
+
+void draw_unit(struct game_state * gs, struct unit u)
 {
 	glPushMatrix();
 	switch(u.type){
@@ -362,6 +374,10 @@ void draw_unit(struct unit u)
 			break;
 		case UNIT_TYPE_YO:
 			draw_yoyo(u);
+			break;
+		case UNIT_TYPE_SIGN:
+			draw_model(fh_model,u.location,
+					u.rotation_angle,u.rotation);
 			break;
 		default:
 			printf("unrecognized model type, not drawing\n");
@@ -432,9 +448,9 @@ void draw_models(struct game_state * gs)
 {
 	draw_room((world_map.current_room));
 	int i;
-	draw_unit(gs->game_player);
+	draw_unit(gs,gs->game_player);
 	for(i=0;i<gs->n_npcs;i++){
-		draw_unit(gs->npc[i]);
+		draw_unit(gs,gs->npc[i]);
 	}
 	for(i=0;i<gs->n_bullets;i++){
 		draw_model(bullet_model,gs->bullet[i].location,
@@ -613,13 +629,15 @@ void draw_prices(struct game_state * gs, struct shop * shop)
 	}
 }
 
+
 void draw_sayings(struct game_state * gs)
 {
-	struct vector l;
-	l= gs->game_player.location;
-	l = world_to_screen(gs,l);
-	if(gs->game_player.saying!=NULL)
-		draw_text(l.x,l.y,gs->game_player.saying,(struct vector) {0,1,1});
+	draw_unit_saying(gs,&gs->game_player);
+	int i;
+	for(i=0;i<(gs->n_npcs);i++){
+		draw_unit_saying(gs,&gs->npc[i]);
+	}
+
 }
 
 void draw_hud(struct game_state * gs)

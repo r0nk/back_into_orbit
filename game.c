@@ -10,7 +10,7 @@ struct map world_map;
 
 struct unit yo_npc(struct vector location)
 {
-	struct unit npc;
+	struct unit npc={0}; 
 	npc.speed=5.0;
 	npc.damage=40;
 	npc.health=100;
@@ -26,7 +26,7 @@ struct unit yo_npc(struct vector location)
 
 struct unit item_npc(struct vector location, int item_id)
 {
-	struct unit npc;
+	struct unit npc={0};
 	npc.speed=0.0;
 	npc.health=2000;
 	npc.location=location;
@@ -39,9 +39,25 @@ struct unit item_npc(struct vector location, int item_id)
 	return npc;
 }
 
+struct unit sign_npc(struct vector location)
+{
+	struct unit npc={0};
+	npc.speed=0.0;
+	npc.health=200;
+	npc.location=location;
+	npc.type = UNIT_TYPE_SIGN;
+	npc.rotation_angle = 90;
+	npc.rotation = (struct vector) {0,1,0};
+	npc.hit_radius = 1.0;
+	npc.poison_timer=0.0;
+	npc.score=1;
+	npc.saying="level 1";
+	return npc;
+}
+
 struct unit scavenger_npc(struct vector location)
 {
-	struct unit npc;
+	struct unit npc={0};
 	npc.speed=3.5;
 	npc.health=20;
 	npc.damage=20;
@@ -57,7 +73,7 @@ struct unit scavenger_npc(struct vector location)
 
 struct unit ranger_npc(struct vector location)
 {
-	struct unit npc;
+	struct unit npc={0};
 	npc.speed=2.5;
 	npc.cooldown=1;
 	npc.health=10;
@@ -74,7 +90,7 @@ struct unit ranger_npc(struct vector location)
 
 struct unit mole_npc(struct vector location)
 {
-	struct unit npc;
+	struct unit npc={0};
 	npc.speed=0;
 	npc.damage=10;
 	npc.health=150;
@@ -90,7 +106,7 @@ struct unit mole_npc(struct vector location)
 
 struct unit boss_npc(struct vector location)
 {
-	struct unit npc;
+	struct unit npc={0};
 	npc.speed=0;
 	npc.health=100;
 	npc.location=location;
@@ -163,6 +179,21 @@ void spawn_mobs(struct room * room)
 	}
 	if(room->boss_room)
 		spawn_boss(room);
+	if(room->starting_room){
+		struct unit s_npc = sign_npc((struct vector){14,0,3});
+		switch(room->starting_room){
+			case 1:
+				s_npc.saying="level 1";
+				break;
+			case 2:
+				s_npc.saying="level 2";
+				break;
+			case 3:
+				s_npc.saying="level 3";
+				break;
+		}
+		add_npc(&room->gs,s_npc);
+	}
 }
 
 struct unit init_player()

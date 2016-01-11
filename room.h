@@ -43,6 +43,7 @@ struct room {
 	int has_shop;
 	struct shop shop;
 	int boss_room;
+	int starting_room;
 };
 
 static inline void dump_room(struct room * room)

@@ -177,12 +177,12 @@ struct model model_room(struct room * room)
 
 struct room generate_room(int i,int level)
 {
-	struct room room;
-	room.boss_room=0;
+	struct room room = {0};
 	switch(i)
 	{
 		case 0:
 			get_layout(&room,"layouts/starting.special");
+			room.starting_room=level;
 			break;
 		case 8:
 			get_layout(&room,"layouts/shop.special");

@@ -172,7 +172,8 @@ void update_bullets(struct game_state * gs, double delta)
 		s = gs->bullet[i].speed*delta;
 		gs->bullet[i].location.x+=gs->bullet[i].direction.x*s;
 		gs->bullet[i].location.z+=gs->bullet[i].direction.z*s;
-		if(world_map.current_room->layout.tiles[(int)gs->bullet[i].location.x]
+		if(world_map.current_room->layout.tiles
+				[(int)gs->bullet[i].location.x]
 				[(int)gs->bullet[i].location.z] == LAYOUT_WALL)
 			remove_bullet(gs,i);
 
@@ -640,6 +641,8 @@ void update_npcs(struct game_state * gs, double delta)
 				break;
 			case UNIT_TYPE_BOSS:
 				update_boss(gs,delta,j);
+				break;
+			case UNIT_TYPE_SIGN:
 				break;
 		}
 	}
