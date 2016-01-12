@@ -689,7 +689,7 @@ void update_game_state(struct game_state * gs,double d)
 	if(world_map.current_room->has_shop){
 		update_shop(gs,d);
 	}
-	update_field(gs->field,d);
+	update_field(&gs->field,d);
 }
 
 void engine_tick(struct game_state * gs)

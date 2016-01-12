@@ -6,12 +6,11 @@ static inline void propogate(struct vector * to, struct vector * from,
 {
 	if(!to||!from)
 		return;
-//	double d = (delta*0.2)*(from->y - to->y);
 	double d = (delta)*(from->y - to->y);
 	to->x +=d;
 	to->z +=d;
-	from->x +=d;
-	from->z +=d;
+	from->x -=d;
+	from->z -=d;
 }
 
 void update_cell(struct field * field,int i, int j,double delta)
