@@ -683,13 +683,13 @@ void update_shop(struct game_state * gs, double delta)
 
 void update_game_state(struct game_state * gs,double d)
 {
+	update_field(&gs->field,d);
 	update_player(gs,d);
 	update_bullets(gs,d);
 	update_npcs(gs,d);
 	if(world_map.current_room->has_shop){
 		update_shop(gs,d);
 	}
-	update_field(&gs->field,d);
 }
 
 void engine_tick(struct game_state * gs)

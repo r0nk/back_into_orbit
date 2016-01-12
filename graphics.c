@@ -200,11 +200,23 @@ struct vector normal(struct vector v)
 	return n;
 }
 
+void draw_2line(struct vector start, struct vector end, 
+		struct vector c1,struct vector c2)
+{
+	glLineWidth(5.0);
+	glBegin(GL_LINES);
+	glColor3f(c1.x, c1.y, c1.z);
+	glVertex3d(start.x,start.y,start.z);
+	glColor3f(c2.x, c2.y, c2.z);
+	glVertex3d(end.x,end.y,end.z);
+	glEnd();
+}
+
 void draw_line(struct vector start, struct vector end, struct vector color)
 {
 	glLineWidth(5.0);
-	glColor3f(color.x, color.y, color.z);
 	glBegin(GL_LINES);
+	glColor3f(color.x, color.y, color.z);
 	glVertex3d(start.x,start.y,start.z);
 	glVertex3d(end.x,end.y,end.z);
 	glEnd();
@@ -232,12 +244,22 @@ void draw_field(struct field * field)
 	int i,j;
 	for(i=0;i<MAX_ROOM_WIDTH;i++){
 		for(j=0;j<MAX_ROOM_HEIGHT;j++){
-			if(field->cell[i][j].y){
-				struct vector a,b;
-				a = (struct vector) {i,0,j};
-				b = (struct vector) {i,field->cell[i][j].y,j};
-				draw_line(a,b,(struct vector) {0,1,1});
-			}
+			if(!field->cell[i][j].y)
+				continue;
+			struct vector s,q,e,z,c,w,a,d,x;
+			s = (struct vector) {i,field->cell[i][j].y,j};
+			w = (struct vector) {i,field->cell[i][j+1].y,j+1};
+			a = (struct vector) {i-1,field->cell[i-1][j].y,j};
+			d = (struct vector) {i+1,field->cell[i+1][j].y,j};
+			x = (struct vector) {i,field->cell[i][j-1].y,j-1};
+
+			/*floor color, (for dat blend)*/
+			double f = 0.6745; 
+			struct vector cs = (struct vector) {f,s.y+f,s.y+f};
+			draw_2line(s,w,cs,(struct vector) {f,w.y+f,w.y+f});
+			draw_2line(s,a,cs,(struct vector) {f,a.y+f,a.y+f});
+			draw_2line(s,d,cs,(struct vector) {f,d.y+f,d.y+f});
+			draw_2line(s,x,cs,(struct vector) {f,x.y+f,x.y+f});
 		}
 	}
 }
@@ -850,7 +872,6 @@ void draw_orbit_path()
 	b = (struct vector){10,-3,1};
 	draw_stippled_line(a,b,c);
 }
-
 
 double planet_rotation;
 void draw_main_menu()
