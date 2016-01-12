@@ -51,5 +51,7 @@ void transfer_map(int level);
 void move_through_doorway(struct map * map,int t);
 
 extern struct map world_map;
+
+int walkable(int i, int j); /*if current_room[i][j] is walkable*/
  
 #endif

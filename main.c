@@ -3,7 +3,6 @@
 #include <unistd.h>
 #include <stdio.h>
 
-
 #include "game_state.h"
 #include "graphics.h"
 #include "engine.h"
@@ -17,7 +16,7 @@ int main()
 {
 	srand(time(NULL));
 	init_graphics();
-	init_audio();
+//	init_audio();
 	generate_map(&world_map,1);
 	init_ui();
 	paused=0;

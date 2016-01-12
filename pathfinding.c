@@ -7,14 +7,6 @@
 
 struct vector parent[MAX_ROOM_WIDTH][MAX_ROOM_HEIGHT];
 
-int walkable(int i, int j)
-{
-	struct layout * l = &world_map.current_room->layout;
-	if(!l->tiles[i][j])
-		return 0;
-	if(l->tiles[i][j]=='#') return 0;
-	return 1;
-}
 
 int wall_near(int i, int j)
 {

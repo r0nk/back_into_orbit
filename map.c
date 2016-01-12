@@ -1,6 +1,15 @@
 #include <stdlib.h>
 #include "map.h"
 
+int walkable(int i, int j)
+{
+	struct layout * l = &world_map.current_room->layout;
+	if(!l->tiles[i][j])
+		return 0;
+	if(l->tiles[i][j]=='#') return 0;
+	return 1;
+}
+
 struct doorway * get_doorway_by_index(struct map * map, int index)
 {
 	int i,j;

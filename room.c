@@ -6,6 +6,7 @@
 #include "room.h"
 #include "shop.h"
 
+
 void get_layout(struct room * room,char * pathname)
 {
 	int fd = open(pathname,O_RDONLY);
