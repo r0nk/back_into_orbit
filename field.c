@@ -6,7 +6,7 @@ static inline void propogate(struct vector * to, struct vector * from,
 {
 	if(!to||!from)
 		return;
-	double d = (delta)*(from->y - to->y);
+	double d = (2*(delta))*(from->y - to->y);
 	to->x +=d;
 	to->z +=d;
 	from->x -=d;
@@ -43,7 +43,7 @@ void update_field(struct field * field, double delta)
 		for(j=0;j<MAX_ROOM_HEIGHT;j++){
 			field->cell[i][j].y+=
 				r*(field->cell[i][j].x + field->cell[i][j].z);
-			field->cell[i][j].y/=1.005;
+			field->cell[i][j].y/=1.001;
 		}
 	}
 }
