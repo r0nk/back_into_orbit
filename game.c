@@ -8,6 +8,23 @@
 
 struct map world_map;
 
+struct unit antenna_npc(struct vector location)
+{
+	struct unit npc={0}; 
+	npc.speed=0.0;
+	npc.cooldown = 5;
+	npc.damage=0;
+	npc.health=20;
+	npc.location=location;
+	npc.type = UNIT_TYPE_ANTENNA;
+	npc.rotation_angle = 90;
+	npc.rotation = (struct vector) {0,1,0};
+	npc.hit_radius = 1;
+	npc.poison_timer = 0.0;
+	npc.score=300;
+	return npc;
+}
+
 struct unit yo_npc(struct vector location)
 {
 	struct unit npc={0}; 
@@ -162,38 +179,55 @@ void spawn_boss(struct room * room)
 	}
 }
 
+void spawn_sign(struct game_state * gs,int n_room)
+{
+	struct unit s_npc = sign_npc((struct vector){14,0,3});
+	switch(n_room){
+		case 1:
+			s_npc.saying="level 1";
+			break;
+		case 2:
+			s_npc.saying="level 2";
+			break;
+		case 3:
+			s_npc.saying="level 3";
+			break;
+	}
+	add_npc(gs,s_npc);
+}
+
+void spawn_mob(struct room * room,int i, int j)
+{
+	struct vector loc;
+	loc.x=i;loc.z=j;
+	int r = rand()%3;
+	switch(r){
+		case 0:
+			add_npc(&room->gs,ranger_npc(loc));
+			break;
+		case 1:
+			add_npc(&room->gs,scavenger_npc(loc));
+			break;
+		case 2:
+			add_npc(&room->gs,antenna_npc(loc));
+			break;
+	}
+}
+
 void spawn_mobs(struct room * room)
 {
-	struct vector loc = {0,0,0};
 	int i,j;
 	for(i=0;i<MAX_ROOM_WIDTH;i++){
 		for(j=0;j<MAX_ROOM_HEIGHT;j++){
 			if(room->layout.tiles[i][j] == 's'){
-				loc.x=i;loc.z=j;
-				if(rand()%2)
-					add_npc(&room->gs,ranger_npc(loc));
-				else
-					add_npc(&room->gs,scavenger_npc(loc));
+				spawn_mob(room,i,j);
 			}
 		}
 	}
 	if(room->boss_room)
 		spawn_boss(room);
-	if(room->starting_room){
-		struct unit s_npc = sign_npc((struct vector){14,0,3});
-		switch(room->starting_room){
-			case 1:
-				s_npc.saying="level 1";
-				break;
-			case 2:
-				s_npc.saying="level 2";
-				break;
-			case 3:
-				s_npc.saying="level 3";
-				break;
-		}
-		add_npc(&room->gs,s_npc);
-	}
+	if(room->starting_room)
+		spawn_sign(&room->gs,room->starting_room);
 }
 
 struct unit init_player()

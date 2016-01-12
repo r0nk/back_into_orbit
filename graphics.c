@@ -28,6 +28,7 @@ struct button test_button;
 
 struct model p_model;
 struct model b_model;
+struct model ant_model;
 struct model mole_boss_model;
 struct model yo_boss_model;
 struct model d_model;
@@ -82,6 +83,7 @@ void init_models()
 	mm_planet_model=main_menu_planet_model();
 	mole_boss_model = mole_model();
 	yo_boss_model = yo_model();
+	ant_model = antenna_model();
 }
 
 int init_window_lib()
@@ -415,6 +417,10 @@ void draw_unit(struct game_state * gs, struct unit u)
 			break;
 		case UNIT_TYPE_SIGN:
 			draw_model(fh_model,u.location,
+					u.rotation_angle,u.rotation);
+			break;
+		case UNIT_TYPE_ANTENNA:
+			draw_model(ant_model,u.location,
 					u.rotation_angle,u.rotation);
 			break;
 		default:

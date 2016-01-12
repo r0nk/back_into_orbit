@@ -41,6 +41,7 @@ struct unit {
 #define UNIT_TYPE_MOLE   		7
 #define UNIT_TYPE_YO   			8
 #define UNIT_TYPE_SIGN   		9
+#define UNIT_TYPE_ANTENNA   		10
 	int team;
 #define NEUTRAL_TEAM 			0
 #define RED_TEAM 			1

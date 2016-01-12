@@ -254,6 +254,19 @@ void move_unit(struct unit * u,struct vector d)
 		u->health=0;/* oops, they went out of the map */
 }
 
+void splash (struct game_state * gs, int x, int z)
+{
+	gs->field.cell[x][z].y=3;
+	gs->field.cell[x+1][z].y=2;
+	gs->field.cell[x+1][z-1].y=1.4141;
+	gs->field.cell[x+1][z+1].y=1.4141;
+	gs->field.cell[x-1][z].y=2;
+	gs->field.cell[x-1][z+1].y=1.4141;
+	gs->field.cell[x-1][z-1].y=1.4141;
+	gs->field.cell[x][z+1].y=2;
+	gs->field.cell[x][z-1].y=2;
+}
+
 void player_movement(struct game_state * gs, double delta)
 {
 	struct vector dvec = (struct vector){0,0,0};
@@ -283,11 +296,6 @@ void player_movement(struct game_state * gs, double delta)
 	if(pi.keys['D'] || pi.keys['d']){
 		dvec.x+=delta;
 		dvec.z-=delta;
-	}
-
-	if(pi.keys[' ']){
-		gs->field.cell[(int)gs->game_player.location.x]
-			[(int)gs->game_player.location.z].y=2;
 	}
 
 	move_unit(&gs->game_player,dvec);
@@ -354,6 +362,19 @@ void door_check(struct game_state * gs)
 	}
 }
 
+void field_damage(struct game_state * gs, struct unit * u, double delta)
+{
+	int diode = 1;/*whether or not we only get damaged and not healed*/
+	int damage = 100;
+	struct vector l = u->location;
+	if(gs->field.cell[(int)l.x][(int)l.z].y){
+		if(diode && (gs->field.cell[(int)l.x][(int)l.z].y<0))
+			return;
+		u->health -= damage*gs->field.cell[(int)l.x][(int)l.z].y*delta;
+	}
+	
+}
+
 void update_player(struct game_state * gs,double delta)
 {
 	if(gs->game_player.health<=0){
@@ -364,6 +385,9 @@ void update_player(struct game_state * gs,double delta)
 	player_attack(gs,delta);
 	player_items(gs,delta);
 	door_check(gs);
+
+	field_damage(gs,&gs->game_player,delta);
+
 
 	face(&gs->game_player,screen_to_world(gs,pi.mouse_x,pi.mouse_y));
 }
@@ -621,6 +645,16 @@ void update_yo(struct game_state * gs, double delta, int j)
 	}
 }
 
+void update_antenna(struct game_state * gs, double delta, int j)
+{
+	if(gs->npc[j].cooldown<0){
+		splash(gs,gs->npc[j].location.x,gs->npc[j].location.z);
+		gs->npc[j].cooldown=5;
+	}else{
+		gs->npc[j].cooldown-=delta;
+	}
+}
+
 void update_npcs(struct game_state * gs, double delta)
 {
 	int j;
@@ -649,6 +683,9 @@ void update_npcs(struct game_state * gs, double delta)
 				update_boss(gs,delta,j);
 				break;
 			case UNIT_TYPE_SIGN:
+				break;
+			case UNIT_TYPE_ANTENNA:
+				update_antenna(gs,delta,j);
 				break;
 		}
 	}

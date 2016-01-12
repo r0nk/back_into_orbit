@@ -43,7 +43,7 @@ void update_field(struct field * field, double delta)
 		for(j=0;j<MAX_ROOM_HEIGHT;j++){
 			field->cell[i][j].y+=
 				r*(field->cell[i][j].x + field->cell[i][j].z);
-			field->cell[i][j].y/=1.005;
+			field->cell[i][j].y/=delta+1;
 		}
 	}
 }
