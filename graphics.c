@@ -355,6 +355,7 @@ void draw_room(struct room * room)
 		draw_shop(&room->shop);	
 	draw_model(room->model,(struct vector){0,0,0},
 				0.0, (struct vector){0,0,0});
+	draw_field(&room->gs.field);
 }
 
 void draw_yoyo(struct unit u){
@@ -681,7 +682,6 @@ void draw_sayings(struct game_state * gs)
 	for(i=0;i<(gs->n_npcs);i++){
 		draw_unit_saying(gs,&gs->npc[i]);
 	}
-
 }
 
 void draw_hud(struct game_state * gs)
@@ -719,7 +719,6 @@ void draw_game(struct game_state * gs)
 		  gs->game_player.location.z,
 		0,1,0);
 	draw_models(gs);
-	draw_field(&gs->field);
 	glPopMatrix();
 
 	draw_hud(gs);
