@@ -12,6 +12,7 @@
 #include "map.h"
 #include "effects.h"
 #include "ui.h"
+#include "field.h"
 
 #define SCM 10
 
@@ -282,6 +283,11 @@ void player_movement(struct game_state * gs, double delta)
 	if(pi.keys['D'] || pi.keys['d']){
 		dvec.x+=delta;
 		dvec.z-=delta;
+	}
+
+	if(pi.keys[' ']){
+		gs->field.cell[(int)gs->game_player.location.x]
+			[(int)gs->game_player.location.z].y=2;
 	}
 
 	move_unit(&gs->game_player,dvec);
@@ -675,16 +681,22 @@ void update_shop(struct game_state * gs, double delta)
 	}
 }
 
+void update_game_state(struct game_state * gs,double d)
+{
+	update_player(gs,d);
+	update_bullets(gs,d);
+	update_npcs(gs,d);
+	if(world_map.current_room->has_shop){
+		update_shop(gs,d);
+	}
+	update_field(gs->field,d);
+}
+
 void engine_tick(struct game_state * gs)
 {
 	double d = delta_time();
 	if(!paused && !in_main_menu){
-		update_player(gs,d);
-		update_bullets(gs,d);
-		update_npcs(gs,d);
-		if(world_map.current_room->has_shop){
-			update_shop(gs,d);
-		}
+		update_game_state(gs,d);
 	}else{
 		if(in_main_menu)
 			update_ui(&main_menu_ui);

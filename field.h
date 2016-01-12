@@ -1,7 +1,8 @@
 #ifndef FIELD
 #define FIELD
 
-#include "room.h"
+#include "dimensions.h"
+#include "poly.h"
 
 struct field
 {

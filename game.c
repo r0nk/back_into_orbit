@@ -225,5 +225,6 @@ struct game_state init_game(struct room * room)
 
 	spawn_mobs(room);
 
+	room->gs.field = (struct field) {0};
 	return room->gs;
 }

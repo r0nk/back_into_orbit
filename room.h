@@ -6,11 +6,10 @@
 #include <unistd.h>
 #include <stdlib.h>
 
+#include "dimensions.h"
 #include "game_state.h"
 #include "shop.h"
 
-#define MAX_ROOM_WIDTH 50
-#define MAX_ROOM_HEIGHT 50
 
 #define MAX_DOORWAYS 6
 
@@ -66,6 +65,5 @@ struct room generate_room(int i, int level);
 void get_layout(struct room * room,char * pathname);
 
 struct shop generate_shop(struct room * room);
-
 
 #endif

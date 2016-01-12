@@ -4,6 +4,7 @@
 #include <stdio.h>
 
 #include "game.h"
+#include "field.h"
 
 #define MAX_NPCS 100
 #define MAX_BULLETS 100
@@ -14,6 +15,7 @@ struct game_state {
 	struct unit npc[MAX_NPCS];
 	int n_bullets;
 	struct bullet bullet[MAX_BULLETS];
+	struct field field;
 };
 
 static inline void remove_bullet(struct game_state * gs, int i)

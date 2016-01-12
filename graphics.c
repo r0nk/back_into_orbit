@@ -2,6 +2,7 @@
 #include <SDL.h>
 
 #include "input.h"
+#include "field.h"
 #include "pathfinding.h"
 #include "map.h"
 #include "game_state.h"
@@ -224,6 +225,21 @@ void draw_stippled_line(struct vector start, struct vector end,
 	glEnd();
 	
 	glPopAttrib();
+}
+
+void draw_field(struct field * field)
+{
+	int i,j;
+	for(i=0;i<MAX_ROOM_WIDTH;i++){
+		for(j=0;j<MAX_ROOM_HEIGHT;j++){
+			if(field->cell[i][j].y){
+				struct vector a,b;
+				a = (struct vector) {i,0,j};
+				b = (struct vector) {i,field->cell[i][j].y,j};
+				draw_line(a,b,(struct vector) {0,1,1});
+			}
+		}
+	}
 }
 
 void draw_floor(int x, int y, int z){
@@ -675,6 +691,7 @@ void draw_game(struct game_state * gs)
 		  gs->game_player.location.z,
 		0,1,0);
 	draw_models(gs);
+	draw_field(&gs->field);
 	glPopMatrix();
 
 	draw_hud(gs);
@@ -833,6 +850,7 @@ void draw_orbit_path()
 	b = (struct vector){10,-3,1};
 	draw_stippled_line(a,b,c);
 }
+
 
 double planet_rotation;
 void draw_main_menu()
