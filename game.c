@@ -12,7 +12,7 @@ struct unit antenna_npc(struct vector location)
 {
 	struct unit npc={0}; 
 	npc.speed=0.0;
-	npc.cooldown = 5;
+	npc.cooldown = 2;
 	npc.damage=0;
 	npc.health=20;
 	npc.location=location;
