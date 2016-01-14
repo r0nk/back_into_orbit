@@ -88,7 +88,7 @@ void init_models()
 
 int init_window_lib()
 {
-	if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
+	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_EVENTS) != 0) {
 		fprintf(stderr,"\nUnable to initialize SDL:  %s\n",
 				SDL_GetError()
 		       );
