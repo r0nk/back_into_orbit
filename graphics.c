@@ -489,6 +489,23 @@ void draw_path(struct path path)
 	}
 }
 
+void draw_bullet(struct bullet b)
+{
+	struct vector v = b.location;
+	struct vector w = b.location;
+	struct vector color = {1,1,0};
+	v.x += b.direction.x;
+	v.y += b.direction.y+0.2;
+	v.z += b.direction.z;
+	w.y+=0.2;
+	glLineWidth(8.0);
+	glBegin(GL_LINES);
+	glColor3f(color.x, color.y, color.z);
+	glVertex3d(w.x,w.y,w.z);
+	glVertex3d(v.x,v.y,v.z);
+	glEnd();
+}
+
 void draw_models(struct game_state * gs)
 {
 	draw_room((world_map.current_room));
@@ -498,8 +515,7 @@ void draw_models(struct game_state * gs)
 		draw_unit(gs,gs->npc[i]);
 	}
 	for(i=0;i<gs->n_bullets;i++){
-		draw_model(bullet_model,gs->bullet[i].location,
-				0.0, (struct vector){0,0,0});
+		draw_bullet(gs->bullet[i]);
 	}
 }
 
