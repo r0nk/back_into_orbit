@@ -8,6 +8,7 @@
 #include "engine.h"
 #include "game.h"
 #include "graphics.h"
+#include "audio.h"
 
 
 void err_callback(int err, const char* description)
@@ -50,6 +51,21 @@ void cursor_button_callback(SDL_Event event)
 void simple_press_callback()
 {
 	printf("simple press callback\n");
+}
+
+void options_callback()
+{
+	in_options=1;
+}
+
+void options_back_callback()
+{
+	in_options=0;
+}
+
+void toggle_audio_callback()
+{
+	audio_enabled=!audio_enabled;
 }
 
 void play_callback()

@@ -1,6 +1,8 @@
 #ifndef AUDIO
 #define AUDIO
 
+extern int audio_enabled;
+
 void init_audio();
 void tzztzzz();
 void pew();

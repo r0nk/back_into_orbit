@@ -13,6 +13,9 @@ void cursor_button_callback(GLFWwindow * win, int button, int action, int mods);
 */
 void simple_press_callback();
 void play_callback();
+void options_callback();
+void options_back_callback();
+void toggle_audio_callback();
 void exit_callback(void);
 
 #endif

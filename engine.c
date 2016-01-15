@@ -735,10 +735,14 @@ void engine_tick(struct game_state * gs)
 	if(!paused && !in_main_menu){
 		update_game_state(gs,d);
 	}else{
-		if(in_main_menu)
-			update_ui(&main_menu_ui);
-		else
+		if(in_main_menu){
+			if(in_options)
+				update_ui(&options_ui);
+			else
+				update_ui(&main_menu_ui);
+		}else{
 			update_ui(ui);
+		}
 	}
 	count_fps(d);
 }

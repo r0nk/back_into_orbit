@@ -7,6 +7,7 @@ long double frames;
 long double seconds;
 
 int in_main_menu; /*boolean, true if main menu is open*/
+int in_options;
 int is_game_over;
 int paused;
 

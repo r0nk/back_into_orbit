@@ -912,7 +912,11 @@ void draw_main_menu()
 
 	glBegin(GL_TRIANGLES);
 	draw_text(3.0,5,"BACK INTO ORBIT",(struct vector) {0,1,1});
-	draw_ui(&main_menu_ui);
+	if(in_options)
+		draw_ui(&options_ui);
+	else
+		draw_ui(&main_menu_ui);
+
 	glEnd();
 
 	glPopMatrix();
@@ -935,10 +939,10 @@ void graphics_draw(struct game_state * gs)
 	//	glFrustum(-1.0,1.0,-1.0f,1.0f,1.0f,100.0f);
 	glMatrixMode(GL_MODELVIEW);
 
-	if(!in_main_menu)
-		draw_game(gs);
-	else
+	if(in_main_menu)
 		draw_main_menu();
+	else
+		draw_game(gs);
 
 	SDL_GL_SwapWindow(window);
 	process_events();

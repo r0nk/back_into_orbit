@@ -11,12 +11,10 @@ void update_button(struct button * b,struct vector pmv)
 		if(pi.left_click){
 			if(!b->down){
 				b->down=1;
-				if(b->callback)
-					b->callback();
-				else
-					printf("Null button callback\n");
 			}
 		}else{
+			if(b->down && b->callback)
+				b->callback();
 			b->down=0;
 		}
 	}else{
@@ -38,7 +36,9 @@ void init_ui()
 {
 	paused_ui = paused_menu();
 	main_menu_ui = main_menu();
+	options_ui = options_menu();
 	gameover_ui = gameover_menu(0,0);
 	ui = &paused_ui;
+	in_options=0;
 	in_main_menu=1;
 }
