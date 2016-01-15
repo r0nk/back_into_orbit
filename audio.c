@@ -9,7 +9,7 @@ int freq=143707;
 
 static unsigned char audio_chunk[AUDIO_BUFF_SIZE];
 static long audio_len;
-static char * audio_pos;
+static unsigned char * audio_pos;
 
 int audio_initalized;
 int audio_enabled;
@@ -136,5 +136,5 @@ void init_audio()
 		exit(-82);
 	}
 	audio_initalized=1;
-	audio_enabled=1;
+	audio_enabled=0;
 }
