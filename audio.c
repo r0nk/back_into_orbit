@@ -16,8 +16,10 @@ int audio_enabled;
 
 void fill_audio(void *udata, Uint8 *stream, int len)
 {
-	if (audio_len<1)
+	if (audio_len<1){
+		SDL_PauseAudio(1);
 		return;
+	}
 
 	/* Mix as much data as possible */
 	len = ( len > audio_len ? audio_len : len );
@@ -122,7 +124,7 @@ void init_audio()
 	SDL_AudioSpec wanted;
 	
 	wanted.freq = 22050;
-	wanted.format = AUDIO_S8;
+	wanted.format = AUDIO_U8;
 	wanted.channels = 1;
 	wanted.samples = 1024;
 	wanted.callback = fill_audio;
@@ -134,5 +136,5 @@ void init_audio()
 		exit(-82);
 	}
 	audio_initalized=1;
-	audio_enabled=0;
+	audio_enabled=1;
 }
