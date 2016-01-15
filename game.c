@@ -182,9 +182,17 @@ void spawn_boss(struct room * room)
 void spawn_sign(struct game_state * gs,int n_room)
 {
 	struct unit s_npc = sign_npc((struct vector){14,0,3});
+
+	struct unit s_m_npc = sign_npc((struct vector){14,0,8});
+	struct unit s_c_npc = sign_npc((struct vector){10,0,8});
+	s_m_npc.saying="WASD to move";
+	s_c_npc.saying="click to shoot";
+
 	switch(n_room){
 		case 1:
 			s_npc.saying="level 1";
+			add_npc(gs,s_m_npc);
+			add_npc(gs,s_c_npc);
 			break;
 		case 2:
 			s_npc.saying="level 2";
@@ -226,8 +234,9 @@ void spawn_mobs(struct room * room)
 	}
 	if(room->boss_room)
 		spawn_boss(room);
-	if(room->starting_room)
+	if(room->starting_room){
 		spawn_sign(&room->gs,room->starting_room);
+	}
 }
 
 struct unit init_player()
