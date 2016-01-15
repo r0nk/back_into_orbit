@@ -368,7 +368,7 @@ void field_damage(struct game_state * gs, struct unit * u, double delta)
 	int damage = 100;
 	struct vector l = u->location;
 	if(gs->field.cell[(int)l.x][(int)l.z].y){
-		if(diode && (gs->field.cell[(int)l.x][(int)l.z].y<0))
+		if(diode && (gs->field.cell[(int)l.x][(int)l.z].y<0.01))
 			return;
 		u->health -= damage*gs->field.cell[(int)l.x][(int)l.z].y*delta;
 	}
