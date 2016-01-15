@@ -527,6 +527,8 @@ void draw_health_bar(struct unit u, int x, int y)
 		c = (struct vector) {1,1,0};
 	if(u.health<25)
 		c = (struct vector) {1,0,0};
+	if(u.health<0)
+		return;
 
 	double h = u.health/40;
 	a.v[0].p = (struct vector) {x-h  ,y+0.0,0.0};
