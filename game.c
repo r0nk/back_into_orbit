@@ -269,5 +269,6 @@ struct game_state init_game(struct room * room)
 	spawn_mobs(room);
 
 	room->gs.field = (struct field) {0};
+	add_item(&(room->gs.game_player.inventory),teledice_item());
 	return room->gs;
 }

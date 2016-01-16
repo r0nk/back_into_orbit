@@ -154,7 +154,7 @@ inline static struct item teledice_item()
 {
 	struct item item;
 	item.type = ITEM_TELEDICE;
-	item.cooldown = 2;
+	item.cooldown = 5;
 	item.active = 0;
 	item.passive = 0;
 	item.stackable = 0;

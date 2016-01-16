@@ -3,6 +3,7 @@
 #include "effects.h"
 #include "map.h"
 #include "audio.h"
+#include "input.h"
 
 void regen_effect(struct game_state * gs, double delta){
 	if((gs->game_player.health) < (gs->game_player.max_health)){
@@ -17,11 +18,10 @@ void puzzle_effect(struct game_state * gs, double delta)
 
 void teledice_effect(struct game_state * gs, double delta)
 {
-	int a =((rand()%4)-2)*2;
-	int b =((rand()%4)-2)*2;
-	teledice_sound(a,b);
-	gs->game_player.location.x+=a;
-	gs->game_player.location.z+=b;
+	struct vector dest;
+	dest = screen_to_world(gs,pi.mouse_x,pi.mouse_y);
+	gs->game_player.location.x=dest.x;
+	gs->game_player.location.z=dest.z;
 }
 
 int kite_effect(struct game_state * gs, double delta)
@@ -57,7 +57,7 @@ void item_effect(struct game_state * gs, struct item * item, double delta)
 		case ITEM_TELEDICE:
 			if(item->active){
 				teledice_effect(gs,delta);
-				item->cooldown=2;
+				item->cooldown=5;
 			}
 			break;
 		case ITEM_TRIGGER:
