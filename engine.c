@@ -384,7 +384,11 @@ void update_player(struct game_state * gs,double delta)
 	player_movement(gs,delta);
 	player_attack(gs,delta);
 	player_items(gs,delta);
-	door_check(gs);
+	if(gs->game_player.portal_timer<=0){
+		door_check(gs);
+	}else{
+		gs->game_player.portal_timer-=delta;
+	}
 
 	field_damage(gs,&gs->game_player,delta);
 

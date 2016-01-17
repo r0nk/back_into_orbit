@@ -52,6 +52,7 @@ struct unit {
 #define HAS_VECTOR_FIELD		4
 	double poison_timer;
 	double dash_timer;
+	double portal_timer;
 	char * saying;
 	double hit_radius;
 	int score;

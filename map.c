@@ -211,8 +211,8 @@ void move_through_doorway(struct map * map,int t)
 	bzewerwwww(t,dest_door->index);
 
 	map->current_room->gs.game_player.location = dest_door->location;
-	map->current_room->gs.game_player.location.x += 2;
-
+	map->current_room->gs.game_player.location.x += 1;
+	map->current_room->gs.game_player.portal_timer = 2;
 }
 
 struct unit buffer_player;
