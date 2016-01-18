@@ -82,7 +82,7 @@ void init_models()
 	b_model = boss_model();
 	mm_planet_model=main_menu_planet_model();
 	mole_boss_model = mole_model();
-	yo_boss_model = yo_model();
+	yo_boss_model = yo_model((struct vector) {16,16,16},(struct vector) {250,0,0});
 	ant_model = antenna_model();
 }
 
