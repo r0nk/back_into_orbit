@@ -1,7 +1,7 @@
 #Introduction:
 Back into Orbit is a simple roguelike, currently running on linux, soon to be ported to windows.
 
-![alt tag](http://imgur.com/jAo51yo)
+[Imgur](http://i.imgur.com/jAo51yo.gifv)
 
 ###Dependencies:
 SDL2   
