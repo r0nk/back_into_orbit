@@ -1,6 +1,7 @@
 #include <GL/glu.h>
 #include <SDL.h>
 
+#include "model_reader.h"
 #include "input.h"
 #include "field.h"
 #include "pathfinding.h"
@@ -924,6 +925,17 @@ void draw_main_menu()
 	glPopMatrix();
 }
 
+void scene_test()
+{
+	struct aiScene* scene = get_aiScene("models/animation_sample.dae");
+	if(scene==NULL){
+		printf("scene test err\n");
+		return;
+	}
+	printf("Num animations:%i\n",scene->mNumAnimations);
+	aiReleaseImport(scene);
+}
+
 void graphics_draw(struct game_state * gs)
 {
 	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
@@ -945,6 +957,8 @@ void graphics_draw(struct game_state * gs)
 		draw_main_menu();
 	else
 		draw_game(gs);
+
+	scene_test();
 
 	SDL_GL_SwapWindow(window);
 	process_events();

@@ -4,21 +4,20 @@
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
 
-int import_model()
+struct aiScene * get_aiScene(char * path)
 {
-	struct aiScene* scene = aiImportFile( "../models/example_animation.dae", 
+	struct aiScene* scene = aiImportFile(path, 
 			aiProcess_CalcTangentSpace       | 
 			aiProcess_Triangulate            |
 			aiProcess_JoinIdenticalVertices  |
 			aiProcess_SortByPType);
 	if( !scene)
 	{
-		printf("import_model ERR:%s",aiGetErrorString());
-		return -1;
+		printf("import_model ERR:%s\n",aiGetErrorString());
+		return NULL;
 	}
-
-/*TODO stuff here*/
-
-	aiReleaseImport( scene);
-	return 0;
+	return scene;
 }
+
+
+
