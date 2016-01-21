@@ -958,7 +958,6 @@ void graphics_draw(struct game_state * gs)
 	else
 		draw_game(gs);
 
-	scene_test();
 
 	SDL_GL_SwapWindow(window);
 	process_events();
