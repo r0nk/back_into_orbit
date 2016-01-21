@@ -4,7 +4,7 @@ ifeq ($(OS),Windows_NT)
 	LDFLAGS=-lm -lopengl32 -lglu32 -L/usr/local/cross-tools//x86_64-w64-mingw32/lib -lmingw32 -lSDL2main -lSDL2 -mwindows -Wl,--no-undefined -lm -ldinput8 -ldxguid -ldxerr8 -luser32 -lgdi32 -lwinmm -limm32 -lole32 -loleaut32 -lshell32 -lversion -luuid -static-libgcc
 else
 	CC=gcc
-	CFLAGS=-c -g -I"/usr/include/SDL2" -I"/usr/include/libxml2" -Wall
+	CFLAGS=-c -g -I"/usr/include/SDL2" -I"/usr/include/assimp" -Wall
 	LDFLAGS=-lgcc -lGL -lGLU -lX11 -lXrandr -lpthread -lXi -lm -lXinerama -lXcursor -lSDL2 $(xml2-config --libs)
 endif
 SOURCEDIR=src
