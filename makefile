@@ -5,7 +5,7 @@ ifeq ($(OS),Windows_NT)
 else
 	CC=gcc
 	CFLAGS=-c -g -I"/usr/include/SDL2" -I"/usr/include/assimp" -Wall
-	LDFLAGS=-lgcc -lGL -lGLU -lX11 -lXrandr -lpthread -lXi -lm -lXinerama -lXcursor -lSDL2 $(xml2-config --libs)
+	LDFLAGS=-lgcc -lGL -lGLU -lX11 -lXrandr -lpthread -lXi -lm -lXinerama -lXcursor -lSDL2 -lassimp
 endif
 SOURCEDIR=src
 OBJDIR=obj
