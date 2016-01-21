@@ -2,9 +2,9 @@
 Back into Orbit is a simple roguelike, currently running on linux, soon to be ported to windows.
 
 ###Dependencies:
-SDL2
-GLEW
-OpenGL 2.0+
+SDL2   
+GLEW   
+OpenGL 2.0+   
 
 ###BUILDING:
 In order to properly build on a linux system:   
