@@ -2,6 +2,7 @@
 #include <time.h>
 #include <unistd.h>
 #include <stdio.h>
+#include <libxml/parser.h>
 
 #include "game_state.h"
 #include "graphics.h"
